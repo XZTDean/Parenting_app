@@ -1,25 +1,39 @@
 package Model;
 
+import android.util.Log;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+
 public class CoinFlipStats {
-    private int flipTime;
-    private int flipDate;
+    private String timeDate;
+    private String childName;
     private boolean choice;
     private boolean result;
     //true stands for Head and false stands for Tail.
 
-    public CoinFlipStats(int flipTime, int flipDate, boolean choice, boolean result) {
-        this.flipTime = flipTime;
-        this.flipDate = flipDate;
+    public CoinFlipStats(String childName, boolean choice) {
+        this.childName = childName;
         this.choice = choice;
-        this.result = result;
+
     }
 
-    public int getFlipTime() {
-        return flipTime;
+
+    public void setFlipTime() {
+        this.timeDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
+    }
+    public void setResult() {
+        Random rand = new Random();
+        this.result = rand.nextBoolean();
     }
 
-    public int getFlipDate() {
-        return flipDate;
+    public String getFlipTime() {
+        return timeDate;
+    }
+
+    public String getChildName(){
+        return childName;
     }
 
     public boolean isChoice() {
@@ -30,11 +44,13 @@ public class CoinFlipStats {
         return result;
     }
 
-    public void setChoice(boolean choice) {
-        this.choice = choice;
-    }
 
-    public void setResult(boolean result) {
-        this.result = result;
-    }
+
+
+
+
+
+
+
+
 }
