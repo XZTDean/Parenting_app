@@ -24,7 +24,7 @@ public class TimeoutTimer {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(remainingTime * 1000);
+                    Thread.sleep(remainingTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
