@@ -36,11 +36,11 @@ public class CoinFlipStats {
         return childName;
     }
 
-    public boolean isChoice() {
+    public boolean getChoice() {
         return choice;
     }
 
-    public boolean isResult() {
+    public boolean getResult() {
         return result;
     }
 
