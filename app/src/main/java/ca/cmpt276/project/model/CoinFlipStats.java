@@ -1,4 +1,4 @@
-package Model;
+package ca.cmpt276.project.model;
 
 import android.util.Log;
 
