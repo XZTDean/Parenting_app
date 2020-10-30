@@ -26,6 +26,7 @@ public class CoinFlip {
         String[] tempList = new String[FlipList.size()];
         for(int i = 0; i<FlipList.size();i++){
             tempList[i]= FlipList.get(i).getChildName();
+            
 
         }
         return tempList;
