@@ -11,14 +11,15 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import Model.ChildManager;
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Child;
-import ca.cmpt276.project.model.ChildManager;
+
 
 public class MainActivity extends AppCompatActivity {
 
     ChildManager childManager;
-    ArrayList<Child> Children;
+    ArrayList<Model.Child> Children;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
