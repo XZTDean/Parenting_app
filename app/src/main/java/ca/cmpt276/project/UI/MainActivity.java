@@ -11,16 +11,15 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import Model.ChildManager;
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Child;
-
+import ca.cmpt276.project.model.ChildManager;
 
 
 public class MainActivity extends AppCompatActivity {
 
     ChildManager childManager;
-    ArrayList<Model.Child> Children;
+    ArrayList<Child> Children;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         /*
         The following is an outline of how the buttons in activity_main could
         be used. Feel free to edit and remove.
-
 
         Button configureChildren = findViewById(R.id.configureChildren);
         configureChildren.setOnClickListener(new View.OnClickListener() {
