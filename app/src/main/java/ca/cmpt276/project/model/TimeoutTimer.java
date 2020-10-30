@@ -11,7 +11,7 @@ public class TimeoutTimer {
     private Status status;
     private final int option;
 
-    private enum Status {
+    public enum Status {
         ready, running, paused
     }
 
@@ -22,7 +22,7 @@ public class TimeoutTimer {
      */
     public TimeoutTimer(Runnable runnable, int time) {
         this.option = time;
-        this.remainingTime = time * 60 * 1000;
+        this.remainingTime = minToMillisecond(time);
         this.runnable = runnable;
         status = Status.ready;
     }
@@ -59,7 +59,7 @@ public class TimeoutTimer {
         remainingTime = remainingTime - (currentTime - startTime);
         thread.interrupt();
         status = Status.paused;
-        return remainingTime / 1000;
+        return getRemainingTime();
     }
 
     public void resume() {
@@ -77,7 +77,22 @@ public class TimeoutTimer {
         if (status == Status.running) {
             pause();
         }
-        remainingTime = option * 60 * 1000;
+        remainingTime = minToMillisecond(option);
         status = Status.ready;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    /**
+     * @return remaining time in seconds
+     */
+    public long getRemainingTime() {
+        return remainingTime / 1000;
+    }
+
+    private long minToMillisecond(int minute) {
+        return minute * 60 * 1000;
     }
 }
