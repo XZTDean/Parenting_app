@@ -9,6 +9,7 @@ public class TimeoutTimer {
     private long remainingTime;
     private long startTime;
     private Status status;
+    private final int option;
 
     private enum Status {
         ready, running, paused
@@ -20,6 +21,7 @@ public class TimeoutTimer {
      * @param time Time set for timer in minutes
      */
     public TimeoutTimer(Runnable runnable, int time) {
+        this.option = time;
         this.remainingTime = time * 60 * 1000;
         this.runnable = runnable;
         status = Status.ready;
@@ -66,5 +68,16 @@ public class TimeoutTimer {
         }
         status = Status.ready;
         start();
+    }
+
+    public void reset() {
+        if (status != Status.paused && status != Status.running) {
+            throw new IllegalStateException("Timer cannot be reset");
+        }
+        if (status == Status.running) {
+            pause();
+        }
+        remainingTime = option * 60 * 1000;
+        status = Status.ready;
     }
 }
