@@ -16,6 +16,10 @@ public class Child {
         return name;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
     public int getChoiceOfHeadsOrTails() {
         return choiceOfHeadsOrTails;
     }
@@ -24,3 +28,9 @@ public class Child {
         this.choiceOfHeadsOrTails = choiceOfHeadsOrTails;
     }
 }
+package ca.cmpt276.project.model;
+/*
+ * Class that represents each child in app.
+ * Uses an integer that can be 0 - (child has not flipped yet), 1 - (child got heads)
+ * and 2- (child got tails).
+ */

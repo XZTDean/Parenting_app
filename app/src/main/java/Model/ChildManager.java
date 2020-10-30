@@ -44,17 +44,8 @@ public class ChildManager extends AppCompatActivity implements AdapterView.OnIte
         return Children.get(index);
     }
 
-    private Set<String> getsChildrenSharedPreferences() {
-        SharedPreferences prefs = getSharedPreferences("childrenSharedPreferences", Context.MODE_PRIVATE);
-        Set<String> extractedChild = prefs.getStringSet("children", null);
-        return extractedChild;
-    }
-
-    private void storeChildrenSharedPreferences(int gophersInput){
-        SharedPreferences prefs = getSharedPreferences("childrenSharedPreferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("children", gophersInput);
-        editor.apply();
+    public void loadData(ArrayList<Child> Children){
+        this.Children = Children;
     }
 
     @Override
