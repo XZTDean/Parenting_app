@@ -26,12 +26,16 @@ public class TimeoutTimer {
                 try {
                     Thread.sleep(remainingTime);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    return;
                 }
                 super.run();
             }
         };
         thread.start();
         startTime = System.currentTimeMillis();
+    }
+
+    public void pause() {
+        thread.interrupt();
     }
 }
