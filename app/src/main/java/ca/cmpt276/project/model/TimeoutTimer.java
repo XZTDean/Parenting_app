@@ -8,6 +8,11 @@ public class TimeoutTimer {
      */
     private long remainingTime;
     private long startTime;
+    private Status status;
+
+    private enum Status {
+        ready, running, paused
+    }
 
     /**
      * Create a Timeout Timer
@@ -17,6 +22,7 @@ public class TimeoutTimer {
     public TimeoutTimer(Runnable runnable, int time) {
         this.remainingTime = time * 60 * 1000;
         this.runnable = runnable;
+        status = Status.ready;
     }
 
     public void start() {
@@ -33,6 +39,7 @@ public class TimeoutTimer {
         };
         thread.start();
         startTime = System.currentTimeMillis();
+        status = Status.running;
     }
 
     /**
@@ -43,6 +50,7 @@ public class TimeoutTimer {
         long currentTime = System.currentTimeMillis();
         remainingTime = remainingTime - (currentTime - startTime);
         thread.interrupt();
+        status = Status.paused;
         return remainingTime / 1000;
     }
 }
