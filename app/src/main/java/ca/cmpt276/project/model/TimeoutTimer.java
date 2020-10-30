@@ -26,6 +26,9 @@ public class TimeoutTimer {
     }
 
     public void start() {
+        if (status != Status.ready) {
+            throw new IllegalStateException("Timer is not ready");
+        }
         thread = new Thread(runnable){
             @Override
             public void run() {
@@ -47,6 +50,9 @@ public class TimeoutTimer {
      * @return remaining time in seconds
      */
     public long pause() {
+        if (status != Status.running) {
+            throw new IllegalStateException("Timer is not running");
+        }
         long currentTime = System.currentTimeMillis();
         remainingTime = remainingTime - (currentTime - startTime);
         thread.interrupt();
