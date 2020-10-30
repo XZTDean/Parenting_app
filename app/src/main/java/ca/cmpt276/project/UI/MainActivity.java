@@ -1,14 +1,10 @@
-package ca.cmpt276.project;
+package ca.cmpt276.project.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 
-import Model.CoinFlip;
+import ca.cmpt276.project.R;
 
 public class MainActivity extends AppCompatActivity {
 
