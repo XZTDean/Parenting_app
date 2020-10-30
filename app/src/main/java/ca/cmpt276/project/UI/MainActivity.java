@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Adaoted from: https://codinginflow.com/tutorials/android/save-arraylist-to-sharedpreferences-with-gson
+    //Adapted from: https://codinginflow.com/tutorials/android/save-arraylist-to-sharedpreferences-with-gson
     private void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
