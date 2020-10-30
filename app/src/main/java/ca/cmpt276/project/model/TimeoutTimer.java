@@ -59,4 +59,12 @@ public class TimeoutTimer {
         status = Status.paused;
         return remainingTime / 1000;
     }
+
+    public void resume() {
+        if (status != Status.paused) {
+            throw new IllegalStateException("Timer is not paused");
+        }
+        status = Status.ready;
+        start();
+    }
 }
