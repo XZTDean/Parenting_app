@@ -1,4 +1,4 @@
-package Model;
+package ca.cmpt276.project.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Set;
+
+import ca.cmpt276.project.model.Child;
 
 public class ChildManager extends AppCompatActivity implements AdapterView.OnItemSelectedListener  {
 
@@ -42,6 +44,10 @@ public class ChildManager extends AppCompatActivity implements AdapterView.OnIte
 
     public Child getChild(int index){
         return Children.get(index);
+    }
+
+    public void loadData(ArrayList<Child> Children){
+        this.Children = Children;
     }
 
     @Override
