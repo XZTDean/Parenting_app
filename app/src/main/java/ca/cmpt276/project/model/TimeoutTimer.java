@@ -35,7 +35,14 @@ public class TimeoutTimer {
         startTime = System.currentTimeMillis();
     }
 
-    public void pause() {
+    /**
+     * Pause the timer
+     * @return remaining time in seconds
+     */
+    public long pause() {
+        long currentTime = System.currentTimeMillis();
+        remainingTime = remainingTime - (currentTime - startTime);
         thread.interrupt();
+        return remainingTime / 1000;
     }
 }
