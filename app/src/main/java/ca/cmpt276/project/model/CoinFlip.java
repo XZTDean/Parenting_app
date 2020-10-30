@@ -21,7 +21,7 @@ public class CoinFlip {
     private List<CoinFlipStats> FlipList = new ArrayList<>();
 
 
-
+    //flip the coin generating a new set of flipCoinStats with random result.
     public CoinFlipStats flipCoin(String childName, int choice){
         String timedate = java.text.DateFormat.getDateTimeInstance().format(new Date());
         Random rand = new Random();
@@ -29,13 +29,13 @@ public class CoinFlip {
         return new CoinFlipStats(timedate,childName,choice,result);
 
     }
-
+    //add the generated Stats to the list.
     public void addStats(CoinFlipStats c){
         FlipList.add(c);
     }
 
-
-    public String[] getItemInList(){
+    //store all the records in list to a string array which can be displayed in UI later.
+    public String[] StoreInList(){
         String[] tempList = new String[FlipList.size()];
         for(int i = 0; i<FlipList.size();i++){
             tempList[i]= "at "+ FlipList.get(i).getFlipTime()+" "+ FlipList.get(i).getChildName()+
