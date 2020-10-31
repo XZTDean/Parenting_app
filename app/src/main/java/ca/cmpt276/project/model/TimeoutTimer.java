@@ -55,11 +55,10 @@ public class TimeoutTimer {
         if (status != Status.running) {
             throw new IllegalStateException("Timer is not running");
         }
-        long currentTime = System.currentTimeMillis();
-        remainingTime = remainingTime - (currentTime - startTime);
+        updateRemainingTime();
         thread.interrupt();
         status = Status.paused;
-        return getRemainingTime();
+        return remainingTime / 1000;
     }
 
     public void resume() {
@@ -89,7 +88,15 @@ public class TimeoutTimer {
      * @return remaining time in seconds
      */
     public long getRemainingTime() {
+        if (status == Status.running) {
+            updateRemainingTime();
+        }
         return remainingTime / 1000;
+    }
+
+    private void updateRemainingTime() {
+        long currentTime = System.currentTimeMillis();
+        remainingTime = remainingTime - (currentTime - startTime);
     }
 
     private long minToMillisecond(int minute) {
