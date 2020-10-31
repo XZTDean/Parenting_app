@@ -2,7 +2,7 @@ package ca.cmpt276.project.model;
 
 public class TimeoutTimer {
     private Thread thread;
-    private Runnable runnable;
+    private final Runnable runnable;
     /**
      * Countdown time in milliseconds
      */
@@ -12,7 +12,7 @@ public class TimeoutTimer {
     private final int option;
 
     public enum Status {
-        ready, running, paused
+        ready, running, paused, stop
     }
 
     /**
@@ -40,6 +40,7 @@ public class TimeoutTimer {
                     return;
                 }
                 super.run();
+                endTimer();
             }
         };
         thread.start();
@@ -101,5 +102,10 @@ public class TimeoutTimer {
 
     private long minToMillisecond(int minute) {
         return minute * 60 * 1000;
+    }
+
+    private void endTimer() {
+        status = Status.stop;
+        remainingTime = 0;
     }
 }
