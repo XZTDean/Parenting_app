@@ -2,16 +2,17 @@ package ca.cmpt276.project.model;
 
 public class TimeoutTimer {
     private Thread thread;
-    private Runnable runnable;
+    private final Runnable runnable;
     /**
      * Countdown time in milliseconds
      */
     private long remainingTime;
     private long startTime;
     private Status status;
+    private final int option;
 
-    private enum Status {
-        ready, running, paused
+    public enum Status {
+        ready, running, paused, stop
     }
 
     /**
@@ -20,7 +21,8 @@ public class TimeoutTimer {
      * @param time Time set for timer in minutes
      */
     public TimeoutTimer(Runnable runnable, int time) {
-        this.remainingTime = time * 60 * 1000;
+        this.option = time;
+        this.remainingTime = minToMillisecond(time);
         this.runnable = runnable;
         status = Status.ready;
     }
@@ -38,6 +40,7 @@ public class TimeoutTimer {
                     return;
                 }
                 super.run();
+                endTimer();
             }
         };
         thread.start();
@@ -53,8 +56,7 @@ public class TimeoutTimer {
         if (status != Status.running) {
             throw new IllegalStateException("Timer is not running");
         }
-        long currentTime = System.currentTimeMillis();
-        remainingTime = remainingTime - (currentTime - startTime);
+        updateRemainingTime();
         thread.interrupt();
         status = Status.paused;
         return remainingTime / 1000;
@@ -66,5 +68,44 @@ public class TimeoutTimer {
         }
         status = Status.ready;
         start();
+    }
+
+    public void reset() {
+        if (status != Status.paused && status != Status.running) {
+            throw new IllegalStateException("Timer cannot be reset");
+        }
+        if (status == Status.running) {
+            pause();
+        }
+        remainingTime = minToMillisecond(option);
+        status = Status.ready;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    /**
+     * @return remaining time in seconds
+     */
+    public long getRemainingTime() {
+        if (status == Status.running) {
+            updateRemainingTime();
+        }
+        return remainingTime / 1000;
+    }
+
+    private void updateRemainingTime() {
+        long currentTime = System.currentTimeMillis();
+        remainingTime = remainingTime - (currentTime - startTime);
+    }
+
+    private long minToMillisecond(int minute) {
+        return minute * 60 * 1000;
+    }
+
+    private void endTimer() {
+        status = Status.stop;
+        remainingTime = 0;
     }
 }
