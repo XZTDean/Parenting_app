@@ -8,6 +8,8 @@ public class Child {
     private String name;
     private int choiceOfHeadsOrTails;  // 1 - heads and 2 - tails
 
+    private int timesToPick;
+
     public Child(String name) {
         this.name = name;
     }
@@ -26,6 +28,14 @@ public class Child {
 
     public void setChoiceOfHeadsOrTails(int choiceOfHeadsOrTails) {
         this.choiceOfHeadsOrTails = choiceOfHeadsOrTails;
+    }
+
+    public int getTimesToPick() {
+        return timesToPick;
+    }
+    public void updateTimesToPick(){
+        timesToPick++;
+
     }
 }
 
