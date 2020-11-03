@@ -59,4 +59,16 @@ public class ChildManager extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    public String childOffer(){
+        Child selectedChild = Children.get(0);
+        for(Child c:Children){
+            if(c.getTimesToPick() < selectedChild.getTimesToPick()){
+                selectedChild = c;
+            }
+        }
+        selectedChild.updateTimesToPick();
+        return selectedChild.getName();
+    }
+
 }
