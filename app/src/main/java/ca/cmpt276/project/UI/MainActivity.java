@@ -2,8 +2,11 @@ package ca.cmpt276.project.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
         loadData();
         childManager = ChildManager.getInstance();
         childManager.loadData(Children);
+
+        Button timeoutTimer = findViewById(R.id.timeoutTimer);
+        timeoutTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = TimeoutTimerUI.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
 
         /*
         The following is an outline of how the buttons in activity_main could
