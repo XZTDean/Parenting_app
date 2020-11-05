@@ -23,6 +23,9 @@ public class TimeoutTimer {
     public TimeoutTimer(Runnable runnable, int time) {
         this.option = time;
         this.remainingTime = minToMillisecond(time);
+        if(time == 1){
+            this.remainingTime = 0;
+        }
         this.runnable = runnable;
         status = Status.ready;
     }
