@@ -2,6 +2,7 @@ package ca.cmpt276.project.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -23,10 +24,15 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import ca.cmpt276.project.R;
+import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.TimeoutTimer;
 
 public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -48,6 +54,9 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private Vibrator vibrator;
     private Ringtone ringtone;
 
+    private FragmentManager manager = getSupportFragmentManager();
+    private TimeoutFinishedDialog dialog;
+
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -66,6 +75,36 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             });
         }
     };
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(dialog);
+        editor.putString("dialog", json);
+        editor.apply();
+    }
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("dialog", null);
+        Type type = new TypeToken<ArrayList<Child>>() {}.getType();
+        dialog = gson.fromJson(json, type);
+
+        if(dialog == null){
+            dialog = new TimeoutFinishedDialog(
+                    TimeoutTimerUI.this,
+                    vibrator,
+                    ringtone);
+        }
+
+    }
+
+    /*@Override
+    public void onBackPressed() {
+        SavePreferences();
+        super.onBackPressed();
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +130,15 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         resetButton.setVisibility(View.GONE);
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+
+        /*dialog = new TimeoutFinishedDialog(
+                TimeoutTimerUI.this,
+                vibrator,
+                ringtone);*/
+
+        loadData();
 
         startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -135,8 +183,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             vibrator.vibrate(50000);
         }
 
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+
         ringtone.play();
 
         finishNotification();
@@ -145,14 +192,10 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     //@RequiresApi(api = Build.VERSION_CODES.O)
     private void finishNotification(){
 
-        FragmentManager manager = getSupportFragmentManager();
-        TimeoutFinishedDialog dialog = new TimeoutFinishedDialog(
-                TimeoutTimerUI.this,
-                vibrator,
-                ringtone);
+        System.out.println("made it");
+
         dialog.show(manager, "");
-
-
+        //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 
 
 /*
@@ -198,9 +241,13 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private void resetSelected(){
 
-        timeoutTimer.reset();
-        timeoutTimer.start();
-
+        if(timeoutTimer.getStatus() == TimeoutTimer.Status.ready){
+            timeoutTimer.start();
+        }
+        else {
+            timeoutTimer.reset();
+            timeoutTimer.start();
+        }
     }
 
     private void resumeSelected(){
