@@ -9,24 +9,19 @@ import java.util.Random;
 public class CoinFlipStats {
     private String timeDate;
     private String childName;
-    private boolean choice;
-    private boolean result;
+    private int choice;
+    private int result;
     //true stands for Head and false stands for Tail.
 
-    public CoinFlipStats(String childName, boolean choice) {
+
+    public CoinFlipStats(String timeDate, String childName, int choice, int result) {
+        this.timeDate = timeDate;
         this.childName = childName;
         this.choice = choice;
-
+        this.result = result;
     }
 
 
-    public void setFlipTime() {
-        this.timeDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
-    }
-    public void setResult() {
-        Random rand = new Random();
-        this.result = rand.nextBoolean();
-    }
 
     public String getFlipTime() {
         return timeDate;
@@ -36,11 +31,11 @@ public class CoinFlipStats {
         return childName;
     }
 
-    public boolean getChoice() {
+    public int getChoice() {
         return choice;
     }
 
-    public boolean getResult() {
+    public int getResult() {
         return result;
     }
 
