@@ -1,7 +1,10 @@
 package ca.cmpt276.project.model;
 
+import android.content.Intent;
+
 import java.util.List;
 
-public class CoinFlip {
+import ca.cmpt276.project.UI.MainActivity;
 
+public class CoinFlip {
 }

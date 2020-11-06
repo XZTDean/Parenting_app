@@ -16,5 +16,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="x">X</string>
     <string name="make_your_choice">Make Your Choice</string>
+    <string name="title_activity_tttest">tttest</string>
 
 </resources>
