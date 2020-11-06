@@ -1,17 +1,24 @@
 package ca.cmpt276.project.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.CoinFlip;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,7 @@ public class MainActivity extends Activity {
         coinFlip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = FlipCoinScreen.makeLaunchIntent(MainActivity.this);
+                Intent intent = CoinFlipScreen.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
@@ -47,4 +54,6 @@ public class MainActivity extends Activity {
 */
 
     }
+
+
 }

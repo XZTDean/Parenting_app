@@ -17,5 +17,6 @@
     <string name="x">X</string>
     <string name="make_your_choice">Make Your Choice</string>
     <string name="title_activity_tttest">tttest</string>
+    <string name="title_activity_coin_flip_screen">CoinFlipScreen</string>
 
 </resources>
