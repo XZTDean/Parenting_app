@@ -11,11 +11,14 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -24,10 +27,10 @@ import android.widget.TextView;
 
 import ca.cmpt276.project.R;
 
+import static java.lang.Thread.sleep;
+
 public class CoinFlipScreen extends AppCompatActivity {
 
-    PopupWindow popUp;
-    boolean click;
 
     public static Intent makeLaunchIntent(Context context) {
         Intent intent = new Intent(context, CoinFlipScreen.class);
@@ -41,24 +44,47 @@ public class CoinFlipScreen extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        View view = null;
-        showPopUp(view);
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPopUp(view);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            }
+        });
+        fab.setVisibility(View.GONE);
+
+        //fab.performClick();
+
+        int noOfSecond = 1;
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                fab.performClick();
+            }
+        }, noOfSecond * 500);
+
+
+        Button flipCoin = (Button) findViewById(R.id.buttonFlipCoin);
+        flipCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                coinTossAnimation();
             }
         });
 
+    }
 
+    private void coinTossAnimation() {
+        View heads = findViewById(R.id.imageViewCoin);
+        View tails = findViewById(R.id.imageViewCoin);
+
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_heads);
+
+        heads.startAnimation(animation);
     }
 
     private void showPopUp(View view) {
-
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -67,11 +93,10 @@ public class CoinFlipScreen extends AppCompatActivity {
         // create the popup window
         int width = RelativeLayout.LayoutParams.WRAP_CONTENT;
         int height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        boolean allowOutsideTouchExit = true; // lets taps outside the popup not dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, allowOutsideTouchExit);
 
         // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
 

@@ -8,7 +8,8 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/cream"
+        android:background="@color/colorPrimaryDark"
+        android:alpha="0.9"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="5dp">
@@ -21,7 +22,7 @@
             android:background="@drawable/circle_background"
             android:gravity="center"
             android:text="@string/x"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -42,7 +43,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
                 android:text="@string/make_your_choice"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -74,13 +75,14 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/button_style"
                     android:id="@+id/buttonHeads"
+                    android:alpha="0.9"
                     android:layout_width="145dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Heads"
                     android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -95,13 +97,14 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/button_style"
                     android:id="@+id/buttonTails"
+                    android:alpha="0.9"
                     android:layout_width="145dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Tails"
                     android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 

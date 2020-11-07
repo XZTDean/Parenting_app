@@ -12,7 +12,7 @@
         <activity
             android:name=".UI.CoinFlipScreen"
             android:label="@string/title_activity_coin_flip_screen"
-            android:theme="@style/Theme.Project.NoActionBar"></activity>
+            android:theme="@style/Theme.Project.NoActionBar" />
         <activity android:name=".UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
