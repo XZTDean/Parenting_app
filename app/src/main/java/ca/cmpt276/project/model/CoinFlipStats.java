@@ -40,11 +40,16 @@ public class CoinFlipStats {
     }
 
     //flip the coin generating a new set of flipCoinStats with random result.
-    public CoinFlipStats flipCoin(String childName, int choice){
+    public void flipCoin(String childname, int choice1){
         String timedate = java.text.DateFormat.getDateTimeInstance().format(new Date());
         Random rand = new Random();
-        int result = rand.nextInt(1);
-        return new CoinFlipStats(timedate,childName,choice,result);
+        int result1 = rand.nextInt(1)+1;
+        timeDate = timedate;
+        childName = childname;
+        choice = choice1;
+        result = result1;
+
+
 
     }
 

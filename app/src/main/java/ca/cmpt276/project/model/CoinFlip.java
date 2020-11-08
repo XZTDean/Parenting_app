@@ -33,9 +33,7 @@ public class CoinFlip {
         for(int i = 0; i<FlipList.size();i++){
             tempList[i]= "at "+ FlipList.get(i).getFlipTime()+" "+ FlipList.get(i).getChildName()+
                     " gets to pick "+FlipList.get(i).getChoice()+" and the result turns out to be "+FlipList.get(i).getResult();
-            if(FlipList.get(i).getChoice() == FlipList.get(i).getResult()){
-                //To do: Add check mark icon if choice == result.
-            }
+
 
 
 
