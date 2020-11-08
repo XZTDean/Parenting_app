@@ -23,9 +23,6 @@ public class TimeoutTimer {
     public TimeoutTimer(Runnable runnable, int time) {
         this.option = time;
         this.remainingTime = minToMillisecond(time);
-        if(time == 1){
-            this.remainingTime = 0;
-        }
         this.runnable = runnable;
         status = Status.ready;
     }
@@ -56,6 +53,7 @@ public class TimeoutTimer {
      * @return remaining time in seconds
      */
     public long pause() {
+        System.out.println("paused");
         if (status != Status.running) {
             throw new IllegalStateException("Timer is not running");
         }
@@ -107,7 +105,7 @@ public class TimeoutTimer {
         return minute * 60 * 1000;
     }
 
-    private void endTimer() {
+    public void endTimer() {
         status = Status.stop;
         remainingTime = 0;
     }

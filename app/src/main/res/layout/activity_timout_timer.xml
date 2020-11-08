@@ -18,22 +18,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.199" />
 
-    <!--<TextView
-        android:id="@+id/duration"
-        android:layout_width="147dp"
-        android:layout_height="68dp"
-        android:background="@drawable/text_box"
-        android:gravity="center"
-        android:text="@string/duration"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.071" />-->
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/customDuration"
         android:layout_width="409dp"
@@ -48,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:visibility="gone"
             android:hint="@string/durationHint" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,6 +54,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="233dp"
         android:text="@string/pauseButton"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -81,6 +67,7 @@
         android:layout_marginTop="233dp"
         android:layout_marginEnd="48dp"
         android:text="@string/resetButton"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -93,6 +80,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="233dp"
         android:text="@string/resumeButton"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

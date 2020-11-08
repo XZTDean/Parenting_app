@@ -1,6 +1,5 @@
 package ca.cmpt276.project.UI;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -51,5 +50,10 @@ public class TimeoutFinishedDialog extends AppCompatDialogFragment {
                 .setView(v)
                 .setPositiveButton(android.R.string.ok, listener)
                 .create();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
     }
 }

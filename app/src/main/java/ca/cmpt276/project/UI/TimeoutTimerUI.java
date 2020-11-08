@@ -2,7 +2,6 @@ package ca.cmpt276.project.UI;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -13,26 +12,20 @@ import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.TimeoutTimer;
 
 public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -76,35 +69,13 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         }
     };
 
-    private void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(dialog);
-        editor.putString("dialog", json);
-        editor.apply();
-    }
-    private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("dialog", null);
-        Type type = new TypeToken<ArrayList<Child>>() {}.getType();
-        dialog = gson.fromJson(json, type);
-
-        if(dialog == null){
-            dialog = new TimeoutFinishedDialog(
-                    TimeoutTimerUI.this,
-                    vibrator,
-                    ringtone);
-        }
-
-    }
-
-    /*@Override
+    @Override
     public void onBackPressed() {
-        SavePreferences();
+        if(timeoutTimer != null){
+            timeoutTimer.endTimer();
+        }
         super.onBackPressed();
-    }*/
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,26 +90,21 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         duration.setOnItemSelectedListener(this);
 
-        customDuration.setVisibility(View.GONE);
+        initializeButtons();
 
+    }
+
+    private void initializeButtons(){
         pauseButton = (Button) findViewById(R.id.pauseButton);
         resumeButton = (Button) findViewById(R.id.resumeButton);
         resetButton = (Button) findViewById(R.id.resetButton);
 
-        pauseButton.setVisibility(View.GONE);
-        resumeButton.setVisibility(View.GONE);
-        resetButton.setVisibility(View.GONE);
-
+        //Adapted from: https://stackoverflow.com/questions/13950338/how-to-make-an-android-device-vibrate
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
-        /*dialog = new TimeoutFinishedDialog(
-                TimeoutTimerUI.this,
-                vibrator,
-                ringtone);*/
 
-        loadData();
 
         startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -183,52 +149,26 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             vibrator.vibrate(50000);
         }
 
-
         ringtone.play();
-
         finishNotification();
     }
 
-    //@RequiresApi(api = Build.VERSION_CODES.O)
     private void finishNotification(){
 
-        System.out.println("made it");
+        dialog = new TimeoutFinishedDialog(
+                TimeoutTimerUI.this,
+                vibrator,
+                ringtone);
 
-        dialog.show(manager, "");
-        //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        try {
+            System.out.println("made it");
+            dialog.show(manager, "");
 
+        } catch (IllegalStateException ISE){
+            ringtone.stop();
+            vibrator.cancel();
+        }
 
-/*
-        // Sets an ID for the notification, so it can be updated.
-        int notifyID = 1;
-        String CHANNEL_ID = "timeOutChannel";// The id of the channel.
-        CharSequence name = getString(R.string.channel_name);// The user-visible name of the channel.
-        int importance = NotificationManager.IMPORTANCE_HIGH;
-        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-// Create a notification and set the notification channel.
-        Notification notification = new Notification.Builder(TimeoutTimerUI.this)
-                .setContentTitle("New Message")
-                .setContentText("You've received new messages")
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setChannelId(CHANNEL_ID)
-                .build();
-
-        // Builds your notification
-        /*NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-
-                .setContentTitle("Timeout is over")
-                .setContentText("Press OK to continue")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);*/
-
-        // Creates the intent needed to show the notification
-        /*Intent notificationIntent = new Intent(this, TimeoutTimerUI.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        notification.setContentIntent(contentIntent);
-
-        // Add as notification
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());*/
     }
 
     private void pauseSelected(){
@@ -252,6 +192,9 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private void resumeSelected(){
 
+        if(timeoutTimer.getStatus() != TimeoutTimer.Status.paused){
+            timeoutTimer.pause();
+        }
         resumeButton.setVisibility(View.GONE);
         pauseButton.setVisibility(View.VISIBLE);
         timeoutTimer.resume();
@@ -308,13 +251,25 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         @Override
         public void afterTextChanged(Editable s) {
             String input = Objects.requireNonNull(customDuration.getText()).toString();
+
+            if(timeoutTimer != null){
+                System.out.println("not null");
+                return;
+            }
+
             try {
                 int inputInt = Integer.parseInt(input);
                 if (inputInt >= 0) {
                     timeoutTimer = new TimeoutTimer(runnable, inputInt);
                 }
             } catch (NumberFormatException nfe) {
-                return;
+                Context context = getApplicationContext();
+                CharSequence text = "Invalid input. Please try again.";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
             }
 
         }
