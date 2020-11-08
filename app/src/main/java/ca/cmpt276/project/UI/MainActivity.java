@@ -46,15 +46,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        */
         Button coinFlip = findViewById(R.id.coinFlip);
         coinFlip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = flipHistory.makeIntent(MainActivity.this);
+                Intent intent =FlipCoinScreen.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
-        });
+        });/*
 
         Button timeoutTimer = findViewById(R.id.timeoutTimer);
         timeoutTimer.setOnClickListener(new View.OnClickListener() {

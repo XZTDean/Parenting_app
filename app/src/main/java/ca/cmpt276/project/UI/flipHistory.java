@@ -23,7 +23,7 @@ public class flipHistory extends AppCompatActivity {
 
         //Add a case to Test if populateListView works. Will delete later.
         CoinFlipStats flip1 = new CoinFlipStats("timedate","null",0,0);
-        flip1.flipCoin("Tom",1);
+        flip1.flipCoin("Tom",2);
         CoinFlip.getInstance().addStats(flip1);
 
 

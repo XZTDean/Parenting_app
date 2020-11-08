@@ -21,7 +21,6 @@ public class CoinFlip {
     private List<CoinFlipStats> FlipList = new ArrayList<>();
 
 
-
     //add the generated Stats to the list.
     public void addStats(CoinFlipStats c){
         FlipList.add(c);
@@ -32,14 +31,32 @@ public class CoinFlip {
         String[] tempList = new String[FlipList.size()];
         for(int i = 0; i<FlipList.size();i++){
             tempList[i]= "at "+ FlipList.get(i).getFlipTime()+" "+ FlipList.get(i).getChildName()+
-                    " gets to pick "+FlipList.get(i).getChoice()+" and the result turns out to be "+FlipList.get(i).getResult();
-
-
+                    " gets to pick "+interpretInt(FlipList.get(i).getChoice())+
+                    " and the result turns out to be "+interpretInt(FlipList.get(i).getResult());
+            if(FlipList.get(i).getChoice() == FlipList.get(i).getResult()){
+                tempList[i] = tempList[i]+" wining!";
+            }
+            else{
+                tempList[i]= tempList[i]+" losing!";
+            }
 
 
         }
         return tempList;
 
+    }
+
+
+    /*interpret the integers in choice and result. If the integer is 1, it presents Head.
+    otherwise it represents tail.
+     */
+    public String interpretInt(int choiceOrresult){
+        if(choiceOrresult ==1){
+            return "head";
+        }
+        else{
+            return "tail";
+        }
     }
 
     public Iterator<CoinFlipStats> iterator(){
