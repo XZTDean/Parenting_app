@@ -1,27 +1,18 @@
 package ca.cmpt276.project.model;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.view.View;
-import android.widget.AdapterView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Iterator;
 
-import ca.cmpt276.project.model.Child;
+public class ChildManager implements Iterable<Child> {
 
-public class ChildManager extends AppCompatActivity implements AdapterView.OnItemSelectedListener  {
-
-    private ArrayList<Child> Children;
+    private ArrayList<Child> children;
 
     /*
      Singleton Support
      */
     private static ChildManager instance;
     private ChildManager(){
-        Children = new ArrayList<Child>();
+        children = new ArrayList<Child>();
     }
     public static ChildManager getInstance(){
         if (instance == null){
@@ -30,39 +21,33 @@ public class ChildManager extends AppCompatActivity implements AdapterView.OnIte
         return instance;
     }
 
-    public void addChild(Child child){
-        Children.add(child);
+    public int size() {
+        return children.size();
+    }
+
+    public void add(Child child){
+        children.add(child);
     }
 
     public void editChildName(int index, String name){ //Maybe just editChild
-        Children.get(index).setName(name);
+        children.get(index).setName(name);
     }
 
-    public void deleteChild(int index){
-        Children.remove(index);
+    public void delete(int index){
+        children.remove(index);
     }
 
-    public Child getChild(int index){
-        return Children.get(index);
+    public Child get(int index){
+        return children.get(index);
     }
 
     public void loadData(ArrayList<Child> Children){
-        this.Children = Children;
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+        this.children = Children;
     }
 
     public String childOffer(){
-        Child selectedChild = Children.get(0);
-        for(Child c:Children){
+        Child selectedChild = children.get(0);
+        for(Child c: children){
             if(c.getTimesToPick() < selectedChild.getTimesToPick()){
                 selectedChild = c;
             }
@@ -71,4 +56,8 @@ public class ChildManager extends AppCompatActivity implements AdapterView.OnIte
         return selectedChild.getName();
     }
 
+    @Override
+    public Iterator<Child> iterator() {
+        return children.iterator();
+    }
 }
