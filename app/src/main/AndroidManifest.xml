@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project">
+        <activity android:name=".UI.flipHistory"></activity>
         <activity
             android:name=".UI.FlipCoinScreen"
             android:label="@string/title_activity_flip_coin_screen"
-            android:theme="@style/Theme.Project.NoActionBar"></activity>
+            android:theme="@style/Theme.Project.NoActionBar" />
         <activity android:name=".UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
