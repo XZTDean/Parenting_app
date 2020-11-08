@@ -3,6 +3,7 @@ package ca.cmpt276.project.UI;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -58,12 +59,13 @@ public class ChildManagerActivity extends AppCompatActivity {
             String firstLetter = name.toUpperCase().substring(0, 1);
             String colorName = "icon_" + position % 5;
             int colorId = getResources().getIdentifier(colorName, "color", getPackageName());
+            int color = ContextCompat.getColor(ChildManagerActivity.this, colorId);
 
             TextView nameTextView = itemView.findViewById(R.id.child_name);
             nameTextView.setText(name);
             TextView iconTextView = itemView.findViewById(R.id.name_icon);
             iconTextView.setText(firstLetter);
-            iconTextView.setBackgroundTintList(ColorStateList.valueOf(colorId));
+            iconTextView.setBackgroundTintList(ColorStateList.valueOf(color));
 
             return itemView;
         }
