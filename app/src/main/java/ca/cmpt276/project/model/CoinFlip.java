@@ -9,6 +9,7 @@ import java.util.Random;
 public class CoinFlip {
 
     private static CoinFlip instance;
+    private String choiceMade;
 
     public static CoinFlip getInstance() {
         if (instance == null){

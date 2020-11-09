@@ -14,7 +14,7 @@
         android:background="@drawable/ic_circle_bg"
         android:backgroundTint="#2196F3"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/_0"
         android:textColor="@color/white"
         android:textSize="24sp" />
 
@@ -29,8 +29,10 @@
         android:layout_marginEnd="8dp"
         android:layout_toEndOf="@+id/name_icon"
         android:gravity="center_vertical"
-        android:text="name"
-        android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:text="@string/name"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
 
 </RelativeLayout>

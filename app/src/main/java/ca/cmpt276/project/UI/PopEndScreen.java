@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class PopEndScreen extends Activity {
 
         setupTextAndImage(result);
         setupBackgroundWinOrLose(winOrLose);
+        setupExitButton();
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -37,6 +39,18 @@ public class PopEndScreen extends Activity {
         int height = dm.heightPixels;
 
         getWindow().setLayout((int)(width * 0.8) , (int)(height * 0.8));
+    }
+
+    private void setupExitButton() {
+        Button exit = (Button) findViewById(R.id.buttonExit);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PopEndScreen.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 
@@ -56,11 +70,11 @@ public class PopEndScreen extends Activity {
         ImageView imageResult = (ImageView) findViewById(R.id.imageViewResult);
 
         if(result == 1){
-            textResult.setText("HEADS");
+            textResult.setText(R.string.heads);
             imageResult.setImageResource(R.drawable.heads__1);
         }
         else{
-            textResult.setText("TAILS");
+            textResult.setText(R.string.tails);
             imageResult.setImageResource(R.drawable.tails__1);
         }
     }

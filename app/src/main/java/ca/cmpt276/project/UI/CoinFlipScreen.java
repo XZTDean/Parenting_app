@@ -2,6 +2,7 @@ package ca.cmpt276.project.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,7 +46,7 @@ public class CoinFlipScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coin_flip_screen);
+        setContentView(R.layout.activity_flip_coin_screen);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -57,15 +58,14 @@ public class CoinFlipScreen extends AppCompatActivity {
 
         coinFlip = CoinFlip.getInstance();
         childList = ChildManager.getInstance();
-        childPlaying = new Child("JAson");
-        childList.addChild(childPlaying);
 
         if(childList.sizeOfList() != 0){
-            childPlaying = new Child("Josh");
+            childPlaying = childList.childOffer();
             choiceScreenShown = true;
             setupChoiceScreen();
         }
         setupFlipButton();
+
     }
 
 
@@ -89,15 +89,22 @@ public class CoinFlipScreen extends AppCompatActivity {
     }
 
     private void setupFlipButton() {
+
         Button flipCoin = (Button) findViewById(R.id.buttonFlipCoin);
         flipCoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resetResultText();
                 resetCoinFaces();
+                coinTossSound();
                 coinTossAnimation();
             }
         });
+    }
+
+    private void coinTossSound() {
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.coin_toss_sound);
+        mp.start();
     }
 
     private void resetCoinFaces() {
@@ -128,6 +135,7 @@ public class CoinFlipScreen extends AppCompatActivity {
         heads.startAnimation(animation);
         tails.startAnimation(animation1);
 
+        coinTossSound();
 
         if(choiceScreenShown == true){
             resultStats = coinFlip.flipCoin(childPlaying);
@@ -193,6 +201,9 @@ public class CoinFlipScreen extends AppCompatActivity {
         // create the popup window
         int width = RelativeLayout.LayoutParams.WRAP_CONTENT;
         int height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+
+        TextView childName = (TextView) popupView.findViewById(R.id.textChildName);
+        childName.setText(childPlaying.getName());
 
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, false);
 

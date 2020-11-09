@@ -6,21 +6,8 @@
     android:layout_height="match_parent">
 
 
-    <Button
-        android:id="@+id/buttonExit"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:layout_below="@+id/imageViewResult"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="137dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="143dp"
-        android:layout_marginBottom="325dp"
-        android:text="Exit" />
-
     <ImageView
+        android:contentDescription="@string/heads"
         android:id="@+id/imageViewResult"
         android:layout_width="184dp"
         android:layout_height="152dp"
@@ -42,10 +29,24 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="0dp"
-        android:text="Heads"
+        android:text="@string/heads"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonExit"
+        android:layout_width="282dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewResult"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="153dp"
+        android:layout_marginEnd="65dp"
+        android:text="@string/return_to_main_menu"
+        android:textColor="@color/white" />
 
 
 </RelativeLayout>

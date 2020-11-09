@@ -1,10 +1,12 @@
 package ca.cmpt276.project.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -30,6 +32,7 @@ public class flipHistory extends AppCompatActivity {
 
         populateListView();
     }
+
 
     private void populateListView() {
         String[] history = coinFlipManager.StoreInList();

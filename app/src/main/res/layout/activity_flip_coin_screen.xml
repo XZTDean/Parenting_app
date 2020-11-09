@@ -20,7 +20,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_coin_flip_screen" />
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tom_gif_1"
+        />
+
+    <include layout="@layout/content_flip_coin_screen" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

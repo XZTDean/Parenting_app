@@ -30,7 +30,7 @@ public class ChildManager implements Iterable<Child> {
 
     public int sizeOfList(){
         int count = 0;
-        for(Child c: Children){
+        for(Child c: children){
             count++;
         }
         return count;
@@ -38,7 +38,8 @@ public class ChildManager implements Iterable<Child> {
 
 
     public void addChild(Child child){
-        Children.add(child);
+        children.add(child);
+    }
     public int size() {
         return children.size();
     }
@@ -59,11 +60,11 @@ public class ChildManager implements Iterable<Child> {
         return children.get(index);
     }
 
-    public void loadData(ArrayList<Child> Children){
-        this.children = Children;
+    public void loadData(ArrayList<Child> children){
+        this.children = children;
     }
 
-    public String childOffer(){
+    public Child childOffer(){
         Child selectedChild = children.get(0);
         for(Child c: children){
             if(c.getTimesToPick() < selectedChild.getTimesToPick()){
@@ -71,7 +72,7 @@ public class ChildManager implements Iterable<Child> {
             }
         }
         selectedChild.updateTimesToPick();
-        return selectedChild.getName();
+        return selectedChild;
     }
 
     @Override
