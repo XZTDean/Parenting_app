@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import ca.cmpt276.project.R;
+
 public class CoinFlip {
 
     private static CoinFlip instance;
@@ -30,7 +32,10 @@ public class CoinFlip {
 
         String timedDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
         int result = (Math.random()<=0.5)? 1 : 2;
-        CoinFlipStats resultStats = new CoinFlipStats(timedDate, childPlaying.getName(), childPlaying.getChoiceOfHeadsOrTails() ,result);
+        int icon = (result == childPlaying.getChoiceOfHeadsOrTails())? R.drawable.check_icon : R.drawable.cross_icon;
+
+        CoinFlipStats resultStats = new CoinFlipStats(timedDate, childPlaying.getName(),
+                childPlaying.getChoiceOfHeadsOrTails() ,result, icon);
         addStats(resultStats);
 
         return resultStats;

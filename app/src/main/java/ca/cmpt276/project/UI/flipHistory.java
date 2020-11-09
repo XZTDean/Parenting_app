@@ -29,18 +29,11 @@ public class flipHistory extends AppCompatActivity {
     private CoinFlip coinFlipManager = CoinFlip.getInstance();
     List<CoinFlipStats> myList = coinFlipManager.getList();
 
-    //Add a case to Test if populateListView works. Will delete later.
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_history);
-
-
-
-
 
         populateListView();
     }
@@ -85,9 +78,6 @@ public class flipHistory extends AppCompatActivity {
     }
 
 
-
-
-
     public static Intent makeIntent(Context context) {
         return new Intent(context, flipHistory.class);
     }
@@ -100,10 +90,5 @@ public class flipHistory extends AppCompatActivity {
             return "tail";
         }
     }
-
-
-
-
-
 
 }

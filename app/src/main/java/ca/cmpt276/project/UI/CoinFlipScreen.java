@@ -59,7 +59,7 @@ public class CoinFlipScreen extends AppCompatActivity {
         coinFlip = CoinFlip.getInstance();
         childList = ChildManager.getInstance();
 
-        if(childList.sizeOfList() != 0){
+        if(childList.size() != 0){
             childPlaying = childList.childOffer();
             choiceScreenShown = true;
             setupChoiceScreen();
