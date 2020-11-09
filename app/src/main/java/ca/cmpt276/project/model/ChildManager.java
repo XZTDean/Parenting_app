@@ -1,12 +1,17 @@
 package ca.cmpt276.project.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class ChildManager implements Iterable<Child> {
 
-    private ArrayList<Child> children;
-
+    private List<Child> children;
+    public final String CHILD_KEY = "ChildList";
     /*
      Singleton Support
      */
@@ -41,8 +46,15 @@ public class ChildManager implements Iterable<Child> {
         return children.get(index);
     }
 
-    public void loadData(ArrayList<Child> Children){
-        this.children = Children;
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(children);
+    }
+
+    public void loadFromJson(String json) {
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<Child>>(){}.getType();
+        children = gson.fromJson(json, collectionType);
     }
 
     public String childOffer(){
