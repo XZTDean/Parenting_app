@@ -212,8 +212,6 @@ public class FlipCoinScreen extends AppCompatActivity {
         });
     }
 
-
-
     public static Intent makeIntent(Context context) {
         return new Intent(context, FlipCoinScreen.class);
     }

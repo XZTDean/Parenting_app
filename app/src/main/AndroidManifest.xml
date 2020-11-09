@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.cmpt276.project">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,6 +32,12 @@
             android:parentActivityName=".UI.MainActivity"
             android:theme="@style/AppTheme.CustomTheme">
         </activity>
+        <service
+            android:name=".UI.TimerService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name=".UI.TimeoutTimerUI" />
     </application>
 
 </manifest>

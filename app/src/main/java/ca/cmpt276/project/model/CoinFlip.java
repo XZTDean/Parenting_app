@@ -20,6 +20,9 @@ public class CoinFlip {
 
 
     private List<CoinFlipStats> FlipList = new ArrayList<>();
+    public List<CoinFlipStats> getList(){
+        return FlipList;
+    }
 
 
     //flip the coin generating a new set of flipCoinStats with random result.

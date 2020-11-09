@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
@@ -90,6 +91,18 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         });
     }
 
+    private void saveToDisk() {
+        SharedPreferences prefs = this.getSharedPreferences("AppPreference", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(manager.CHILD_KEY, manager.toJson());
+        editor.apply();
+    }
+
+    private void updateData() {
+        populateListView();
+        saveToDisk();
+    }
+
     @Override
     public void onDialogPositiveClick(int pos, String name) {
         if (pos != -1) {
@@ -97,13 +110,13 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         } else {
             manager.add(new Child(name));
         }
-        populateListView();
+        updateData();
     }
 
     @Override
     public void onDialogDelete(int pos) {
         manager.delete(pos);
-        populateListView();
+        updateData();
     }
 
     private class ChildArrayAdapter extends ArrayAdapter<String> {

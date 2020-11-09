@@ -25,7 +25,7 @@
     <string name="config_children">Config Children</string>
     <string name="child_page_title">Children:</string>
     <string name="no_child">There is no child now</string>
-    <string name="add_child_instruction">Tap +to add one</string>
+    <string name="add_child_instruction">Tap \"+\" to add one</string>
     <string name="coin_fliping_history">Coin Flipping History</string>
     <string name="history">History</string>
     <string name="heads">HEADS</string>
@@ -35,5 +35,32 @@
     <string name="name">name</string>
     <string name="flip_coin">Flip Coin</string>
     <string name="tails">TAILS</string>
+
+    <string name="duration">Please select a duration</string>
+    <string name="durationHint">Enter Custom Timeout Duration (in minutes)</string>
+    <string name ="notificationHeader">The timeout has finished</string>
+    <string name="startButton">Start Timeout</string>
+    <string name="pauseButton">Pause</string>
+    <string name="resumeButton">Resume</string>
+    <string name="resetButton">Reset</string>
+
+    <string name="timer">Timer</string>
+    <string name="timer_notification_desc">The notification for timer. When timer is up, it will send a notification.</string>
+    <string name="timer_notification_text">Your timer is up</string>
+    <string name="hist_1">hist1</string>
+    <string name="result">RESULT</string>
+    <string name="todo">TODO</string>
+
+
+    <string-array name="durationSpinner">
+        <item>Select Timeout Duration</item>
+        <item>1 minute</item>
+        <item>2 minutes</item>
+        <item>3 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>Custom</item>
+    </string-array>
+
 
 </resources>

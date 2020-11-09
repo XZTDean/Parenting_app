@@ -1,19 +1,17 @@
 package ca.cmpt276.project.model;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.view.View;
-import android.widget.AdapterView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class ChildManager implements Iterable<Child> {
 
-    private ArrayList<Child> children;
-
+    private List<Child> children;
+    public final String CHILD_KEY = "ChildList";
     /*
      Singleton Support
      */
@@ -28,18 +26,6 @@ public class ChildManager implements Iterable<Child> {
         return instance;
     }
 
-    public int sizeOfList(){
-        int count = 0;
-        for(Child c: children){
-            count++;
-        }
-        return count;
-    }
-
-
-    public void addChild(Child child){
-        children.add(child);
-    }
     public int size() {
         return children.size();
     }
@@ -60,8 +46,15 @@ public class ChildManager implements Iterable<Child> {
         return children.get(index);
     }
 
-    public void loadData(ArrayList<Child> children){
-        this.children = children;
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(children);
+    }
+
+    public void loadFromJson(String json) {
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<Child>>(){}.getType();
+        children = gson.fromJson(json, collectionType);
     }
 
     public Child childOffer(){
