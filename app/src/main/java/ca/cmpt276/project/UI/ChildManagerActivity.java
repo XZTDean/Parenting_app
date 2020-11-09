@@ -58,6 +58,7 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         ArrayAdapter<String> adapter = new ChildArrayAdapter(names);
         ListView listView = findViewById(R.id.children_list);
         listView.setAdapter(adapter);
+        listView.setEmptyView(findViewById(R.id.no_child_layout));
     }
 
     private void clickList() {

@@ -18,5 +18,8 @@
     <string name="cancel">Cancel</string>
     <string name="delete">DELETE</string>
     <string name="config_children">Config Children</string>
+    <string name="child_page_title">Children:</string>
+    <string name="no_child">There is no child now</string>
+    <string name="add_child_instruction">Tab +to add one</string>
 
 </resources>
