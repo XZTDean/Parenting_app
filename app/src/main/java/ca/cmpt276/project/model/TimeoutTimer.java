@@ -1,7 +1,7 @@
 package ca.cmpt276.project.model;
 
 public class TimeoutTimer {
-    private TimeoutTimer instance;
+    private static TimeoutTimer instance;
 
     private Thread thread;
     private final Runnable runnable;
@@ -17,7 +17,7 @@ public class TimeoutTimer {
         ready, running, paused, stop
     }
 
-    public boolean hasInstance() {
+    public static boolean hasInstance() {
         return instance != null;
     }
 
@@ -26,7 +26,7 @@ public class TimeoutTimer {
      * @param runnable Object to run after timer
      * @param time Time set for timer in minutes
      */
-    public TimeoutTimer getNewInstance(Runnable runnable, int time) {
+    public static TimeoutTimer getNewInstance(Runnable runnable, int time) {
         if (hasInstance()) {
             throw new IllegalStateException("A timer exist");
         }
@@ -34,11 +34,19 @@ public class TimeoutTimer {
         return instance;
     }
 
-    public TimeoutTimer getExistInstance() {
+    public static TimeoutTimer getExistInstance() {
         if (!hasInstance()){
             throw new IllegalStateException("Currently no timer");
         }
-        return instance;
+        TimeoutTimer tmp = instance;
+        if (instance.status == Status.stop) {
+            deleteInstance();
+        }
+        return tmp;
+    }
+
+    public static void deleteInstance() {
+        instance = null;
     }
 
     /**
