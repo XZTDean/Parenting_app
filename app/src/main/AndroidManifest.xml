@@ -11,6 +11,7 @@
         android:theme="@style/Theme.Project">
         <activity
             android:name=".UI.ChildManagerActivity"
+            android:label="@string/config_children"
             android:theme="@style/Theme.Project.NoActionBar" />
         <activity
             android:name=".UI.FlipCoinScreen"

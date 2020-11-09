@@ -16,5 +16,7 @@
     <string name="edit_child">Edit Child</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="delete">DELETE</string>
+    <string name="config_children">Config Children</string>
 
 </resources>

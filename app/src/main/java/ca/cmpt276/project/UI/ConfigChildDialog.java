@@ -39,7 +39,8 @@ public class ConfigChildDialog extends DialogFragment {
         }
         builder.setView(view)
                 .setPositiveButton(R.string.ok, (dialog, which) -> positiveClick())
-                .setNegativeButton(R.string.cancel, (dialog, which) -> {});
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {})
+                .setNeutralButton(R.string.delete, (dialog, which) -> listener.onDialogDelete(pos));
         return builder.create();
     }
 
@@ -78,5 +79,6 @@ public class ConfigChildDialog extends DialogFragment {
 
     public interface NoticeDialogListener {
         public void onDialogPositiveClick(int pos, String name);
+        public void onDialogDelete(int pos);
     }
 }

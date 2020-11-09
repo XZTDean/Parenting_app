@@ -93,6 +93,12 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         populateListView();
     }
 
+    @Override
+    public void onDialogDelete(int pos) {
+        manager.delete(pos);
+        populateListView();
+    }
+
     private class ChildArrayAdapter extends ArrayAdapter<String> {
         public ChildArrayAdapter(List<String> strings) {
             super(ChildManagerActivity.this, R.layout.item_view, strings);
