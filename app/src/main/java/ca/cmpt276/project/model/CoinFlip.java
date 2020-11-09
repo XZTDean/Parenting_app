@@ -19,6 +19,9 @@ public class CoinFlip {
 
 
     private List<CoinFlipStats> FlipList = new ArrayList<>();
+    public List<CoinFlipStats> getList(){
+        return FlipList;
+    }
 
 
     //add the generated Stats to the list.
