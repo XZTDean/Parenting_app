@@ -49,4 +49,29 @@
 
 
 
+    <string name="duration">Please select a duration</string>
+    <string name="durationHint">Enter Custom Timeout Duration (in minutes)</string>
+    <string name ="notificationHeader">The timeout has finished</string>
+    <string name="startButton">Start Timeout</string>
+    <string name="pauseButton">Pause</string>
+    <string name="resumeButton">Resume</string>
+    <string name="resetButton">Reset</string>
+
+    <string name="timer">Timer</string>
+    <string name="timer_notification_desc">The notification for timer. When timer is up, it will send a notification.</string>
+    <string name="timer_notification_text">Your timer is up</string>
+
+
+    <string-array name="durationSpinner">
+        <item>Select Timeout Duration</item>
+        <item>1 minute</item>
+        <item>2 minutes</item>
+        <item>3 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>Custom</item>
+    </string-array>
+
+
+
 </resources>
