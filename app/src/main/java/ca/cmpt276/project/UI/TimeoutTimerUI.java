@@ -90,11 +90,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
-                    startButton.setVisibility(View.VISIBLE);
-                    pauseButton.setVisibility(View.GONE);
-                    resetButton.setVisibility(View.GONE);
-                    timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
+                    setButtonInReady();
 
                     if(activityVisible) {
                         onFinish();
@@ -123,9 +119,11 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         initializeButtons();
 
+        restoreTimer();
     }
 
     private void initializeButtons(){
+        startButton = (Button) findViewById(R.id.startButton);
         pauseButton = (Button) findViewById(R.id.pauseButton);
         resumeButton = (Button) findViewById(R.id.resumeButton);
         resetButton = (Button) findViewById(R.id.resetButton);
@@ -135,37 +133,32 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
-        startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(timeoutTimer != null) {
-                    timeoutTimer.start();
-                    startButton.setVisibility(View.GONE);
-                    pauseButton.setVisibility(View.VISIBLE);
-                    resetButton.setVisibility(View.VISIBLE);
+                timeoutTimer = TimeoutTimer.getNewInstance(runnable, chosenDuration);
+                timeoutTimer.start();
+                setButtonInRunning();
+            }
+        });
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pauseSelected();
+            }
+        });
 
-                    pauseButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            pauseSelected();
-                        }
-                    });
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetSelected();
+            }
+        });
 
-                    resetButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            resetSelected();
-                        }
-                    });
-
-                    resumeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            resumeSelected();
-                        }
-                    });
-                }
+        resumeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resumeSelected();
             }
         });
     }
@@ -198,36 +191,69 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             vibrator.cancel();
         }
 
+        TimeoutTimer.deleteInstance();
+    }
+
+    private void restoreTimer() {
+        if (TimeoutTimer.hasInstance()) {
+            timeoutTimer = TimeoutTimer.getExistInstance();
+            setButtonByState();
+            if (timeoutTimer.getStatus() == TimeoutTimer.Status.stop) {
+                onFinish();
+            }
+        }
+    }
+
+    private void setButtonByState() {
+        switch (timeoutTimer.getStatus()) {
+            case running:
+                setButtonInRunning();
+                break;
+            case paused:
+                setButtonInPause();
+                break;
+            case stop:
+            case ready:
+                setButtonInReady();
+        }
+    }
+
+    private void setButtonInRunning() {
+        startButton.setVisibility(View.GONE);
+        pauseButton.setVisibility(View.VISIBLE);
+        resetButton.setVisibility(View.VISIBLE);
+        resumeButton.setVisibility(View.GONE);
+    }
+
+    private void setButtonInPause() {
+        startButton.setVisibility(View.GONE);
+        pauseButton.setVisibility(View.GONE);
+        resetButton.setVisibility(View.VISIBLE);
+        resumeButton.setVisibility(View.VISIBLE);
+    }
+
+    private void setButtonInReady() {
+        startButton.setVisibility(View.VISIBLE);
+        pauseButton.setVisibility(View.GONE);
+        resetButton.setVisibility(View.GONE);
+        resumeButton.setVisibility(View.GONE);
     }
 
     private void pauseSelected(){
-
-        pauseButton.setVisibility(View.GONE);
-        resumeButton.setVisibility(View.VISIBLE);
+        setButtonInPause();
         timeoutTimer.pause();
 
     }
 
     private void resetSelected(){
-
-        if(timeoutTimer.getStatus() == TimeoutTimer.Status.ready){
-            timeoutTimer.start();
-        }
-        else {
-            timeoutTimer.reset();
-            timeoutTimer.start();
-        }
+        setButtonInRunning();
+        timeoutTimer.reset();
+        timeoutTimer.start();
     }
 
     private void resumeSelected(){
-
-        if(timeoutTimer.getStatus() != TimeoutTimer.Status.paused){
-            timeoutTimer.pause();
-        }
-        resumeButton.setVisibility(View.GONE);
-        pauseButton.setVisibility(View.VISIBLE);
+        setButtonInRunning();
         timeoutTimer.resume();
-
     }
 
     private void setSpinner() {
@@ -245,19 +271,14 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         if(pos == 1) {
             chosenDuration = 1;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 2) {
             chosenDuration = 2;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 3) {
             chosenDuration = 3;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 4) {
             chosenDuration = 5;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 5) {
             chosenDuration = 10;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 6) {
             customDuration.setVisibility(View.VISIBLE);
             customDurationLayout.setVisibility(View.VISIBLE);
@@ -288,7 +309,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             try {
                 int inputInt = Integer.parseInt(input);
                 if (inputInt >= 0) {
-                    timeoutTimer = new TimeoutTimer(runnable, inputInt);
+                    chosenDuration = inputInt;
                 }
             } catch (NumberFormatException nfe) {
                 Context context = getApplicationContext();
