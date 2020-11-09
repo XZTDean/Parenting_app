@@ -37,6 +37,7 @@
     <string name="timer_notification_text">Your timer is up</string>
     <string name="hist_1">hist1</string>
     <string name="result">RESULT</string>
+    <string name="todo">TODO</string>
 
 
     <string-array name="durationSpinner">
