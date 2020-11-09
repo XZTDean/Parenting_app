@@ -36,13 +36,7 @@ public class flipHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_history);
 
-        //Add a case to Test if populateListView works. Will delete later.
-        CoinFlipStats flip1 = new CoinFlipStats("timedate","null",0,0,0);
-        flip1.flipCoin("Tom",2);
-        CoinFlipStats flip2 = new CoinFlipStats("timedate","null",0,0,0);
-        flip2.flipCoin("Jerry",1);
-        myList.add(flip1);
-        myList.add(flip2);
+
 
 
 
@@ -72,13 +66,13 @@ public class flipHistory extends AppCompatActivity {
             ImageView imageView =(ImageView)itemView.findViewById(R.id.imageView);
             imageView.setImageResource(CurrentStats.getIconID());
 
-            /*TextView makeText = (TextView) itemView.findViewById(R.id.history_text);
+            TextView makeText = (TextView) itemView.findViewById(R.id.textView1);
             makeText.setText(CurrentStats.getFlipTime());
 
-            TextView makeText1 = (TextView) itemView.findViewById(R.id.textView3);
+            TextView makeText1 = (TextView) itemView.findViewById(R.id.textView2);
             String outputHistory = CurrentStats.getChildName()+" chose "+ interpretInt(CurrentStats.getChoice())+" and the result was "
                     +interpretInt(CurrentStats.getResult());
-            makeText1.setText(outputHistory);*/
+            makeText1.setText(outputHistory);
 
             return itemView;
 
