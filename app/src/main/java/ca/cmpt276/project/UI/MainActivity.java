@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.ChildManager;
+import ca.cmpt276.project.model.CoinFlip;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -49,11 +50,18 @@ public class MainActivity extends AppCompatActivity {
         configureChildren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ChildManager.makeIntent(MainActivity.this);
+                Intent intent = ChildManagerActivity.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
-
+        Button coinFlip = findViewById(R.id.coinFlip);
+        coinFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =FlipCoinScreen.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });/*
 
         Button timeoutTimer = findViewById(R.id.timeoutTimer);
         timeoutTimer.setOnClickListener(new View.OnClickListener() {

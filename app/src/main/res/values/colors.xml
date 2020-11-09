@@ -14,4 +14,11 @@
     <color name="orange">#eaad43</color>
     <color name="colorAccent">#FF4081</color>
     <color name="NavyBlue">#0E86D4</color>
+
+    <!-- Color for Child icon -->
+    <color name="icon_0">#FF2196F3</color>
+    <color name="icon_1">#FFFF9800</color>
+    <color name="icon_2">#FF9C27B0</color>
+    <color name="icon_3">#FF4CAF50</color>
+    <color name="icon_4">#FFF44336</color>
 </resources>
