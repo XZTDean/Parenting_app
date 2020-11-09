@@ -108,14 +108,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         }
     };
 
-    /*@Override
-    public void onBackPressed() {
-        if(timeoutTimer != null){
-            timeoutTimer.endTimer();
-        }
-        super.onBackPressed();
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -303,7 +295,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             } catch (NumberFormatException nfe) {
                 Context context = getApplicationContext();
                 CharSequence text = "Invalid input. Please try again.";
-                int duration = Toast.LENGTH_SHORT;
+                int duration = Toast.LENGTH_LONG;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
