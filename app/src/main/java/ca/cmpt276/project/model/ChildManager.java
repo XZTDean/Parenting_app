@@ -20,14 +20,24 @@ public class ChildManager extends AppCompatActivity implements AdapterView.OnIte
      Singleton Support
      */
     private static ChildManager instance;
+
     private ChildManager(){
         Children = new ArrayList<Child>();
     }
+
     public static ChildManager getInstance(){
         if (instance == null){
             instance = new ChildManager();
         }
         return instance;
+    }
+
+    public int sizeOfList(){
+        int count = 0;
+        for(Child c: Children){
+            count++;
+        }
+        return count;
     }
 
     public void addChild(Child child){

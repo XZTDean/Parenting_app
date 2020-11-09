@@ -21,7 +21,10 @@ public class CoinFlipStats {
         this.result = result;
     }
 
-
+    // 1 - win, 2 - lose
+    public int winOrLose(){
+        return (choice == result)? 1 : 0;
+    }
 
     public String getFlipTime() {
         return timeDate;

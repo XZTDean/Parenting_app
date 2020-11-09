@@ -22,13 +22,16 @@ public class CoinFlip {
 
 
     //flip the coin generating a new set of flipCoinStats with random result.
-    public CoinFlipStats flipCoin(String childName, int choice){
-        String timedate = java.text.DateFormat.getDateTimeInstance().format(new Date());
-        Random rand = new Random();
-        int result = rand.nextInt(1);
-        return new CoinFlipStats(timedate,childName,choice,result);
+    public CoinFlipStats flipCoin(Child childPlaying){
 
+        String timedDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        int result = (Math.random()<=0.5)? 1 : 2;
+        CoinFlipStats resultStats = new CoinFlipStats(timedDate, childPlaying.getName(), childPlaying.getChoiceOfHeadsOrTails() ,result);
+        addStats(resultStats);
+
+        return resultStats;
     }
+
     //add the generated Stats to the list.
     public void addStats(CoinFlipStats c){
         FlipList.add(c);
@@ -43,9 +46,6 @@ public class CoinFlip {
             if(FlipList.get(i).getChoice() == FlipList.get(i).getResult()){
                 //To do: Add check mark icon if choice == result.
             }
-
-
-
         }
         return tempList;
 

@@ -13,10 +13,10 @@
         android:duration="@integer/coin_flip_quarter_time"/>
 
     <alpha
-        android:fromAlpha="1"
-        android:toAlpha="0"
+        android:fromAlpha="0"
+        android:toAlpha="1"
         android:repeatMode="reverse"
-        android:repeatCount="3"
+        android:repeatCount="2"
         android:duration="@integer/coin_flip_quarter_time"/>
 
     <rotate

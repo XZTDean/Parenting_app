@@ -14,17 +14,6 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <TextView
-            android:id="@+id/textX"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            android:background="@drawable/circle_background"
-            android:gravity="center"
-            android:text="@string/x"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
