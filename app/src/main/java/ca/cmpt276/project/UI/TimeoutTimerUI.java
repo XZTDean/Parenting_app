@@ -135,8 +135,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
-
-
         startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
