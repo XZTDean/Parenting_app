@@ -2,6 +2,7 @@ package ca.cmpt276.project.UI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -33,6 +34,10 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
 
         manager = ChildManager.getInstance();
 
+        ActionBar ab = getSupportActionBar();
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+
         populateListView();
         clickList();
         setAddButton();
@@ -55,7 +60,8 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = manager.get(position).getName();
-                ConfigChildDialog.getInstance(position, name);
+                ConfigChildDialog dialog = ConfigChildDialog.getInstance(position, name);
+                dialog.show(getSupportFragmentManager(), "ConfigChildDialog");
             }
         });
     }
@@ -65,7 +71,8 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfigChildDialog.getInstance(-1, "");
+                ConfigChildDialog dialog = ConfigChildDialog.getInstance(-1, "");
+                dialog.show(getSupportFragmentManager(), "ConfigChildDialog");
             }
         });
     }
