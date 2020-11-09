@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +29,10 @@ import ca.cmpt276.project.model.ChildManager;
 
 public class ChildManagerActivity extends AppCompatActivity implements ConfigChildDialog.NoticeDialogListener {
     private ChildManager manager;
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, ChildManagerActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
