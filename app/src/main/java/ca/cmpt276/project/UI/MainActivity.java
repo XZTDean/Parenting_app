@@ -37,16 +37,16 @@ public class MainActivity extends AppCompatActivity {
         /*
         The following is an outline of how the buttons in activity_main could
         be used. Feel free to edit and remove.
+        */
 
         Button configureChildren = findViewById(R.id.configureChildren);
         configureChildren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ChildManager.makeIntent(MainActivity.this);
+                Intent intent = ChildManagerActivity.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
-        */
         Button coinFlip = findViewById(R.id.coinFlip);
         coinFlip.setOnClickListener(new View.OnClickListener() {
             @Override
