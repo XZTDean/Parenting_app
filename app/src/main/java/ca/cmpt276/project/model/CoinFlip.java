@@ -6,9 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import ca.cmpt276.project.R;
+
 public class CoinFlip {
 
     private static CoinFlip instance;
+    private String choiceMade;
 
     public static CoinFlip getInstance() {
         if (instance == null){
@@ -23,6 +26,20 @@ public class CoinFlip {
         return FlipList;
     }
 
+
+    //flip the coin generating a new set of flipCoinStats with random result.
+    public CoinFlipStats flipCoin(Child childPlaying){
+
+        String timedDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        int result = (Math.random()<=0.5)? 1 : 2;
+        int icon = (result == childPlaying.getChoiceOfHeadsOrTails())? R.drawable.check_icon : R.drawable.cross_icon;
+
+        CoinFlipStats resultStats = new CoinFlipStats(timedDate, childPlaying.getName(),
+                childPlaying.getChoiceOfHeadsOrTails() ,result, icon);
+        addStats(resultStats);
+
+        return resultStats;
+    }
 
     //add the generated Stats to the list.
     public void addStats(CoinFlipStats c){
@@ -42,7 +59,6 @@ public class CoinFlip {
             else{
                 tempList[i]= tempList[i]+" losing!";
             }
-
 
         }
         return tempList;

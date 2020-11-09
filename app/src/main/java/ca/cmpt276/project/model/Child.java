@@ -35,7 +35,6 @@ public class Child {
     }
     public void updateTimesToPick(){
         timesToPick++;
-
     }
 }
 

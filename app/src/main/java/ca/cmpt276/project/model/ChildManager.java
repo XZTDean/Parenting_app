@@ -57,7 +57,7 @@ public class ChildManager implements Iterable<Child> {
         children = gson.fromJson(json, collectionType);
     }
 
-    public String childOffer(){
+    public Child childOffer(){
         Child selectedChild = children.get(0);
         for(Child c: children){
             if(c.getTimesToPick() < selectedChild.getTimesToPick()){
@@ -65,7 +65,7 @@ public class ChildManager implements Iterable<Child> {
             }
         }
         selectedChild.updateTimesToPick();
-        return selectedChild.getName();
+        return selectedChild;
     }
 
     @Override
