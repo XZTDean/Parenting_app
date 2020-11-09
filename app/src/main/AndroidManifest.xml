@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project">
+        <activity android:name=".UI.flipHistory"></activity>
         <activity
             android:name=".UI.ChildManagerActivity"
             android:label="@string/config_children"
