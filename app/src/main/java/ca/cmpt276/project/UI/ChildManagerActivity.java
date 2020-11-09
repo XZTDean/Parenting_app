@@ -14,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
 
         populateListView();
         clickList();
+        setAddButton();
     }
 
     private void populateListView() {
@@ -53,6 +56,16 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = manager.get(position).getName();
                 ConfigChildDialog.getInstance(position, name);
+            }
+        });
+    }
+
+    private void setAddButton() {
+        FloatingActionButton button = findViewById(R.id.add_child_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfigChildDialog.getInstance(-1, "");
             }
         });
     }
