@@ -9,6 +9,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.ChildManager;
 
-public class ChildManagerActivity extends AppCompatActivity {
+public class ChildManagerActivity extends AppCompatActivity implements ConfigChildDialog.NoticeDialogListener {
     private ChildManager manager;
 
     @Override
@@ -29,6 +30,9 @@ public class ChildManagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child_manager);
 
         manager = ChildManager.getInstance();
+
+        populateListView();
+        clickList();
     }
 
     private void populateListView() {
@@ -40,6 +44,27 @@ public class ChildManagerActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ChildArrayAdapter(names);
         ListView listView = findViewById(R.id.children_list);
         listView.setAdapter(adapter);
+    }
+
+    private void clickList() {
+        ListView listView = findViewById(R.id.children_list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String name = manager.get(position).getName();
+                ConfigChildDialog.getInstance(position, name);
+            }
+        });
+    }
+
+    @Override
+    public void onDialogPositiveClick(int pos, String name) {
+        if (pos != -1) {
+            manager.get(pos).setName(name);
+        } else {
+            manager.add(new Child(name));
+        }
+        populateListView();
     }
 
     private class ChildArrayAdapter extends ArrayAdapter<String> {
