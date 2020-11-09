@@ -14,8 +14,12 @@ import android.view.View;
 import android.widget.Button;
 
 import ca.cmpt276.project.R;
+import ca.cmpt276.project.model.CoinFlip;
+import ca.cmpt276.project.model.CoinFlipStats;
 
 public class FlipCoinScreen extends AppCompatActivity {
+
+    private CoinFlip coinFlipManager = CoinFlip.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,15 @@ public class FlipCoinScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        //Add a case to Test if populateListView works. Will delete later.
+        CoinFlipStats flip1 = new CoinFlipStats("timedate","null",0,0,0);
+        flip1.flipCoin("Tom",2);
+        CoinFlipStats flip2 = new CoinFlipStats("timedate","null",0,0,0);
+        flip2.flipCoin("Jerry",1);
+        coinFlipManager.addStats(flip1);
+        coinFlipManager.addStats(flip2);
+
 
         Button btn = findViewById(R.id.historyButton);
         btn.setOnClickListener(new View.OnClickListener(){
