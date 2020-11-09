@@ -48,10 +48,17 @@ public class CoinFlipScreen extends AppCompatActivity {
         setContentView(R.layout.activity_coin_flip_screen);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         coinFlip = CoinFlip.getInstance();
         childList = ChildManager.getInstance();
-        //childList.addChild(childPlaying);
+        childPlaying = new Child("JAson");
+        childList.addChild(childPlaying);
 
         if(childList.sizeOfList() != 0){
             childPlaying = new Child("Josh");

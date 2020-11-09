@@ -40,6 +40,7 @@ public class ChildManager extends AppCompatActivity implements AdapterView.OnIte
         return count;
     }
 
+
     public void addChild(Child child){
         Children.add(child);
     }
