@@ -53,6 +53,7 @@ public class TimeoutTimer {
      * @return remaining time in seconds
      */
     public long pause() {
+        System.out.println("paused");
         if (status != Status.running) {
             throw new IllegalStateException("Timer is not running");
         }
@@ -104,7 +105,7 @@ public class TimeoutTimer {
         return minute * 60 * 1000;
     }
 
-    private void endTimer() {
+    public void endTimer() {
         status = Status.stop;
         remainingTime = 0;
     }
