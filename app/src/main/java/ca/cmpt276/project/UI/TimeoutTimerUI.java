@@ -28,6 +28,13 @@ import java.util.Objects;
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.TimeoutTimer;
 
+/*
+ *TimeoutTimerUI defines the look
+ * of the timeout timer user interface.
+ * The class also defines how the support timer
+ * classes will interact with each other and the interface.
+ */
+
 public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static Context context;
@@ -50,6 +57,33 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private FragmentManager manager = getSupportFragmentManager();
     private TimeoutFinishedDialog dialog;
 
+    //Adapted from: https://stackoverflow.com/questions/18038399/how-to-check-if-activity-is-in-foreground-or-in-visible-background
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TimeoutTimerUI.activityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TimeoutTimerUI.activityPaused();
+    }
+
+    public static boolean isActivityVisible() {
+        return activityVisible;
+    }
+
+    public static void activityResumed() {
+        activityVisible = true;
+    }
+
+    public static void activityPaused() {
+        activityVisible = false;
+    }
+
+    private static boolean activityVisible;
+
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -62,20 +96,25 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
                     resetButton.setVisibility(View.GONE);
                     timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
 
-                    onFinish();
+                    if(activityVisible) {
+                        onFinish();
+                    } else {
+                        Intent intent = TimerService.makeIntent(TimeoutTimerUI.this);
+                        startService(intent);
+                    }
 
                 }
             });
         }
     };
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         if(timeoutTimer != null){
             timeoutTimer.endTimer();
         }
         super.onBackPressed();
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +200,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
                 ringtone);
 
         try {
-            System.out.println("made it");
+
             dialog.show(manager, "");
 
         } catch (IllegalStateException ISE){
@@ -211,31 +250,31 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
 
-            customDuration.setVisibility(View.GONE);
-            customDurationLayout.setVisibility(View.GONE);
+        customDuration.setVisibility(View.GONE);
+        customDurationLayout.setVisibility(View.GONE);
 
-            if(pos == 1) {
-                chosenDuration = 1;
-                timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
-            } else if (pos == 2) {
-                chosenDuration = 2;
-                timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
-            } else if (pos == 3) {
-                chosenDuration = 3;
-                timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
-            } else if (pos == 4) {
-                chosenDuration = 5;
-                timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
-            } else if (pos == 5) {
-                chosenDuration = 10;
-                timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
-            } else if (pos == 6) {
-                customDuration.setVisibility(View.VISIBLE);
-                customDurationLayout.setVisibility(View.VISIBLE);
+        if(pos == 1) {
+            chosenDuration = 1;
+            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
+        } else if (pos == 2) {
+            chosenDuration = 2;
+            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
+        } else if (pos == 3) {
+            chosenDuration = 3;
+            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
+        } else if (pos == 4) {
+            chosenDuration = 5;
+            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
+        } else if (pos == 5) {
+            chosenDuration = 10;
+            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
+        } else if (pos == 6) {
+            customDuration.setVisibility(View.VISIBLE);
+            customDurationLayout.setVisibility(View.VISIBLE);
 
-                customDuration.addTextChangedListener(textWatcherDistance);
+            customDuration.addTextChangedListener(textWatcherDistance);
 
-            }
+        }
 
     }
 
@@ -253,7 +292,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             String input = Objects.requireNonNull(customDuration.getText()).toString();
 
             if(timeoutTimer != null){
-                System.out.println("not null");
                 return;
             }
 
