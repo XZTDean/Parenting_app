@@ -295,7 +295,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             } catch (NumberFormatException nfe) {
                 Context context = getApplicationContext();
                 CharSequence text = "Invalid input. Please try again.";
-                int duration = Toast.LENGTH_LONG;
+                int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
