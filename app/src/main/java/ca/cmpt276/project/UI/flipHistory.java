@@ -68,7 +68,7 @@ public class flipHistory extends AppCompatActivity {
     }
 
     private void setToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarFlip);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;
