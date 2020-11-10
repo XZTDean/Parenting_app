@@ -72,7 +72,6 @@ public class FlipCoinScreen extends AppCompatActivity {
         btn.setOnClickListener(v -> {
             Intent intent = flipHistory.makeIntent(FlipCoinScreen.this);
             intent.putExtra("listSize", childList.size());
-            intent.putExtra("childPlaying", childPlaying.getName());
             startActivity(intent);
         });
     }
