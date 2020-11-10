@@ -19,6 +19,11 @@ import android.widget.TextView;
 
 import ca.cmpt276.project.R;
 
+/**
+ * This is the dialog for entering child's name
+ * when add and edit the child. And there will
+ * be a delete button for exist child.
+ */
 public class ConfigChildDialog extends DialogFragment {
     private static final String NAME = "NAME";
     private static final String POS = "POSITION";
@@ -41,7 +46,7 @@ public class ConfigChildDialog extends DialogFragment {
                     .setNeutralButton(R.string.delete, (dialog, which) -> listener.onDialogDelete(pos));
         }
         builder.setView(view)
-                .setPositiveButton(R.string.ok, null)
+                .setPositiveButton(R.string.ok, null) // will override after build (onStart method)
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {});
         return builder.create();
     }

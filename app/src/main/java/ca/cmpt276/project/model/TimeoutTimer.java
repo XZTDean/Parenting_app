@@ -1,5 +1,10 @@
 package ca.cmpt276.project.model;
 
+/**
+ * This model for timer, it will only hold a timer each time.
+ * It can start, pause, resume and reset a timer. It can return
+ * the remaining time of the timer.
+ */
 public class TimeoutTimer {
     private static TimeoutTimer instance;
 
