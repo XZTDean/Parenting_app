@@ -204,7 +204,8 @@ public class FlipCoinScreen extends AppCompatActivity {
         startActivity(new Intent(FlipCoinScreen.this, PopEndScreen.class)
                 .putExtra("Result",resultStats.getResult())
                 .putExtra("WinOrLose",resultStats.winOrLose())
-                .putExtra("childPlaying", childPlaying.getName()));
+                .putExtra("childPlaying", childPlaying.getName())
+                .putExtra("listSize", childList.size()));
     }
 
 

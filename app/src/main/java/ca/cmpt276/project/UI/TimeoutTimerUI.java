@@ -26,7 +26,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
@@ -129,10 +131,19 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         duration.setOnItemSelectedListener(this);
 
+        setupToolBar();
         setupGifBG();
         createNotificationChannel();
         initializeButtons();
         restoreTimer();
+    }
+
+    private void setupToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     private void displayTimeDisplay() {
