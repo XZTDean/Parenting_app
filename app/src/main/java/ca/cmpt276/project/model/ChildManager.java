@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Singleton Class that stores and manipulates an Array List of Class Child.
+ * Called on by any class to update/edit child list.
+ * Eg: UI.ChildManagerActivity uses to display/edit child list.
+ */
 public class ChildManager implements Iterable<Child> {
 
     private List<Child> children;

@@ -39,7 +39,7 @@ import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.TimeoutTimer;
 import pl.droidsonroids.gif.GifImageView;
 
-/*
+/**
  *TimeoutTimerUI defines the look
  * of the timeout timer user interface.
  * The class also defines how the support timer

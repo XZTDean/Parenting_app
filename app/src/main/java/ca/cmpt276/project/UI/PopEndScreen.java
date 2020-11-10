@@ -17,6 +17,10 @@ import ca.cmpt276.project.R;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * Screen to display result of toss
+ * Has options to view history page or exit to main menu
+ */
 public class PopEndScreen extends Activity {
     String childPlaying;
 

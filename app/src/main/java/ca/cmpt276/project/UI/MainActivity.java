@@ -13,7 +13,11 @@ import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.ChildManager;
 import ca.cmpt276.project.model.CoinFlip;
 
-
+/**
+ * App to flip coins to settle disputes among children
+ * Has Screen to configure Children, Flip the coin and a Timeout Timer
+ * Saves Data using json and Shared Preferences
+ */
 public class MainActivity extends AppCompatActivity {
 
     ChildManager childManager;
