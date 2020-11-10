@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:screenOrientation="portrait"
+    tools:ignore="LockedOrientationActivity"
     tools:context=".UI.CoinFlipScreen">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -23,7 +25,7 @@
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/tom_gif_1"
+        android:background="@drawable/tom_gif_6"
         />
 
     <include layout="@layout/content_flip_coin_screen" />

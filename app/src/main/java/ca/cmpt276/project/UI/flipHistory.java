@@ -9,10 +9,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,7 +31,7 @@ public class flipHistory extends AppCompatActivity {
 
     private CoinFlip coinFlipManager = CoinFlip.getInstance();
     List<CoinFlipStats> myList = coinFlipManager.getList();
-
+    private boolean toggleChildOnlyHistory = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,29 @@ public class flipHistory extends AppCompatActivity {
         setContentView(R.layout.activity_flip_history);
         populateListView();
         saveToDisk();
+        setupToggleButton();
+    }
+
+    private void setupToggleButton() {
+        Button toggleHistoryView = (Button) findViewById(R.id.buttonToggleHistory);
+        String childPlayingName = getIntent().getStringExtra("childPlaying");
+
+        final String childPlaying = childPlayingName;
+        toggleHistoryView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!toggleChildOnlyHistory){
+                    toggleChildOnlyHistory = true;
+                    populateListView();
+                    toggleHistoryView.setText(childPlaying);
+                }
+                else{
+                    toggleChildOnlyHistory = false;
+                    populateListView();
+                    toggleHistoryView.setText(R.string.all);
+                }
+            }
+        });
     }
 
 
@@ -46,6 +71,7 @@ public class flipHistory extends AppCompatActivity {
         ListView list = (ListView) findViewById(R.id.FlipListView);
         list.setAdapter(adapter);
     }
+
     private class myListAdapter extends ArrayAdapter<CoinFlipStats> {
         public myListAdapter(){
             super(flipHistory.this,R.layout.flip_items,myList );
@@ -58,8 +84,7 @@ public class flipHistory extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.flip_items,parent,false);
             }
             //find the coinFlipStats
-
-            CoinFlipStats CurrentStats = myList.get(position); // get the information of flip No.position
+            CoinFlipStats CurrentStats = myList.get(position);
 
             ImageView imageView =(ImageView)itemView.findViewById(R.id.imageView);
             imageView.setImageResource(CurrentStats.getIconID());
@@ -68,13 +93,10 @@ public class flipHistory extends AppCompatActivity {
             makeText.setText(CurrentStats.getFlipTime());
 
             TextView makeText1 = (TextView) itemView.findViewById(R.id.textView2);
-            String outputHistory = CurrentStats.getChildName()+" chose "+ interpretInt(CurrentStats.getChoice())+" and the result was "
-                    +interpretInt(CurrentStats.getResult());
+            String outputHistory = CurrentStats.getChildName()+" chose "+ interpretInt(CurrentStats.getChoice());
             makeText1.setText(outputHistory);
 
             return itemView;
-
-
 
             //return super.getView(position, convertView, parent);
         }

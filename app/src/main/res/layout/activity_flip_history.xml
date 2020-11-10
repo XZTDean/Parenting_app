@@ -5,42 +5,55 @@
     android:id="@+id/listViewFlip"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:screenOrientation="portrait"
+    tools:ignore="LockedOrientationActivity"
     tools:context=".UI.flipHistory">
 
-
     <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/tom_gif_3"
-        />
-
-
-
+        android:background="@drawable/tom_gif_3" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="145dp"
-        android:layout_marginBottom="680dp"
+        android:layout_marginTop="80dp"
+        android:background="#80E8DFDF"
         android:text="@string/coin_fliping_history"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/FlipListView"
-        android:layout_width="265dp"
-        android:layout_height="269dp"
+        android:layout_width="394dp"
+        android:layout_height="401dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#80131313"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+
+    </ListView>
+
+    <Button
+        android:id="@+id/buttonToggleHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:text="@string/all"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.358" />
+        app:layout_constraintTop_toBottomOf="@+id/FlipListView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

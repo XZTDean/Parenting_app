@@ -5,7 +5,9 @@
     android:id="@+id/coinFlipView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:screenOrientation="portrait"
+    tools:ignore="LockedOrientationActivity">
 
     <ImageView
         android:id="@+id/imageViewCoinTails"

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -64,6 +65,7 @@ public class FlipCoinScreen extends AppCompatActivity {
         Button btn = findViewById(R.id.historyButton);
         btn.setOnClickListener(v -> {
             Intent intent = flipHistory.makeIntent(FlipCoinScreen.this);
+            intent.putExtra("childPlaying", childPlaying.getName());
             startActivity(intent);
         });
     }
@@ -195,7 +197,8 @@ public class FlipCoinScreen extends AppCompatActivity {
     private void displayEndScreen(CoinFlipStats resultStats) {
         startActivity(new Intent(FlipCoinScreen.this, PopEndScreen.class)
                 .putExtra("Result",resultStats.getResult())
-                .putExtra("WinOrLose",resultStats.winOrLose()));
+                .putExtra("WinOrLose",resultStats.winOrLose())
+                .putExtra("childPlaying", childPlaying.getName()));
     }
 
 

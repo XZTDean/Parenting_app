@@ -51,6 +51,7 @@
     <string name="result">RESULT</string>
     <string name="todo">TODO</string>
     <string name="view_history">VIEW HISTORY</string>
+    <string name="all">All</string>
 
 
     <string-array name="durationSpinner">

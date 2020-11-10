@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import java.util.Objects;
 
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.TimeoutTimer;
+import pl.droidsonroids.gif.GifImageView;
 
 /*
  *TimeoutTimerUI defines the look
@@ -57,6 +59,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private Button pauseButton;
     private Button resumeButton;
     private Button resetButton;
+
+    private GifImageView relaxingBG;
 
     private int chosenDuration;
 
@@ -125,9 +129,23 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         duration.setOnItemSelectedListener(this);
 
+        setupGifBG();
         createNotificationChannel();
         initializeButtons();
         restoreTimer();
+    }
+
+    private void setupGifBG() {
+        relaxingBG = (GifImageView) findViewById(R.id.gifTimeoutTimer);
+    }
+
+    private void startGifBG(){
+        relaxingBG.setBackgroundResource(R.drawable.tom_gif_1);
+        relaxingBG.setVisibility(View.VISIBLE);
+    }
+
+    private void stopGifBG(){
+        relaxingBG.setVisibility(View.GONE);
     }
 
     private void initializeButtons(){
@@ -150,6 +168,14 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         pauseButton.setOnClickListener(v -> pauseSelected());
         resetButton.setOnClickListener(v -> resetSelected());
         resumeButton.setOnClickListener(v -> resumeSelected());
+    }
+
+    private void setVisibilityDropDownAsVisible() {
+        duration.setVisibility(View.VISIBLE);
+    }
+
+    private void setVisibilityDropDownAsInvisible(){
+        duration.setVisibility(View.INVISIBLE);
     }
 
     private void onFinish(){
@@ -209,12 +235,16 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private void setButtonInRunning() {
         startButton.setVisibility(View.GONE);
+        startGifBG();
+        setVisibilityDropDownAsInvisible();
         pauseButton.setVisibility(View.VISIBLE);
         resetButton.setVisibility(View.VISIBLE);
         resumeButton.setVisibility(View.GONE);
     }
 
     private void setButtonInPause() {
+        stopGifBG();
+        setVisibilityDropDownAsVisible();
         startButton.setVisibility(View.GONE);
         pauseButton.setVisibility(View.GONE);
         resetButton.setVisibility(View.VISIBLE);
@@ -222,6 +252,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setButtonInReady() {
+        setVisibilityDropDownAsVisible();
         startButton.setVisibility(View.VISIBLE);
         pauseButton.setVisibility(View.GONE);
         resetButton.setVisibility(View.GONE);
