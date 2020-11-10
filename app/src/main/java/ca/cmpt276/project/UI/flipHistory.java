@@ -49,6 +49,7 @@ public class flipHistory extends AppCompatActivity {
         }
         else{
             hideToggleButton();
+
         }
     }
 
