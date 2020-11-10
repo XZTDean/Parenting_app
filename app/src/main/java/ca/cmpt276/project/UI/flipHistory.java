@@ -101,6 +101,49 @@ public class flipHistory extends AppCompatActivity {
 
         @Override
         public View getView(int position,  View convertView, ViewGroup parent) {
+            /*View itemView = convertView;
+            //String testOutPut = myList.get(position).getChildName() + " chose " + interpretInt(myList.get(position).getChoice());
+            //if(testOutPut.isEmpty())
+
+            if(itemView == null){
+                itemView = getLayoutInflater().inflate(R.layout.flip_items,parent,false);
+            }
+            CoinFlipStats CurrentStats;
+            //find the coinFlipStats
+            //if(toggleChildOnlyHistory && (myList.get(position).getChildName().compareTo(getIntent().getStringExtra("childPlaying"))) == 0 ){
+            CurrentStats = myList.get(position); // get the information of flip No.position
+
+            if(toggleChildOnlyHistory) {
+                if ((myList.get(position).getChildName().compareTo(getIntent().getStringExtra("childPlaying"))) == 0) {
+                    ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
+                    imageView.setImageResource(CurrentStats.getIconID());
+
+                    TextView makeText = (TextView) itemView.findViewById(R.id.textView1);
+                    makeText.setText(CurrentStats.getFlipTime());
+
+                    TextView makeText1 = (TextView) itemView.findViewById(R.id.textView2);
+                    String outputHistory = CurrentStats.getChildName() + " chose " + interpretInt(CurrentStats.getChoice());
+                    makeText1.setText(outputHistory);
+                }
+            }
+            else{
+                Log.d("HIHIHIHI", "Entered unfiltered part: "+CurrentStats.getChildName());
+                ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
+                imageView.setImageResource(CurrentStats.getIconID());
+
+                TextView makeText = (TextView) itemView.findViewById(R.id.textView1);
+                makeText.setText(CurrentStats.getFlipTime());
+
+                TextView makeText1 = (TextView) itemView.findViewById(R.id.textView2);
+                String outputHistory = CurrentStats.getChildName() + " chose " + interpretInt(CurrentStats.getChoice());
+                makeText1.setText(outputHistory);
+            }
+
+            return itemView;
+        }*/
+
+
+
             View itemView = convertView;
             if(itemView == null){
                 itemView = getLayoutInflater().inflate(R.layout.flip_items,parent,false);
@@ -120,7 +163,7 @@ public class flipHistory extends AppCompatActivity {
 
             return itemView;
 
-            //return super.getView(position, convertView, parent);
+
         }
     }
 
