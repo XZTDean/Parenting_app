@@ -50,6 +50,7 @@
     <string name="hist_1">hist1</string>
     <string name="result">RESULT</string>
     <string name="todo">TODO</string>
+    <string name="name_empty_warnning">Name should not be empty</string>
     <string name="view_history">VIEW HISTORY</string>
     <string name="all">All</string>
 

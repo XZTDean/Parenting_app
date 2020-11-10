@@ -1,5 +1,6 @@
 package ca.cmpt276.project.model;
-/*
+
+/**
  * Class that represents each child in app.
  * Uses an integer that can be 0 - (child has not flipped yet), 1 - (child got heads)
  * and 2- (child got tails).
@@ -38,9 +39,3 @@ public class Child {
         timesToPick++;
     }
 }
-
-/*
- * Class that represents each child in app.
- * Uses an integer that can be 0 - (child has not flipped yet), 1 - (child got heads)
- * and 2- (child got tails).
- */

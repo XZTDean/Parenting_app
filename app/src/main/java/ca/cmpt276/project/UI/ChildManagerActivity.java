@@ -27,8 +27,11 @@ import java.util.List;
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.ChildManager;
-/*
-*
+
+/**
+ * This is the UI class for child managing. User can add,
+ * edit or delete child in this page. It will show a list
+ * of child, and pop up a dialog for input.
  */
 public class ChildManagerActivity extends AppCompatActivity implements ConfigChildDialog.NoticeDialogListener {
     private ChildManager manager;
@@ -51,7 +54,7 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
     }
 
     private void setToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_child_manager);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;
