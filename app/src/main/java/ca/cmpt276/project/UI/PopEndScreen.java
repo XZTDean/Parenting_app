@@ -31,6 +31,7 @@ public class PopEndScreen extends Activity {
         setupTextAndImage(result);
         setupBackgroundWinOrLose(winOrLose);
         setupExitButton();
+        setupHistoryButton();
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -41,13 +42,23 @@ public class PopEndScreen extends Activity {
         getWindow().setLayout((int)(width * 0.8) , (int)(height * 0.8));
     }
 
+    private void setupHistoryButton() {
+        Button history = (Button) findViewById(R.id.buttonHistory);
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = flipHistory.makeIntent(PopEndScreen.this);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
     private void setupExitButton() {
         Button exit = (Button) findViewById(R.id.buttonExit);
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PopEndScreen.this, MainActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

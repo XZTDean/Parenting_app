@@ -28,22 +28,40 @@
         app:srcCompat="@drawable/heads__1" />
 
 
+    <Button
+        android:id="@+id/historyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#D9288B95"
+        android:text="@string/history"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCoinHeads"
+        app:layout_constraintVertical_bias="0.495"
+        tools:text="@string/history" />
 
     <Button
         android:id="@+id/buttonFlipCoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#D9288B95"
         android:text="@string/flip_coin"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.645"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewCoinHeads" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCoinHeads"
+        app:layout_constraintVertical_bias="0.495" />
 
     <TextView
         android:id="@+id/textViewHeads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/heads"
+        android:background="#80FFFFFF"
+        android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
         android:visibility="invisible"
@@ -57,6 +75,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tails"
+        android:background="#80FFFFFF"
+        android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
         android:visibility="invisible"
@@ -64,5 +84,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="200dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

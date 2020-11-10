@@ -30,7 +30,8 @@
         android:layout_toEndOf="@+id/name_icon"
         android:gravity="center_vertical"
         android:text="@string/name"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimary"
+        android:background="#B3E4E1E1"
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="serif" />

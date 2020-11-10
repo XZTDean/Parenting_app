@@ -59,12 +59,15 @@ public class ChildManager implements Iterable<Child> {
 
     public Child childOffer(){
         Child selectedChild = children.get(0);
-        for(Child c: children){
-            if(c.getTimesToPick() < selectedChild.getTimesToPick()){
-                selectedChild = c;
+
+        int index = 0;
+        for(int i =0; i < size(); i++){
+            if(selectedChild.getTimesToPick() > get(i).getTimesToPick()){
+                selectedChild = get(i);
+                index = i;
             }
         }
-        selectedChild.updateTimesToPick();
+        children.get(index).updateTimesToPick();
         return selectedChild;
     }
 

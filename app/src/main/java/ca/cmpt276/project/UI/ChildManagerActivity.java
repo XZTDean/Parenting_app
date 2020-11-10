@@ -49,7 +49,7 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
     }
 
     private void setToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar_child_manager);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;

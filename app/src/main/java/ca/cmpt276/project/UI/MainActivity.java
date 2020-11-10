@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
         childManager = ChildManager.getInstance();
         loadData();
 
+        setupButtons();
+
+    }
+
+    private void setupButtons() {
         Button timeoutTimer = findViewById(R.id.timeoutTimer);
         timeoutTimer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,21 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        /*
-        The following is an outline of how the buttons in activity_main could
-        be used. Feel free to edit and remove.
-
-        Button timeoutTimer = findViewById(R.id.timeoutTimer);
-        timeoutTimer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = ChildManager.makeIntent(MainActivity.this);
-                startActivity(intent);
-            }
-        });
-
-         */
-
     }
 
     private void loadData() {

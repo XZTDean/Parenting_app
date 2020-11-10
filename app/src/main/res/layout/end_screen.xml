@@ -31,6 +31,7 @@
         android:layout_marginEnd="0dp"
         android:text="@string/heads"
         android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -39,14 +40,29 @@
         android:layout_width="282dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageViewResult"
+        android:background="@color/colorPrimary"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="false"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="64dp"
         android:layout_marginTop="153dp"
         android:layout_marginEnd="65dp"
-        android:text="@string/return_to_main_menu"
+        android:text="@string/exit"
         android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/buttonHistory"
+        android:layout_width="282dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonExit"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="65dp"
+        android:text="@string/view_history"
+        android:textColor="@color/white"/>
 
 
 </RelativeLayout>

@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Practical Parent</string>
+    <string name="app_name">FlipIT</string>
 
-    <string name="mainMenuTitle">Just Flip A Coin</string>
+    <string name="mainMenuTitle">Just Flip a Coin</string>
     <string name="flip">Flip Coin</string>
     <string name="timeout">timeout Timer</string>
     <string name="configure">Configure Children</string>
@@ -50,6 +50,7 @@
     <string name="hist_1">hist1</string>
     <string name="result">RESULT</string>
     <string name="todo">TODO</string>
+    <string name="view_history">VIEW HISTORY</string>
 
 
     <string-array name="durationSpinner">

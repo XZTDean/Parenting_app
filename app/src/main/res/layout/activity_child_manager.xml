@@ -6,22 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".UI.ChildManagerActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_child_manager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/tom_gif_8"
         />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/child_config_title"
@@ -31,12 +32,13 @@
         android:layout_marginTop="16dp"
         android:text="@string/child_page_title"
         android:textAllCaps="true"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimary"
+        android:background="#99FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="serif"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_child_manager" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ListView
         android:id="@+id/children_list"
@@ -81,7 +83,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/no_child"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
+            android:background="#80FFFFFF"
             android:textSize="30sp"
             android:textStyle="bold"
             android:typeface="serif" />
@@ -93,7 +96,8 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/add_child_instruction"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
+            android:background="#80FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
             android:typeface="serif" />

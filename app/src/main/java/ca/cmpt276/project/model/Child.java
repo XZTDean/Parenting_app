@@ -12,6 +12,7 @@ public class Child {
 
     public Child(String name) {
         this.name = name;
+        timesToPick = 0;
     }
 
     public String getName() {

@@ -2,6 +2,7 @@ package ca.cmpt276.project.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,7 +35,6 @@ public class FlipCoinScreen extends AppCompatActivity {
     private ChildManager childList;
     private Child childPlaying;
     private CoinFlip coinFlip;
-    private int choice;
     private boolean choiceScreenShown = false;
 
     @Override
@@ -52,10 +52,9 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         coinFlip = CoinFlip.getInstance();
         childList = ChildManager.getInstance();
-        childPlaying = new Child("Tom");
-        childList.add(childPlaying);
 
         if(childList.size() != 0){
+            childPlaying = childList.childOffer();
             choiceScreenShown = true;
             setupChoiceScreen();
         }
@@ -79,6 +78,11 @@ public class FlipCoinScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void makeSound(){
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.coin_toss_sound);
+        mp.start();
+    }
+
     private void setupChoiceScreen() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> showPopUp(view));
@@ -98,7 +102,14 @@ public class FlipCoinScreen extends AppCompatActivity {
         flipCoin.setOnClickListener(v -> {
             resetResultText();
             resetCoinFaces();
+            //childPlaying.updateTimesToPick();
             coinTossAnimation();
+            makeSound();
+            flipCoin.setVisibility(View.INVISIBLE);
+            if(choiceScreenShown){
+                Button history = (Button) findViewById(R.id.historyButton);
+                history.setVisibility(View.INVISIBLE);
+            }
         });
     }
 
@@ -143,6 +154,7 @@ public class FlipCoinScreen extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     displayEndScreen(resultStats);
+                    finish();
                 }
 
                 @Override
@@ -172,7 +184,11 @@ public class FlipCoinScreen extends AppCompatActivity {
                 TextView textTails = (TextView) findViewById(R.id.textViewTails);
                 textTails.setVisibility(View.VISIBLE);
             }
-        }, 3500);
+            if(!choiceScreenShown){
+                Button flipCoin = (Button) findViewById(R.id.buttonFlipCoin);
+                flipCoin.setVisibility(View.VISIBLE);
+            }
+        }, 2700);
 
     }
 
@@ -194,6 +210,9 @@ public class FlipCoinScreen extends AppCompatActivity {
         int height = RelativeLayout.LayoutParams.WRAP_CONTENT;
 
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, false);
+
+        TextView childName = (TextView) popupView.findViewById(R.id.textChildName);
+        childName.setText(childPlaying.getName());
 
         // show the popup window
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
