@@ -1,7 +1,14 @@
 package ca.cmpt276.project.UI;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -19,6 +26,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -51,11 +60,11 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private int chosenDuration;
 
+    private final String CHANNEL_ID = "TIMER";
     private Vibrator vibrator;
     private Ringtone ringtone;
 
-    private FragmentManager manager = getSupportFragmentManager();
-    private TimeoutFinishedDialog dialog;
+    private final FragmentManager manager = getSupportFragmentManager();
 
     //Adapted from: https://stackoverflow.com/questions/18038399/how-to-check-if-activity-is-in-foreground-or-in-visible-background
     @Override
@@ -84,23 +93,18 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private static boolean activityVisible;
 
-    Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
-                    startButton.setVisibility(View.VISIBLE);
-                    pauseButton.setVisibility(View.GONE);
-                    resetButton.setVisibility(View.GONE);
-                    timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
+                    setButtonInReady();
 
                     if(activityVisible) {
                         onFinish();
                     } else {
-                        Intent intent = TimerService.makeIntent(TimeoutTimerUI.this);
-                        startService(intent);
+                        sendNotification();
                     }
 
                 }
@@ -121,11 +125,13 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         duration.setOnItemSelectedListener(this);
 
+        createNotificationChannel();
         initializeButtons();
-
+        restoreTimer();
     }
 
     private void initializeButtons(){
+        startButton = (Button) findViewById(R.id.startButton);
         pauseButton = (Button) findViewById(R.id.pauseButton);
         resumeButton = (Button) findViewById(R.id.resumeButton);
         resetButton = (Button) findViewById(R.id.resetButton);
@@ -135,39 +141,15 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
-        startButton = (Button) findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(timeoutTimer != null) {
-                    timeoutTimer.start();
-                    startButton.setVisibility(View.GONE);
-                    pauseButton.setVisibility(View.VISIBLE);
-                    resetButton.setVisibility(View.VISIBLE);
-
-                    pauseButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            pauseSelected();
-                        }
-                    });
-
-                    resetButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            resetSelected();
-                        }
-                    });
-
-                    resumeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            resumeSelected();
-                        }
-                    });
-                }
-            }
+        startButton.setOnClickListener(v -> {
+            timeoutTimer = TimeoutTimer.getNewInstance(runnable, chosenDuration);
+            timeoutTimer.start();
+            setButtonInRunning();
         });
+
+        pauseButton.setOnClickListener(v -> pauseSelected());
+        resetButton.setOnClickListener(v -> resetSelected());
+        resumeButton.setOnClickListener(v -> resumeSelected());
     }
 
     private void onFinish(){
@@ -184,7 +166,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private void finishNotification(){
 
-        dialog = new TimeoutFinishedDialog(
+        TimeoutFinishedDialog dialog = new TimeoutFinishedDialog(
                 TimeoutTimerUI.this,
                 vibrator,
                 ringtone);
@@ -198,36 +180,69 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             vibrator.cancel();
         }
 
+        TimeoutTimer.deleteInstance();
+    }
+
+    private void restoreTimer() {
+        if (TimeoutTimer.hasInstance()) {
+            timeoutTimer = TimeoutTimer.getExistInstance();
+            setButtonByState();
+            if (timeoutTimer.getStatus() == TimeoutTimer.Status.stop) {
+                onFinish();
+            }
+        }
+    }
+
+    private void setButtonByState() {
+        switch (timeoutTimer.getStatus()) {
+            case running:
+                setButtonInRunning();
+                break;
+            case paused:
+                setButtonInPause();
+                break;
+            case stop:
+            case ready:
+                setButtonInReady();
+        }
+    }
+
+    private void setButtonInRunning() {
+        startButton.setVisibility(View.GONE);
+        pauseButton.setVisibility(View.VISIBLE);
+        resetButton.setVisibility(View.VISIBLE);
+        resumeButton.setVisibility(View.GONE);
+    }
+
+    private void setButtonInPause() {
+        startButton.setVisibility(View.GONE);
+        pauseButton.setVisibility(View.GONE);
+        resetButton.setVisibility(View.VISIBLE);
+        resumeButton.setVisibility(View.VISIBLE);
+    }
+
+    private void setButtonInReady() {
+        startButton.setVisibility(View.VISIBLE);
+        pauseButton.setVisibility(View.GONE);
+        resetButton.setVisibility(View.GONE);
+        resumeButton.setVisibility(View.GONE);
     }
 
     private void pauseSelected(){
-
-        pauseButton.setVisibility(View.GONE);
-        resumeButton.setVisibility(View.VISIBLE);
+        setButtonInPause();
         timeoutTimer.pause();
 
     }
 
     private void resetSelected(){
-
-        if(timeoutTimer.getStatus() == TimeoutTimer.Status.ready){
-            timeoutTimer.start();
-        }
-        else {
-            timeoutTimer.reset();
-            timeoutTimer.start();
-        }
+        setButtonInRunning();
+        timeoutTimer.reset();
+        timeoutTimer.start();
     }
 
     private void resumeSelected(){
-
-        if(timeoutTimer.getStatus() != TimeoutTimer.Status.paused){
-            timeoutTimer.pause();
-        }
-        resumeButton.setVisibility(View.GONE);
-        pauseButton.setVisibility(View.VISIBLE);
+        setButtonInRunning();
         timeoutTimer.resume();
-
     }
 
     private void setSpinner() {
@@ -245,19 +260,14 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         if(pos == 1) {
             chosenDuration = 1;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 2) {
             chosenDuration = 2;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 3) {
             chosenDuration = 3;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 4) {
             chosenDuration = 5;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 5) {
             chosenDuration = 10;
-            timeoutTimer = new TimeoutTimer(runnable, chosenDuration);
         } else if (pos == 6) {
             customDuration.setVisibility(View.VISIBLE);
             customDurationLayout.setVisibility(View.VISIBLE);
@@ -268,7 +278,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    TextWatcher textWatcherDistance = new TextWatcher() {
+    private final TextWatcher textWatcherDistance = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -288,7 +298,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             try {
                 int inputInt = Integer.parseInt(input);
                 if (inputInt >= 0) {
-                    timeoutTimer = new TimeoutTimer(runnable, inputInt);
+                    chosenDuration = inputInt;
                 }
             } catch (NumberFormatException nfe) {
                 Context context = getApplicationContext();
@@ -307,6 +317,42 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelName = getString(R.string.timer);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, channelName,
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.enableLights(true);
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{0, 500, 500, 500, 500, 500, 500, 500, 500, 500});
+            channel.setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                            + "://" + getPackageName() + "/" + R.raw.bell),
+                    new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build());
+            channel.setDescription(getString(R.string.timer_notification_desc));
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    public void sendNotification() {
+        Intent intent = new Intent(this, TimeoutTimerUI.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_alarm_clock)
+                .setContentTitle(getString(R.string.timer))
+                .setContentText(getString(R.string.timer_notification_text))
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setDefaults(Notification.DEFAULT_LIGHTS)
+                .setVibrate(new long[]{0, 500, 500, 500, 500, 500, 500, 500, 500, 500})
+                .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                        + "://" + getPackageName() + "/" + R.raw.bell), AudioManager.STREAM_ALARM)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(0, builder.build());
     }
 
     public static Intent makeIntent(Context contextInput) {
