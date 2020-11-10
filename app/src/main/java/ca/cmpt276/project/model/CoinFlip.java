@@ -1,5 +1,9 @@
 package ca.cmpt276.project.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -12,7 +16,7 @@ public class CoinFlip {
 
     private static CoinFlip instance;
     private String choiceMade;
-
+    public final String Flip_KEY = "FlipList";
     public static CoinFlip getInstance() {
         if (instance == null){
             instance = new CoinFlip();
@@ -45,6 +49,19 @@ public class CoinFlip {
     public void addStats(CoinFlipStats c){
         FlipList.add(c);
     }
+
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(FlipList);
+    }
+
+    public void loadFromJson(String json) {
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<Child>>(){}.getType();
+        FlipList = gson.fromJson(json, collectionType);
+    }
+
+
 
     /*interpret the integers in choice and result. If the integer is 1, it presents Head.
     otherwise it represents tail.

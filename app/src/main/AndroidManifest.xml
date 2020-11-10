@@ -34,12 +34,9 @@
             android:parentActivityName=".UI.MainActivity"
             android:theme="@style/AppTheme.CustomTheme">
         </activity>
-        <service
-            android:name=".UI.TimerService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <activity android:name=".UI.TimeoutTimerUI" />
+        <activity
+            android:name=".UI.TimeoutTimerUI"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

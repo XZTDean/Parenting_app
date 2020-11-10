@@ -96,16 +96,16 @@ public class CoinFlipScreen extends AppCompatActivity {
             public void onClick(View v) {
                 resetResultText();
                 resetCoinFaces();
-                coinTossSound();
+                //coinTossSound();
                 coinTossAnimation();
             }
         });
     }
-
+    /*
     private void coinTossSound() {
         final MediaPlayer mp = MediaPlayer.create(this, R.raw.coin_toss_sound);
         mp.start();
-    }
+    }*/
 
     private void resetCoinFaces() {
         ImageView heads = findViewById(R.id.imageViewCoinHeads);
@@ -135,7 +135,7 @@ public class CoinFlipScreen extends AppCompatActivity {
         heads.startAnimation(animation);
         tails.startAnimation(animation1);
 
-        coinTossSound();
+        //coinTossSound();
 
         if(choiceScreenShown == true){
             resultStats = coinFlip.flipCoin(childPlaying);
