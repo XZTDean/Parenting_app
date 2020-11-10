@@ -2,6 +2,7 @@ package ca.cmpt276.project.UI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -41,8 +42,38 @@ public class flipHistory extends AppCompatActivity {
 
         populateListView();
         saveToDisk();
+        setToolbar();
     }
 
+    private void setupToggleButton() {
+        Button toggleHistoryView = (Button) findViewById(R.id.buttonToggleHistory);
+        String childPlayingName = getIntent().getStringExtra("childPlaying");
+
+        final String childPlaying = childPlayingName;
+        toggleHistoryView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!toggleChildOnlyHistory){
+                    toggleChildOnlyHistory = true;
+                    populateListView();
+                    toggleHistoryView.setText(childPlaying);
+                }
+                else{
+                    toggleChildOnlyHistory = false;
+                    populateListView();
+                    toggleHistoryView.setText(R.string.all);
+                }
+            }
+        });
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+    }
 
 
     //populate the information of each flip.
