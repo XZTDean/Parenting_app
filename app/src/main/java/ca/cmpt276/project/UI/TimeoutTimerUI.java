@@ -244,7 +244,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private void setButtonInPause() {
         stopGifBG();
-        setVisibilityDropDownAsVisible();
         startButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
         resetButton.setVisibility(View.VISIBLE);
@@ -252,6 +251,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setButtonInReady() {
+        stopGifBG();
         setVisibilityDropDownAsVisible();
         startButton.setVisibility(View.VISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
