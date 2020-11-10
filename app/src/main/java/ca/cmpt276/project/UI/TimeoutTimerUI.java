@@ -64,8 +64,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private Vibrator vibrator;
     private Ringtone ringtone;
 
-    private FragmentManager manager = getSupportFragmentManager();
-    private TimeoutFinishedDialog dialog;
+    private final FragmentManager manager = getSupportFragmentManager();
 
     //Adapted from: https://stackoverflow.com/questions/18038399/how-to-check-if-activity-is-in-foreground-or-in-visible-background
     @Override
@@ -94,7 +93,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private static boolean activityVisible;
 
-    Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             runOnUiThread(new Runnable() {
@@ -142,34 +141,15 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                timeoutTimer = TimeoutTimer.getNewInstance(runnable, chosenDuration);
-                timeoutTimer.start();
-                setButtonInRunning();
-            }
-        });
-        pauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pauseSelected();
-            }
+        startButton.setOnClickListener(v -> {
+            timeoutTimer = TimeoutTimer.getNewInstance(runnable, chosenDuration);
+            timeoutTimer.start();
+            setButtonInRunning();
         });
 
-        resetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetSelected();
-            }
-        });
-
-        resumeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resumeSelected();
-            }
-        });
+        pauseButton.setOnClickListener(v -> pauseSelected());
+        resetButton.setOnClickListener(v -> resetSelected());
+        resumeButton.setOnClickListener(v -> resumeSelected());
     }
 
     private void onFinish(){
@@ -186,7 +166,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private void finishNotification(){
 
-        dialog = new TimeoutFinishedDialog(
+        TimeoutFinishedDialog dialog = new TimeoutFinishedDialog(
                 TimeoutTimerUI.this,
                 vibrator,
                 ringtone);
@@ -298,7 +278,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    TextWatcher textWatcherDistance = new TextWatcher() {
+    private final TextWatcher textWatcherDistance = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
