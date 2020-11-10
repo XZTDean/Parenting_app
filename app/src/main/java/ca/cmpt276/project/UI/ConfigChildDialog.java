@@ -3,6 +3,7 @@ package ca.cmpt276.project.UI;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -39,9 +41,18 @@ public class ConfigChildDialog extends DialogFragment {
                     .setNeutralButton(R.string.delete, (dialog, which) -> listener.onDialogDelete(pos));
         }
         builder.setView(view)
-                .setPositiveButton(R.string.ok, (dialog, which) -> positiveClick())
+                .setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {});
         return builder.create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AlertDialog dialog = (AlertDialog) getDialog();
+        assert dialog != null;
+        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        button.setOnClickListener(v -> positiveClick());
     }
 
     @Override
@@ -63,7 +74,12 @@ public class ConfigChildDialog extends DialogFragment {
     private void positiveClick() {
         EditText editText = view.findViewById(R.id.name_edit_text);
         String name = editText.getText().toString();
+        if (name.isEmpty()) {
+            editText.setError(getString(R.string.name_empty_warnning));
+            return;
+        }
         listener.onDialogPositiveClick(pos, name);
+        dismiss();
     }
 
     public static ConfigChildDialog getInstance(int pos, String name) {
