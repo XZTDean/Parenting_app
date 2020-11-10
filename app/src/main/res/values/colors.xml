@@ -22,4 +22,5 @@
     <color name="icon_2">#FF9C27B0</color>
     <color name="icon_3">#FF4CAF50</color>
     <color name="icon_4">#FFF44336</color>
+    <color name="text_background">#80FFFFFF</color>
 </resources>

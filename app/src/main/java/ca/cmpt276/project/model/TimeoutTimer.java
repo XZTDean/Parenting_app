@@ -14,7 +14,7 @@ public class TimeoutTimer {
      * Countdown time in milliseconds
      */
     private long remainingTime;
-    private long startTime;
+    private long finishTime;
     private Status status;
     private final int option;
 
@@ -83,7 +83,7 @@ public class TimeoutTimer {
             }
         };
         thread.start();
-        startTime = System.currentTimeMillis();
+        finishTime = System.currentTimeMillis() + remainingTime;
         status = Status.running;
     }
 
@@ -137,7 +137,7 @@ public class TimeoutTimer {
 
     private void updateRemainingTime() {
         long currentTime = System.currentTimeMillis();
-        remainingTime = remainingTime - (currentTime - startTime);
+        remainingTime = finishTime - currentTime;
     }
 
     private long minToMillisecond(int minute) {
