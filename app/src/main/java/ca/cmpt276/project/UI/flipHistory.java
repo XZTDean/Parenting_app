@@ -38,36 +38,11 @@ public class flipHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_history);
 
-        int listSize = getIntent().getIntExtra("listSize", 0);
 
-        if(listSize == 0) {
-            populateListView();
-            setupToggleButton();
-            saveToDisk();
-        }
+        populateListView();
+        saveToDisk();
     }
 
-    private void setupToggleButton() {
-        Button toggleHistoryView = (Button) findViewById(R.id.buttonToggleHistory);
-        String childPlayingName = getIntent().getStringExtra("childPlaying");
-
-        final String childPlaying = childPlayingName;
-        toggleHistoryView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!toggleChildOnlyHistory){
-                    toggleChildOnlyHistory = true;
-                    populateListView();
-                    toggleHistoryView.setText(childPlaying);
-                }
-                else{
-                    toggleChildOnlyHistory = false;
-                    populateListView();
-                    toggleHistoryView.setText(R.string.all);
-                }
-            }
-        });
-    }
 
 
     //populate the information of each flip.
