@@ -8,6 +8,11 @@ import java.util.Random;
 
 import ca.cmpt276.project.R;
 
+/**
+ * Stores data of coin flips.
+ * Used to display in History screen.
+ * Has functionality of determining if coin toss was a win or loss
+ */
 public class CoinFlipStats {
     private String timeDate;
     private String childName;

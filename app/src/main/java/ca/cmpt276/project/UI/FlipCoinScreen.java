@@ -31,6 +31,12 @@ import ca.cmpt276.project.model.ChildManager;
 import ca.cmpt276.project.model.CoinFlip;
 import ca.cmpt276.project.model.CoinFlipStats;
 
+/**
+ * Class to display animation of a coin flip.
+ * Uses a pop up window to register choice of heads or tails if valid
+ * Uses ChildManager to get next Child to toss coin
+ * Uses CoinFlip class to functionally flip the coin and displays required result
+ */
 public class FlipCoinScreen extends AppCompatActivity {
 
     private ChildManager childList;
