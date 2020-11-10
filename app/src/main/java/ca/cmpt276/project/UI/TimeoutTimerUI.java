@@ -1,7 +1,14 @@
 package ca.cmpt276.project.UI;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -19,6 +26,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -51,6 +60,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private int chosenDuration;
 
+    private final String CHANNEL_ID = "TIMER";
     private Vibrator vibrator;
     private Ringtone ringtone;
 
@@ -95,8 +105,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
                     if(activityVisible) {
                         onFinish();
                     } else {
-                        Intent intent = TimerService.makeIntent(TimeoutTimerUI.this);
-                        startService(intent);
+                        sendNotification();
                     }
 
                 }
@@ -117,8 +126,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         duration.setOnItemSelectedListener(this);
 
+        createNotificationChannel();
         initializeButtons();
-
         restoreTimer();
     }
 
@@ -328,6 +337,42 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelName = getString(R.string.timer);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, channelName,
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.enableLights(true);
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{0, 500, 500, 500, 500, 500, 500, 500, 500, 500});
+            channel.setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                            + "://" + getPackageName() + "/" + R.raw.bell),
+                    new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build());
+            channel.setDescription(getString(R.string.timer_notification_desc));
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    public void sendNotification() {
+        Intent intent = new Intent(this, TimeoutTimerUI.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_alarm_clock)
+                .setContentTitle(getString(R.string.timer))
+                .setContentText(getString(R.string.timer_notification_text))
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setDefaults(Notification.DEFAULT_LIGHTS)
+                .setVibrate(new long[]{0, 500, 500, 500, 500, 500, 500, 500, 500, 500})
+                .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                        + "://" + getPackageName() + "/" + R.raw.bell), AudioManager.STREAM_ALARM)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(0, builder.build());
     }
 
     public static Intent makeIntent(Context contextInput) {
