@@ -32,6 +32,7 @@ public class flipHistory extends AppCompatActivity {
 
     private CoinFlip coinFlipManager = CoinFlip.getInstance();
     List<CoinFlipStats> myList = coinFlipManager.getList();
+    private int listSize;
     private boolean toggleChildOnlyHistory = false;
 
     @Override
@@ -39,24 +40,34 @@ public class flipHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_history);
 
-
+        listSize = getIntent().getIntExtra("listSize", 0);
         populateListView();
         saveToDisk();
         setToolbar();
+        if(listSize != 0){
+            setupToggleButton();
+        }
+        else{
+            hideToggleButton();
+        }
+    }
+
+    private void hideToggleButton() {
+        Button toggleHistoryView = (Button) findViewById(R.id.buttonToggleHistory);
+        toggleHistoryView.setVisibility(View.GONE);
     }
 
     private void setupToggleButton() {
         Button toggleHistoryView = (Button) findViewById(R.id.buttonToggleHistory);
         String childPlayingName = getIntent().getStringExtra("childPlaying");
 
-        final String childPlaying = childPlayingName;
         toggleHistoryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!toggleChildOnlyHistory){
                     toggleChildOnlyHistory = true;
                     populateListView();
-                    toggleHistoryView.setText(childPlaying);
+                    toggleHistoryView.setText(childPlayingName);
                 }
                 else{
                     toggleChildOnlyHistory = false;

@@ -21,7 +21,6 @@ import ca.cmpt276.project.R;
 public class CoinFlip {
 
     private static CoinFlip instance;
-    private String choiceMade;
     public final String Flip_KEY = "FlipList";
     public static CoinFlip getInstance() {
         if (instance == null){

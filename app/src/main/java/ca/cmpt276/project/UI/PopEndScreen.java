@@ -22,7 +22,8 @@ import static java.lang.Thread.sleep;
  * Has options to view history page or exit to main menu
  */
 public class PopEndScreen extends Activity {
-    String childPlaying;
+    private String childPlaying;
+    private int listSize;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class PopEndScreen extends Activity {
         int result = intent.getIntExtra("Result", 2);
         int winOrLose = intent.getIntExtra("WinOrLose", 1);
         childPlaying = intent.getStringExtra("childPlaying");
+        listSize = intent.getIntExtra("listSize", 0);
 
         setupTextAndImage(result);
         setupBackgroundWinOrLose(winOrLose);
@@ -55,6 +57,7 @@ public class PopEndScreen extends Activity {
             public void onClick(View v) {
                 Intent intent = flipHistory.makeIntent(PopEndScreen.this);
                 intent.putExtra("childPlaying", childPlaying);
+                intent.putExtra("listSize", listSize);
                 startActivity(intent);
                 finish();
             }
