@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import ca.cmpt276.project.R;
 
+/**
+ * Dialog for notifying when timer hsa completed!
+ */
 public class TimeoutFinishedDialog extends AppCompatDialogFragment {
 
     private Context context;

@@ -12,6 +12,12 @@ import java.util.Random;
 
 import ca.cmpt276.project.R;
 
+/**
+ * Class that represents a singular Coin Flip
+ * Randomizes and gives a result of head - 1, or tails - 2.
+ * Stores data of each coin flip in an arrayList of class CoinFlipStats.
+ * Uses Json to save data.
+ */
 public class CoinFlip {
 
     private static CoinFlip instance;
