@@ -63,7 +63,7 @@ public class CoinFlip {
 
     public void loadFromJson(String json) {
         Gson gson = new Gson();
-        Type collectionType = new TypeToken<ArrayList<Child>>(){}.getType();
+        Type collectionType = new TypeToken<ArrayList<CoinFlipStats>>(){}.getType();
         FlipList = gson.fromJson(json, collectionType);
     }
 

@@ -2,6 +2,7 @@ package ca.cmpt276.project.UI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -38,13 +39,10 @@ public class flipHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_history);
 
-        int listSize = getIntent().getIntExtra("listSize", 0);
 
-        if(listSize == 0) {
-            populateListView();
-            setupToggleButton();
-            saveToDisk();
-        }
+        populateListView();
+        saveToDisk();
+        setToolbar();
     }
 
     private void setupToggleButton() {
@@ -67,6 +65,14 @@ public class flipHistory extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbarFlip);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
 

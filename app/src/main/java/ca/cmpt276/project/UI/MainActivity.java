@@ -21,6 +21,7 @@ import ca.cmpt276.project.model.CoinFlip;
 public class MainActivity extends AppCompatActivity {
 
     ChildManager childManager;
+    CoinFlip coinFlipManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         childManager = ChildManager.getInstance();
+        coinFlipManager = CoinFlip.getInstance();
         loadData();
 
         setupButtons();
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     private void loadData() {
         SharedPreferences prefs = getSharedPreferences("AppPreference", MODE_PRIVATE);
         String json = prefs.getString(childManager.CHILD_KEY, "[]");
+        String json1 = prefs.getString(coinFlipManager.Flip_KEY,"[]");
         childManager.loadFromJson(json);
+        coinFlipManager.loadFromJson(json1);
     }
 }
