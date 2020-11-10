@@ -189,7 +189,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/text_background"
-                android:text="3"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
@@ -199,6 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/text_background"
+                android:gravity="center"
                 android:text="@string/colon"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
@@ -209,7 +209,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/text_background"
-                android:text="10"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
         </LinearLayout>
