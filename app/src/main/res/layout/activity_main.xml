@@ -7,11 +7,18 @@
     tools:context=".UI.MainActivity"
     android:background="@drawable/main_menu">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tom_gif_4"
+        />
+
     <Button
         android:id="@+id/coinFlip"
         android:layout_width="276dp"
         android:layout_height="75dp"
         android:text="@string/flip"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.474"
@@ -24,6 +31,7 @@
         android:layout_width="276dp"
         android:layout_height="75dp"
         android:text="@string/timeout"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.467"
@@ -33,10 +41,13 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="183dp"
-        android:layout_height="113dp"
+        android:layout_width="wrap_content"
+        android:layout_height="115dp"
+        android:background="@drawable/circle_background"
+        android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:text="@string/mainMenuTitle"
+        android:textColor="@color/icon_4"
         android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,6 +62,7 @@
         android:layout_width="276dp"
         android:layout_height="75dp"
         android:text="@string/configure"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.464"

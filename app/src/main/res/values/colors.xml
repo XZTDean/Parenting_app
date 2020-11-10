@@ -7,6 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#1BA4E4</color>
+    <color name="colorPrimaryDark">#362845</color>
+    <color name="blueLight">#49acd5</color>
+    <color name="green">#45bc62</color>
+    <color name="orange">#eaad43</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="NavyBlue">#0E86D4</color>
+    <color name="Gray">#96A09F</color>
 
     <!-- Color for Child icon -->
     <color name="icon_0">#FF2196F3</color>

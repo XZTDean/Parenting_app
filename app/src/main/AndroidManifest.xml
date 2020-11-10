@@ -20,12 +20,17 @@
             android:name=".UI.FlipCoinScreen"
             android:label="@string/title_activity_flip_coin_screen"
             android:theme="@style/Theme.Project.NoActionBar" />
+        <activity android:name=".UI.CoinFlipScreen"></activity>
         <activity android:name=".UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".UI.PopEndScreen"
+            android:parentActivityName=".UI.MainActivity"
+            android:theme="@style/AppTheme.CustomTheme">
         </activity>
         <activity
             android:name=".UI.TimeoutTimerUI"
