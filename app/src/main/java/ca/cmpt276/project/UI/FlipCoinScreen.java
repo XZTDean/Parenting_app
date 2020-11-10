@@ -52,7 +52,7 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         coinFlip = CoinFlip.getInstance();
         childList = ChildManager.getInstance();
-        childPlaying = new Child("Tom");
+        childPlaying = childList.childOffer();
         childList.add(childPlaying);
 
         if(childList.size() != 0){
