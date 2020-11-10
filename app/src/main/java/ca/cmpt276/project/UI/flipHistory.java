@@ -37,9 +37,14 @@ public class flipHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_history);
-        populateListView();
-        saveToDisk();
-        setupToggleButton();
+
+        int listSize = getIntent().getIntExtra("listSize", 0);
+
+        if(listSize == 0) {
+            populateListView();
+            setupToggleButton();
+            saveToDisk();
+        }
     }
 
     private void setupToggleButton() {
