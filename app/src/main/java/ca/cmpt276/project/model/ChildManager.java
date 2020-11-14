@@ -51,6 +51,19 @@ public class ChildManager implements Iterable<Child> {
         return children.get(index);
     }
 
+    public Child getChildByName(String name) {
+        for (Child child: children) {
+            if (name.equals(child.getName())) {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    public boolean isChildNameExist(String name) {
+        return getChildByName(name) != null;
+    }
+
     public String toJson() {
         Gson gson = new Gson();
         return gson.toJson(children);
