@@ -52,6 +52,9 @@ public class ChildManager implements Iterable<Child> {
     }
 
     public Child getChildByName(String name) {
+        if (name == null) {
+            return null;
+        }
         for (Child child: children) {
             if (name.equals(child.getName())) {
                 return child;

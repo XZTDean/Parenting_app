@@ -17,13 +17,15 @@ public class Task {
     private String name;
     private String description;
     private final Map<String, Integer> taskTaken;
-    private Child current;
+    private String current; // use string to prevent store too much useless info when save in JSON
+    private String previous;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         taskTaken = new HashMap<>();
         addChildToMap();
+        current = previous = null;
     }
 
     private void addChildToMap() {
@@ -37,16 +39,18 @@ public class Task {
     }
 
     public Child getNext() {
-        if (current == null) {
+        ChildManager manager = ChildManager.getInstance();
+
+        if (current == null || !manager.isChildNameExist(current)) {
             updateAssign();
         }
-        return current;
+        return manager.getChildByName(current);
     }
 
     private void updateAssign() {
         addChildToMap();
+        current = null;
         if (taskTaken.isEmpty()) {
-            current = null;
             return; // No child cannot update
         }
 
@@ -54,10 +58,11 @@ public class Task {
         List<String> potential = new ArrayList<>();
         Collection<Integer> values = taskTaken.values();
 
-        while (potential.isEmpty()) {
+        while (potential.isEmpty() && !values.isEmpty()) {
             int min = Collections.min(values);
             for (Map.Entry<String, Integer> entry : taskTaken.entrySet()) {
-                if (entry.getValue() == min && manager.isChildNameExist(entry.getKey())) {
+                if (entry.getValue() == min && manager.isChildNameExist(entry.getKey())
+                    && !entry.getKey().equals(previous)) {
                     potential.add(entry.getKey());
                 }
             }
@@ -70,9 +75,14 @@ public class Task {
             }
         }
 
-        int random = new Random().nextInt(potential.size());
-        String child = potential.get(random);
-        current = manager.getChildByName(child);
+        if (potential.isEmpty()) {
+            if (manager.isChildNameExist(previous)) { // no other choice other than previous child
+                current = previous;
+            }
+        } else {
+            int random = new Random().nextInt(potential.size());
+            this.current = potential.get(random);
+        }
     }
 
     public void finishTask(Child child) {
@@ -85,15 +95,16 @@ public class Task {
             times++;
         }
         taskTaken.put(childName, times);
-        if (child.equals(current)) {
+        if (childName.equals(current)) {
             current = null;
+            previous = childName;
         }
     }
 
     public Child changeNext() {
         current = null;
         updateAssign();
-        return current;
+        return ChildManager.getInstance().getChildByName(current);
     }
 
     public String getName() {
