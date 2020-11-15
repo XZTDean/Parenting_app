@@ -1,7 +1,5 @@
 package ca.cmpt276.project.model;
 
-import java.util.Objects;
-
 /**
  * Class that represents each child in app.
  * Uses an integer that can be 0 - (child has not flipped yet), 1 - (child got heads)
@@ -51,6 +49,6 @@ public class Child {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return name.hashCode();
     }
 }
