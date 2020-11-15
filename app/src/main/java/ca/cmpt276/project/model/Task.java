@@ -17,17 +17,22 @@ public class Task {
         this.name = name;
         this.description = description;
         taskTaken = new HashMap<>();
-        initializeMap();
+        addChildToMap();
     }
 
-    private void initializeMap() {
+    private void addChildToMap() {
         ChildManager manager = ChildManager.getInstance();
         for (Child child: manager) {
-            taskTaken.put(child.getName(), 0);
+            String childName = child.getName();
+            if (!taskTaken.containsKey(childName)) {
+                taskTaken.put(childName, 0);
+            }
         }
     }
 
     public String getNext() {
+        addChildToMap();
+
         ChildManager manager = ChildManager.getInstance();
         List<String> potential = new ArrayList<>();
         Collection<Integer> values = taskTaken.values();
@@ -50,6 +55,18 @@ public class Task {
 
         int random = new Random().nextInt(potential.size());
         return potential.get(random);
+    }
+
+    public void finishTask(Child child) {
+        String childName = child.getName();
+        Integer times = taskTaken.get(childName);
+        if (times == null) {
+            times = 1;
+        } else {
+            taskTaken.remove(childName);
+            times++;
+        }
+        taskTaken.put(childName, times);
     }
 
     public String getName() {
