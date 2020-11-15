@@ -12,6 +12,7 @@
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/tom_gif_8"
         />
 
     <androidx.appcompat.widget.Toolbar
@@ -106,3 +107,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

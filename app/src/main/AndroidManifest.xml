@@ -61,10 +61,10 @@
             android:name=".UI.TimeoutTimerUI"
             android:launchMode="singleTop" />
         <activity
-            android:label="Children Photo"
+            android:label="Add Photo"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
-            android:parentActivityName=".UI.MainActivity"
+            android:parentActivityName=".UI.ChildManagerActivity"
             android:theme="@style/Theme.Project.NoActionBar"
             android:name=".UI.ChildrenPhotoActivity"
             android:launchMode="singleTop" />

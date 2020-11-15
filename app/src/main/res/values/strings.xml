@@ -66,5 +66,9 @@
         <item>Custom</item>
     </string-array>
 
+    <string name="newPhotoButton">Take New Photo</string>
+    <string name="uploadButton">Upload Photo from Gallery</string>
+    <string name="defaultButton">Use Default Photo</string>
+    <string name="continueButton">Continue</string>
 
 </resources>

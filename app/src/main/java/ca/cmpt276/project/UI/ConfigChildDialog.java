@@ -64,11 +64,6 @@ public class ConfigChildDialog extends DialogFragment {
         return builder.create();
     }
 
-    private void addPhoto(){
-        Intent intent = new Intent(getActivity(), ChildrenPhotoActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -117,22 +112,10 @@ public class ConfigChildDialog extends DialogFragment {
         addPhoto();
     }
 
-    /*private final TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            builder.setView(view)
-                    .setPositiveButton(R.string.ok, null) // will override after build (onStart method)
-                    .setNegativeButton(R.string.cancel, (dialog, which) -> {});
-        }
-    };*/
+    private void addPhoto(){
+        Intent intent = new Intent(getActivity(), ChildrenPhotoActivity.class);
+        startActivity(intent);
+    }
 
     public static ConfigChildDialog getInstance(int pos, String name) {
         ConfigChildDialog dialog = new ConfigChildDialog();
