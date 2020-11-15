@@ -12,6 +12,7 @@ public class Task {
     private String name;
     private String description;
     private final Map<String, Integer> taskTaken;
+    private Child current;
 
     public Task(String name, String description) {
         this.name = name;
@@ -31,7 +32,18 @@ public class Task {
     }
 
     public Child getNext() {
+        if (current == null) {
+            updateAssign();
+        }
+        return current;
+    }
+
+    private void updateAssign() {
         addChildToMap();
+        if (taskTaken.isEmpty()) {
+            current = null;
+            return; // No child cannot update
+        }
 
         ChildManager manager = ChildManager.getInstance();
         List<String> potential = new ArrayList<>();
@@ -55,7 +67,7 @@ public class Task {
 
         int random = new Random().nextInt(potential.size());
         String child = potential.get(random);
-        return manager.getChildByName(name);
+        current = manager.getChildByName(child);
     }
 
     public void finishTask(Child child) {
@@ -68,6 +80,15 @@ public class Task {
             times++;
         }
         taskTaken.put(childName, times);
+        if (child.equals(current)) {
+            current = null;
+        }
+    }
+
+    public Child changeNext() {
+        current = null;
+        updateAssign();
+        return current;
     }
 
     public String getName() {
