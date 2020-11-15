@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * This Task class store the info of task name & description
+ * & times each child finish the task, and the current assigned
+ * child for this task.
+ */
 public class Task {
     private String name;
     private String description;
