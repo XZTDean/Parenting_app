@@ -1,5 +1,7 @@
 package ca.cmpt276.project.model;
 
+import java.util.Objects;
+
 /**
  * Class that represents each child in app.
  * Uses an integer that can be 0 - (child has not flipped yet), 1 - (child got heads)
@@ -37,5 +39,18 @@ public class Child {
     }
     public void updateTimesToPick(){
         timesToPick++;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Child child = (Child) o;
+        return name.equals(child.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
