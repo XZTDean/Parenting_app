@@ -68,13 +68,11 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         setupFlipButton();
 
-        Button btn = findViewById(R.id.historyButton);
-        btn.setOnClickListener(v -> {
-            Intent intent = flipHistory.makeIntent(FlipCoinScreen.this);
-            intent.putExtra("listSize", childList.size());
-            startActivity(intent);
-        });
+        setupHistoryButton();
+
+        setupQueueButton();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -120,6 +118,25 @@ public class FlipCoinScreen extends AppCompatActivity {
             }
         });
     }
+
+    private void setupHistoryButton(){
+        Button btn = findViewById(R.id.historyButton);
+        btn.setOnClickListener(v -> {
+            Intent intent = flipHistory.makeIntent(FlipCoinScreen.this);
+            intent.putExtra("listSize", childList.size());
+            startActivity(intent);
+        });
+    }
+
+    private void setupQueueButton() {
+        Button btn = findViewById(R.id.showQueue);
+        btn.setOnClickListener(v -> {
+            Intent intent = childrenQueue.makeIntent(FlipCoinScreen.this);
+            startActivity(intent);
+        });
+
+    }
+
 
     private void resetCoinFaces() {
         ImageView heads = findViewById(R.id.imageViewCoinHeads);
@@ -210,7 +227,7 @@ public class FlipCoinScreen extends AppCompatActivity {
 
 
     private void showPopUp(View view) {
-        // inflate the layout of the popup window
+        // inflate the queue_items of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.custom_pop_up, null);
