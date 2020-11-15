@@ -30,7 +30,7 @@ public class Task {
         }
     }
 
-    public String getNext() {
+    public Child getNext() {
         addChildToMap();
 
         ChildManager manager = ChildManager.getInstance();
@@ -54,7 +54,8 @@ public class Task {
         }
 
         int random = new Random().nextInt(potential.size());
-        return potential.get(random);
+        String child = potential.get(random);
+        return manager.getChildByName(name);
     }
 
     public void finishTask(Child child) {
