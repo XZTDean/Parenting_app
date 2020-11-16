@@ -9,7 +9,7 @@
     tools:context=".UI.childrenQueue">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarQ"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/child_page_title"
+        android:text="@string/children_with_times_to_pick"
         android:textAllCaps="true"
         android:textColor="@color/colorPrimary"
         android:background="#99FFFFFF"
@@ -47,6 +47,6 @@
         android:textStyle="bold"
         android:typeface="serif"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarQ" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

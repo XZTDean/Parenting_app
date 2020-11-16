@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -36,11 +38,7 @@ public class childrenQueue extends AppCompatActivity {
         manager = ChildManager.getInstance();
         popQueue(childQueue);
         populateListView();
-
-
-
-
-
+        clickList();
 
 
     }
@@ -70,6 +68,9 @@ public class childrenQueue extends AppCompatActivity {
             TextView makeText = (TextView) itemView.findViewById(R.id.child_name);
             makeText.setText(CurrentChild.getName());
 
+            TextView makeText1 = (TextView) itemView.findViewById(R.id.name_queue);
+            makeText1.setText(String.valueOf(CurrentChild.getTimesToPick()));
+
 
 
             return itemView;
@@ -88,13 +89,18 @@ public class childrenQueue extends AppCompatActivity {
              childQueue.add(tempChild);
              tempManager.deleteByObject(tempChild);
          }
-
-
-
     }
 
-
-
+    private void clickList() {
+        ListView listView = findViewById(R.id.children_queue);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(childrenQueue.this,childQueue.get(position).getName(),Toast.LENGTH_LONG).show();
+                //should be replaced with an intent which starts Flip Coin with an override choice instead of default child.
+            }
+        });
+    }
 
 
 

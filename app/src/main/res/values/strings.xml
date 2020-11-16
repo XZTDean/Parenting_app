@@ -54,6 +54,7 @@
     <string name="view_history">VIEW HISTORY</string>
     <string name="all">All</string>
     <string name="show_queue">Show queue</string>
+    <string name="children_with_times_to_pick">Children(With times to pick):</string>
 
 
     <string-array name="durationSpinner">
