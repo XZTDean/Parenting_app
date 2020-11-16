@@ -107,6 +107,11 @@ public class Task {
         return ChildManager.getInstance().getChildByName(current);
     }
 
+    public void reset() {
+        taskTaken.clear();
+        addChildToMap();
+    }
+
     public String getName() {
         return name;
     }
