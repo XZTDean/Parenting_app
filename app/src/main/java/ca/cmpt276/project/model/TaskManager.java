@@ -10,6 +10,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * TaskManager store a list of tasks. You can add, get
+ * and remove tasks here. It can convert its content to
+ * JSON and get content from JSON.
+ */
 public class TaskManager implements Iterable<Task> {
     private static TaskManager instance;
 
@@ -38,6 +43,10 @@ public class TaskManager implements Iterable<Task> {
 
     public void remove(int i) {
         taskList.remove(i);
+    }
+
+    public int size() {
+        return taskList.size();
     }
 
     public boolean hasTask(Task rhs) {
