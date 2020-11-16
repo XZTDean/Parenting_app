@@ -2,6 +2,10 @@ package ca.cmpt276.project.model;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -32,6 +36,10 @@ public class TaskManager implements Iterable<Task> {
         return taskList.get(i);
     }
 
+    public void remove(int i) {
+        taskList.remove(i);
+    }
+
     public boolean hasTask(Task rhs) {
         for (Task task: taskList) {
             if (task.equals(rhs)) {
@@ -39,6 +47,17 @@ public class TaskManager implements Iterable<Task> {
             }
         }
         return false;
+    }
+
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(taskList);
+    }
+
+    public void loadFromJson(String json) {
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<Task>>(){}.getType();
+        taskList = gson.fromJson(json, collectionType);
     }
 
     @NonNull
