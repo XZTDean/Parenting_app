@@ -54,7 +54,7 @@
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.CustomTheme"
-            tools:ignore="LockedOrientationActivity"></activity>
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:label="Timeout Timer"
             android:parentActivityName=".UI.MainActivity"
@@ -70,7 +70,7 @@
             android:theme="@style/Theme.Project.NoActionBar"
             android:name=".UI.ChildrenPhotoActivity"
             android:launchMode="singleTop" />
-            tools:ignore="LockedOrientationActivity" />
+
     </application>
 
 </manifest>
