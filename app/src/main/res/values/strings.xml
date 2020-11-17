@@ -53,6 +53,7 @@
     <string name="name_empty_warnning">Name should not be empty</string>
     <string name="view_history">VIEW HISTORY</string>
     <string name="all">All</string>
+    <string name="next_child">Next Child:</string>
 
 
     <string-array name="durationSpinner">
