@@ -56,9 +56,7 @@
             android:theme="@style/AppTheme.CustomTheme"
             tools:ignore="LockedOrientationActivity"></activity>
         <activity
-            android:name=".UI.TimeoutTimerUI"
             android:label="Timeout Timer"
-            android:launchMode="singleTop"
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
