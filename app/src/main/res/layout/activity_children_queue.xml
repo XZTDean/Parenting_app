@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
     tools:ignore="LockedOrientationActivity"
-    tools:context=".UI.childrenQueue">
+    tools:context=".UI.ChildrenQueue">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarQ"

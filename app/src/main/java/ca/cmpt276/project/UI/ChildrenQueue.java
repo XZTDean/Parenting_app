@@ -9,21 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.ChildManager;
-import ca.cmpt276.project.model.CoinFlipStats;
 
-public class childrenQueue extends AppCompatActivity {
+public class ChildrenQueue extends AppCompatActivity {
 
 
     private ChildManager manager ;
@@ -42,6 +39,8 @@ public class childrenQueue extends AppCompatActivity {
 
 
     }
+
+    //populate the queue of children
     private void populateListView() {
         ArrayAdapter<Child> adapter = new myListAdapter();
         ListView list = (ListView) findViewById(R.id.children_queue);
@@ -50,7 +49,7 @@ public class childrenQueue extends AppCompatActivity {
 
     private class myListAdapter extends ArrayAdapter<Child> {
         public myListAdapter(){
-            super(childrenQueue.this,R.layout.queue_items,childQueue );
+            super(ChildrenQueue.this,R.layout.queue_items,childQueue );
         }
 
         @Override
@@ -79,6 +78,7 @@ public class childrenQueue extends AppCompatActivity {
         }
     }
 
+    //use linked-list to store each child such that the order follows the size of each child's timesToPick.
     public void popQueue(List<Child> childQueue){
          ChildManager tempManager = manager;
          tempManager.setList(manager);
@@ -91,12 +91,13 @@ public class childrenQueue extends AppCompatActivity {
          }
     }
 
+    //click list will lead to flip coin with a new child picking head or tail.
     private void clickList() {
         ListView listView = findViewById(R.id.children_queue);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(childrenQueue.this,childQueue.get(position).getName(),Toast.LENGTH_LONG).show();
+                Toast.makeText(ChildrenQueue.this,childQueue.get(position).getName(),Toast.LENGTH_LONG).show();
                 //should be replaced with an intent which starts Flip Coin with an override choice instead of default child.
             }
         });
@@ -105,7 +106,7 @@ public class childrenQueue extends AppCompatActivity {
 
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, childrenQueue.class);
+        return new Intent(context, ChildrenQueue.class);
     }
 
 }

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project">
         <activity
-            android:name=".UI.childrenQueue"
+            android:name=".UI.ChildrenQueue"
             android:label="Queue"/>
         <activity
             android:name=".UI.flipHistory"
