@@ -82,10 +82,12 @@ public class FlipCoinScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void makeSound(){
         MediaPlayer mp = MediaPlayer.create(this, R.raw.coin_toss_sound);
         mp.start();
     }
+
 
     private void setupChoiceScreen() {
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -236,8 +238,16 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, false);
 
-        TextView childName = (TextView) popupView.findViewById(R.id.textChildName);
-        childName.setText(childPlaying.getName());
+        TextView childNameTextView = (TextView) popupView.findViewById(R.id.textChildName);
+        childNameTextView.setText(childPlaying.getName());
+        childNameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // call children list to change childPlaying start activity
+                childPlaying = childList.getChildPlaying();
+                childNameTextView.setText(childPlaying.getName());
+            }
+        });
 
         // show the popup window
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -246,14 +256,18 @@ public class FlipCoinScreen extends AppCompatActivity {
         Button heads = (Button)popupView.findViewById(R.id.buttonHeads);
         heads.setOnClickListener(v -> {
             childPlaying.setChoiceOfHeadsOrTails(1);
+            childList.updateChildPlayingTimesToPick();
             popupWindow.dismiss();
         });
 
         Button tails = (Button)popupView.findViewById(R.id.buttonTails);
         tails.setOnClickListener(v -> {
             childPlaying.setChoiceOfHeadsOrTails(2);
+            childList.updateChildPlayingTimesToPick();
             popupWindow.dismiss();
         });
+
+        // Setup change child screen
     }
 
     public static Intent makeIntent(Context context) {

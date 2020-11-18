@@ -37,9 +37,9 @@ public class ChildrenQueue extends AppCompatActivity {
         populateListView();
         clickList();
 
-
     }
 
+    
     //populate the queue of children
     private void populateListView() {
         ArrayAdapter<Child> adapter = new myListAdapter();
