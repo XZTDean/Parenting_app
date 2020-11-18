@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ public class TaskListActivity extends AppCompatActivity {
 
         populateList();
         setButton();
+        clickList();
     }
 
     private void populateList() {
@@ -44,6 +47,16 @@ public class TaskListActivity extends AppCompatActivity {
         listView.getAdapter();
     }
 
+    private void clickList() {
+        ListView listView = findViewById(R.id.task_list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+    }
+
     private void setButton() {
         FloatingActionButton button = findViewById(R.id.add_task);
         button.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +64,13 @@ public class TaskListActivity extends AppCompatActivity {
             public void onClick(View v) {
             }
         });
+    }
+
+    private void saveToDisk() {
+        SharedPreferences prefs = this.getSharedPreferences("AppPreference", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(manager.TASK_KEY, manager.toJson());
+        editor.apply();
     }
 
     private class TaskArrayAdapter extends ArrayAdapter<Task> {
