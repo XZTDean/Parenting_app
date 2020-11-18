@@ -193,7 +193,7 @@ public class CoinFlipScreen extends AppCompatActivity {
 
 
     private void showPopUp(View view) {
-        // inflate the layout of the popup window
+        // inflate the queue_items of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.custom_pop_up, null);

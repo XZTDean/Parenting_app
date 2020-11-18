@@ -32,6 +32,12 @@ public class ChildManager implements Iterable<Child> {
         return instance;
     }
 
+
+    public void setList(ChildManager manager){
+        children = manager.getList();
+
+    }
+
     public int size() {
         return children.size();
     }
@@ -48,8 +54,14 @@ public class ChildManager implements Iterable<Child> {
         children.remove(index);
     }
 
+    public void deleteByObject(Child child){ children.remove(child); }
+
     public Child get(int index){
         return children.get(index);
+    }
+
+    public List<Child >getList(){
+        return children;
     }
 
     public String toJson() {
