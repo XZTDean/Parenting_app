@@ -54,7 +54,6 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         populateListView();
         clickList();
         setAddButton();
-        onDialogDelete(0);
 
     }
 
@@ -105,6 +104,7 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         SharedPreferences prefs = this.getSharedPreferences("AppPreference", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(manager.CHILD_KEY, manager.toJson());
+
         editor.apply();
     }
 
@@ -138,49 +138,22 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            if(position != 0) {
-                View itemView = convertView;
-                if (itemView == null) {
-                    itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
-                }
-
-                String name = manager.get(position).getName();
-                Bitmap photo = manager.get(position).getPhoto();
-                //Child child = getItem(position);
-                //System.out.println(name);
-
-                TextView nameTextView = itemView.findViewById(R.id.child_name);
-                nameTextView.setText(name);
-
-                ImageView childIcon = itemView.findViewById(R.id.child_icon);
-                childIcon.setImageBitmap(photo);
-
-                //TextView iconTextView = itemView.findViewById(R.id.name_icon);
-                //iconTextView.setText(firstLetter);
-                //iconTextView.setBackgroundTintList(ColorStateList.valueOf(color));
-
-                return itemView;
-            }
-
             View itemView = convertView;
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
             }
 
-            String name = getItem(position);
-            String firstLetter = name.toUpperCase().substring(0, 1);
-            String colorName = "icon_" + position % 5;
-            int colorId = getResources().getIdentifier(colorName, "color", getPackageName());
-            int color = ContextCompat.getColor(ChildManagerActivity.this, colorId);
+            String name = manager.get(position).getName();
+            Bitmap photo = manager.get(position).getPhoto();
 
             TextView nameTextView = itemView.findViewById(R.id.child_name);
             nameTextView.setText(name);
-            TextView iconTextView = itemView.findViewById(R.id.name_icon);
-            iconTextView.setText(firstLetter);
-            iconTextView.setBackgroundTintList(ColorStateList.valueOf(color));
+
+            ImageView childIcon = itemView.findViewById(R.id.child_icon);
+            childIcon.setImageBitmap(photo);
 
             return itemView;
+
         }
     }
 }

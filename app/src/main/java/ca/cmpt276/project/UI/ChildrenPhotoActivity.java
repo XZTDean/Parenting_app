@@ -40,7 +40,6 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
     private Button continueButton;
     private ImageView imageView;
 
-    //childPhoto will be used in childManager.
     private Bitmap childPhoto;
     private static Child child;
 
@@ -149,6 +148,7 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imageBitmap);
             childPhoto = imageBitmap;
+            child.setPhoto(childPhoto);
         }
 
         continueButton.setVisibility(View.VISIBLE);

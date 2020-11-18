@@ -18,7 +18,7 @@
     <string name="make_your_choice">Make Your Choice</string>
     <string name="title_activity_coin_flip_screen">CoinFlipScreen</string>
     <string name="add_child">Add Child</string>
-    <string name="edit_child">Edit Child</string>
+    <string name="edit_child">Edit Child\nClick anywhere off dialog to cancel</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="delete">DELETE</string>
@@ -70,5 +70,6 @@
     <string name="uploadButton">Upload Photo from Gallery</string>
     <string name="defaultButton">Use Default Photo</string>
     <string name="continueButton">Continue</string>
+    <string name="changePhoto">CHANGE PHOTO</string>
 
 </resources>

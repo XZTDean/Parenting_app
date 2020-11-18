@@ -1,11 +1,15 @@
 package ca.cmpt276.project.UI;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -53,19 +57,27 @@ public class ConfigChildDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         view = inflater.inflate(R.layout.fragment_config_child_dialog, null);
 
+
+
         //setName();
         setChild();
         if (pos < 0) {
-            builder.setTitle(R.string.add_child);
+            //Setting default image
+            @SuppressLint("UseCompatLoadingForDrawables")
+            Drawable defaultImage = getResources().getDrawable(R.drawable.default_photo_jerry);
+            Bitmap photo = ((BitmapDrawable) defaultImage).getBitmap();
+            child.setPhoto(photo);
+
+            builder.setTitle(R.string.add_child)
+                    .setNegativeButton(R.string.cancel, (dialog, which) -> {})
+                    .setNeutralButton(R.string.addPhoto, null);
         } else {
             builder.setTitle(R.string.edit_child)
-                    .setNeutralButton(R.string.delete, (dialog, which) -> listener.onDialogDelete(pos));
+                    .setNegativeButton(R.string.delete, (dialog, which) -> listener.onDialogDelete(pos))
+                    .setNeutralButton(R.string.changePhoto, null);
         }
         builder.setView(view)
-                .setPositiveButton(R.string.ok, null) // will override after build (onStart method)
-                .setNegativeButton(R.string.cancel, (dialog, which) -> {})
-                .setNeutralButton(R.string.addPhoto, null);
-
+                .setPositiveButton(R.string.ok, null); // will override after build (onStart method)
 
         return builder.create();
     }
