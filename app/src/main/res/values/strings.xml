@@ -38,7 +38,7 @@
 
     <string name="duration">Please select a duration</string>
     <string name="durationHint">Enter Custom Timeout Duration (in minutes)</string>
-    <string name ="notificationHeader">The timeout has finished</string>
+    <string name="notificationHeader">The timeout has finished</string>
     <string name="startButton">Start Timeout</string>
     <string name="pauseButton">Pause</string>
     <string name="resumeButton">Resume</string>
@@ -53,6 +53,9 @@
     <string name="name_empty_warnning">Name should not be empty</string>
     <string name="view_history">VIEW HISTORY</string>
     <string name="all">All</string>
+    <string name="show_queue">Show queue</string>
+    <string name="children_with_times_to_pick">Children(With times to pick):</string>
+    <string name="addPhoto">Add Photo</string>
 
 
     <string-array name="durationSpinner">
@@ -65,5 +68,9 @@
         <item>Custom</item>
     </string-array>
 
+    <string name="newPhotoButton">Take New Photo</string>
+    <string name="uploadButton">Upload Photo from Gallery</string>
+    <string name="defaultButton">Use Default Photo</string>
+    <string name="continueButton">Continue</string>
 
 </resources>
