@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import ca.cmpt276.project.R;
+import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.Task;
 import ca.cmpt276.project.model.TaskManager;
 
@@ -68,12 +69,19 @@ public class TaskListActivity extends AppCompatActivity {
             Task task = getItem(position);
             assert task != null;
             String taskName = task.getName();
-            String nextChild = task.getNext().getName(); // TODO fix error if no child
-
             TextView name = itemView.findViewById(R.id.task_name);
             name.setText(taskName);
-            TextView child = itemView.findViewById(R.id.task_child);
-            child.setText(nextChild);
+
+            Child next = task.getNext();
+            View view = itemView.findViewById(R.id.next_child_name_display);
+            if (next != null) {
+                view.setVisibility(View.VISIBLE);
+                String nextChild = next.getName();
+                TextView child = itemView.findViewById(R.id.task_child);
+                child.setText(nextChild);
+            } else {
+                view.setVisibility(View.INVISIBLE);
+            }
 
             return itemView;
         }
