@@ -36,4 +36,17 @@
         android:textStyle="bold"
         android:typeface="serif" />
 
+    <ImageView
+        android:id="@+id/child_icon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_circle_bg"
+        android:backgroundTint="#2196F3"
+        android:gravity="center"
+        />
+
 </RelativeLayout>

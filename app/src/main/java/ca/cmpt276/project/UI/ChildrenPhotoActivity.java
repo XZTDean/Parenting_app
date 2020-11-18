@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.io.IOException;
 
 import ca.cmpt276.project.R;
+import ca.cmpt276.project.model.Child;
 
 /*
  * ChildrenPhotoActivity provides the user interface
@@ -41,8 +42,10 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
 
     //childPhoto will be used in childManager.
     private Bitmap childPhoto;
+    private static Child child;
 
-    public static Intent makeIntent(Context context) {
+    public static Intent makeIntent(Context context, Child childInput) {
+        child = childInput;
         return new Intent(context, ChildrenPhotoActivity.class);
     }
 
@@ -52,6 +55,8 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_children_photo);
 
         imageView = (ImageView) findViewById(R.id.displayPhoto);
+
+        child.setPhoto(childPhoto);
 
         setToolbar();
         setButtons();
@@ -114,7 +119,8 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Drawable defaultImage = getResources().getDrawable(R.drawable.default_photo_jerry);
                 imageView.setImageDrawable(defaultImage);
-                // childPhoto = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                childPhoto = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                child.setPhoto(childPhoto);
                 continueButton.setVisibility(View.VISIBLE);
             }
         });
@@ -131,6 +137,7 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(imageBitmap);
                 childPhoto = imageBitmap;
+                child.setPhoto(childPhoto);
 
             } catch (IOException e) {
                 e.printStackTrace();

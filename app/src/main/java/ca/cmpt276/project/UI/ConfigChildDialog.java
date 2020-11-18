@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import java.util.Objects;
 
 import ca.cmpt276.project.R;
+import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.ChildManager;
 
 /**
@@ -34,12 +36,15 @@ import ca.cmpt276.project.model.ChildManager;
  * be a delete button for exist child.
  */
 public class ConfigChildDialog extends DialogFragment {
-    private static final String NAME = "NAME";
+    //private static final String NAME = "NAME";
+    private static final String CHILD = "CHILD";
     private static final String POS = "POSITION";
     private View view;
     private int pos;
     private NoticeDialogListener listener;
     private AlertDialog.Builder builder;
+
+    private Child child;
 
     @NonNull
     @Override
@@ -48,7 +53,8 @@ public class ConfigChildDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         view = inflater.inflate(R.layout.fragment_config_child_dialog, null);
 
-        setName();
+        //setName();
+        setChild();
         if (pos < 0) {
             builder.setTitle(R.string.add_child);
         } else {
@@ -82,23 +88,27 @@ public class ConfigChildDialog extends DialogFragment {
         listener = (NoticeDialogListener) context;
     }
 
-    private void setName() {
+    private void setChild() {
         assert getArguments() != null;
-        String name = getArguments().getString(NAME);
+        child = (Child) getArguments().getParcelable(CHILD);
         pos = getArguments().getInt(POS);
 
         EditText editText = view.findViewById(R.id.name_edit_text);
-        editText.setText(name);
+        editText.setText(child.getName());
     }
 
     private void positiveClick() {
         EditText editText = view.findViewById(R.id.name_edit_text);
         String name = editText.getText().toString();
+
+
         if (name.isEmpty()) {
             editText.setError(getString(R.string.name_empty_warnning));
             return;
         }
-        listener.onDialogPositiveClick(pos, name);
+        //child = new Child(name, photo);
+        child.setName(name);
+        listener.onDialogPositiveClick(pos, child);
         dismiss();
     }
 
@@ -113,15 +123,15 @@ public class ConfigChildDialog extends DialogFragment {
     }
 
     private void addPhoto(){
-        Intent intent = new Intent(getActivity(), ChildrenPhotoActivity.class);
+        Intent intent = ChildrenPhotoActivity.makeIntent(getActivity(), child);
         startActivity(intent);
     }
 
-    public static ConfigChildDialog getInstance(int pos, String name) {
+    public static ConfigChildDialog getInstance(int pos, Child child) {
         ConfigChildDialog dialog = new ConfigChildDialog();
 
         Bundle args = new Bundle();
-        args.putString(NAME, name);
+        args.putParcelable(CHILD, (Parcelable) child);
         args.putInt(POS, pos);
         dialog.setArguments(args);
 
@@ -129,7 +139,10 @@ public class ConfigChildDialog extends DialogFragment {
     }
 
     public interface NoticeDialogListener {
-        public void onDialogPositiveClick(int pos, String name);
+        //public void onDialogPositiveClick(int pos, String name);
+
+        void onDialogPositiveClick(int pos, Child child);
+
         public void onDialogDelete(int pos);
     }
 }
