@@ -5,23 +5,51 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Task;
+import ca.cmpt276.project.model.TaskManager;
 
 public class TaskListActivity extends AppCompatActivity {
+    private TaskManager manager;
+    private TaskArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
+
+        manager = TaskManager.getInstance();
+
+        populateList();
+        setButton();
+    }
+
+    private void populateList() {
+        adapter = new TaskArrayAdapter(manager.getList());
+        ListView listView = findViewById(R.id.task_list);
+        listView.setAdapter(adapter);
+        listView.getAdapter();
+    }
+
+    private void setButton() {
+        FloatingActionButton button = findViewById(R.id.add_task);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 
     private class TaskArrayAdapter extends ArrayAdapter<Task> {
@@ -34,20 +62,24 @@ public class TaskListActivity extends AppCompatActivity {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.task_item, parent, false);
             }
 
             Task task = getItem(position);
             assert task != null;
             String taskName = task.getName();
-            String nextChild = task.getNext().getName();
+            String nextChild = task.getNext().getName(); // TODO fix error if no child
 
-            TextView name = findViewById(R.id.task_name);
+            TextView name = itemView.findViewById(R.id.task_name);
             name.setText(taskName);
-            TextView child = findViewById(R.id.task_child);
+            TextView child = itemView.findViewById(R.id.task_child);
             child.setText(nextChild);
 
             return itemView;
         }
+    }
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, TaskListActivity.class);
     }
 }

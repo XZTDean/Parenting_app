@@ -58,6 +58,10 @@ public class TaskManager implements Iterable<Task> {
         return false;
     }
 
+    public List<Task> getList() {
+        return taskList;
+    }
+
     public String toJson() {
         Gson gson = new Gson();
         return gson.toJson(taskList);

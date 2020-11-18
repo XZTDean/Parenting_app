@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         configureChildren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ChildManagerActivity.makeIntent(MainActivity.this);
+                Intent intent = TaskListActivity.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
