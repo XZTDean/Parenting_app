@@ -60,6 +60,22 @@ public class ChildManager implements Iterable<Child> {
         return children.get(index);
     }
 
+    public Child getChildByName(String name) {
+        if (name == null) {
+            return null;
+        }
+        for (Child child: children) {
+            if (name.equals(child.getName())) {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    public boolean isChildNameExist(String name) {
+        return getChildByName(name) != null;
+    }
+
     public List<Child >getList(){
         return children;
     }
@@ -90,14 +106,15 @@ public class ChildManager implements Iterable<Child> {
     public Child childOffer(){
         Child selectedChild = children.get(0);
 
+        int index = 0;
         for(int i =0; i < size(); i++){
             if(selectedChild.getTimesToPick() > get(i).getTimesToPick()){
                 selectedChild = get(i);
+                index = i;
             }
         }
-
-        childPlaying = selectedChild;
-        return childPlaying;
+        children.get(index).updateTimesToPick();
+        return selectedChild;
     }
 
     @Override
