@@ -118,7 +118,7 @@
                 android:textColor="@color/black" />
 
             <EditText
-                android:id="@+id/tesk_desc_edit"
+                android:id="@+id/task_desc_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

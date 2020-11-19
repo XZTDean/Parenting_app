@@ -55,6 +55,7 @@
     <string name="all">All</string>
     <string name="next_child">Next Child:</string>
     <string name="description">Description</string>
+    <string name="empty_error">should not be empty</string>
 
 
     <string-array name="durationSpinner">
