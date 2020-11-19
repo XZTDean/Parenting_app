@@ -8,7 +8,6 @@ package ca.cmpt276.project.model;
 public class Child {
     private String name;
     private int choiceOfHeadsOrTails;  // 1 - heads and 2 - tails
-
     private int timesToPick;
 
     public Child(String name) {

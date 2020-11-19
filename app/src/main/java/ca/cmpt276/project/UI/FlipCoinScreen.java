@@ -6,13 +6,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Handler;
-import android.os.Parcelable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -68,13 +66,11 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         setupFlipButton();
 
-        Button btn = findViewById(R.id.historyButton);
-        btn.setOnClickListener(v -> {
-            Intent intent = flipHistory.makeIntent(FlipCoinScreen.this);
-            intent.putExtra("listSize", childList.size());
-            startActivity(intent);
-        });
+        setupHistoryButton();
+
+        setupQueueButton();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -86,10 +82,12 @@ public class FlipCoinScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void makeSound(){
         MediaPlayer mp = MediaPlayer.create(this, R.raw.coin_toss_sound);
         mp.start();
     }
+
 
     private void setupChoiceScreen() {
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -120,6 +118,25 @@ public class FlipCoinScreen extends AppCompatActivity {
             }
         });
     }
+
+    private void setupHistoryButton(){
+        Button btn = findViewById(R.id.historyButton);
+        btn.setOnClickListener(v -> {
+            Intent intent = flipHistory.makeIntent(FlipCoinScreen.this);
+            intent.putExtra("listSize", childList.size());
+            startActivity(intent);
+        });
+    }
+
+    private void setupQueueButton() {
+        Button btn = findViewById(R.id.showQueue);
+        btn.setOnClickListener(v -> {
+            Intent intent = ChildrenQueue.makeIntent(FlipCoinScreen.this);
+            startActivity(intent);
+        });
+
+    }
+
 
     private void resetCoinFaces() {
         ImageView heads = findViewById(R.id.imageViewCoinHeads);
@@ -210,7 +227,7 @@ public class FlipCoinScreen extends AppCompatActivity {
 
 
     private void showPopUp(View view) {
-        // inflate the layout of the popup window
+        // inflate the queue_items of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.custom_pop_up, null);
@@ -221,8 +238,16 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, false);
 
-        TextView childName = (TextView) popupView.findViewById(R.id.textChildName);
-        childName.setText(childPlaying.getName());
+        TextView childNameTextView = (TextView) popupView.findViewById(R.id.textChildName);
+        childNameTextView.setText(childPlaying.getName());
+        childNameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // call children list to change childPlaying start activity
+                childPlaying = childList.getChildPlaying();
+                childNameTextView.setText(childPlaying.getName());
+            }
+        });
 
         // show the popup window
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -231,14 +256,18 @@ public class FlipCoinScreen extends AppCompatActivity {
         Button heads = (Button)popupView.findViewById(R.id.buttonHeads);
         heads.setOnClickListener(v -> {
             childPlaying.setChoiceOfHeadsOrTails(1);
+            childList.updateChildPlayingTimesToPick();
             popupWindow.dismiss();
         });
 
         Button tails = (Button)popupView.findViewById(R.id.buttonTails);
         tails.setOnClickListener(v -> {
             childPlaying.setChoiceOfHeadsOrTails(2);
+            childList.updateChildPlayingTimesToPick();
             popupWindow.dismiss();
         });
+
+        // Setup change child screen
     }
 
     public static Intent makeIntent(Context context) {

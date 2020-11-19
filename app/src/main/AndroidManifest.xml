@@ -18,24 +18,26 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar" />
         <activity
+            android:name=".UI.ChildrenQueue"
+            android:label="Queue"/>
+        <activity
             android:name=".UI.flipHistory"
             android:label="History Screen"
+            android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
-            android:parentActivityName=".UI.MainActivity"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".UI.ChildManagerActivity"
             android:label="@string/config_children"
             android:parentActivityName=".UI.MainActivity"
-            android:theme="@style/Theme.Project.NoActionBar"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.Project.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".UI.FlipCoinScreen"
             android:label="@string/title_activity_flip_coin_screen"
             android:theme="@style/Theme.Project.NoActionBar"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".UI.CoinFlipScreen"
@@ -57,15 +59,23 @@
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.CustomTheme"
-            tools:ignore="LockedOrientationActivity"></activity>
+            tools:ignore="LockedOrientationActivity"/>
         <activity
-            android:name=".UI.TimeoutTimerUI"
             android:label="Timeout Timer"
-            android:launchMode="singleTop"
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
-            tools:ignore="LockedOrientationActivity" />
+            android:name=".UI.TimeoutTimerUI"
+            android:launchMode="singleTop" />
+        <activity
+            android:label="Add Photo"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:parentActivityName=".UI.ChildManagerActivity"
+            android:theme="@style/Theme.Project.NoActionBar"
+            android:name=".UI.ChildrenPhotoActivity"
+            android:launchMode="singleTop" />
+
     </application>
 
 </manifest>
