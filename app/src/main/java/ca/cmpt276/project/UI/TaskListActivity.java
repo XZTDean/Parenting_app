@@ -52,17 +52,17 @@ public class TaskListActivity extends AppCompatActivity implements ConfigTaskDia
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                ConfigTaskDialog dialog = ConfigTaskDialog.getInstance(position);
+                dialog.show(getSupportFragmentManager(), "ConfigTaskDialog");
             }
         });
     }
 
     private void setButton() {
         FloatingActionButton button = findViewById(R.id.add_task);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
+        button.setOnClickListener(v -> {
+            ConfigTaskDialog dialog = ConfigTaskDialog.getInstance(-1);
+            dialog.show(getSupportFragmentManager(), "ConfigTaskDialog");
         });
     }
 
