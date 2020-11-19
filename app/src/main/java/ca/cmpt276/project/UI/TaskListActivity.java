@@ -24,7 +24,7 @@ import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.Task;
 import ca.cmpt276.project.model.TaskManager;
 
-public class TaskListActivity extends AppCompatActivity {
+public class TaskListActivity extends AppCompatActivity implements ConfigTaskDialog.NoticeDialogListener {
     private TaskManager manager;
     private TaskArrayAdapter adapter;
 
@@ -71,6 +71,11 @@ public class TaskListActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(manager.TASK_KEY, manager.toJson());
         editor.apply();
+    }
+
+    @Override
+    public void dataChanged() {
+        adapter.notifyDataSetChanged();
     }
 
     private class TaskArrayAdapter extends ArrayAdapter<Task> {

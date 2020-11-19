@@ -2,6 +2,7 @@ package ca.cmpt276.project.UI;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Task;
@@ -26,6 +28,7 @@ public class ConfigTaskDialog extends DialogFragment {
     private int pos;
     private Task task;
     private TaskManager taskManager;
+    private NoticeDialogListener listener;
 
     @NonNull
     @Override
@@ -37,15 +40,26 @@ public class ConfigTaskDialog extends DialogFragment {
         setFields();
         setButton();
 
-        if (edit) {
+        if (newTask) {
             displayEditPanel();
             ImageButton button = view.findViewById(R.id.task_edit_complete);
             button.setVisibility(View.GONE);
             builder.setTitle("Add Task");
+        } else {
+            displayInfoPanel();
+            builder.setNeutralButton("Reset", task.reset());
         }
 
-        builder.setView(view);
+        builder.setView(view)
+                .setPositiveButton(R.string.ok, null)
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {});
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        listener = (NoticeDialogListener) context;
     }
 
     private void displayEditPanel() {
@@ -74,6 +88,12 @@ public class ConfigTaskDialog extends DialogFragment {
         View displayPanel = view.findViewById(R.id.task_info_disp);
         displayPanel.setVisibility(View.VISIBLE);
 
+        TextView name = view.findViewById(R.id.task_name_disp);
+        name.setText(task.getName());
+        TextView desc = view.findViewById(R.id.task_desc_disp);
+        desc.setText(task.getDescription());
+
+        // Child Part - Need work
     }
 
     private boolean completeEdit() {
@@ -96,6 +116,7 @@ public class ConfigTaskDialog extends DialogFragment {
         if (success) {
             task.setName(name);
             task.setDescription(desc);
+            listener.dataChanged();
         }
         return success;
     }
@@ -115,8 +136,8 @@ public class ConfigTaskDialog extends DialogFragment {
         ImageButton delete = view.findViewById(R.id.task_delete_button);
         delete.setOnClickListener(v -> {
             taskManager.remove(pos);
+            listener.dataChanged();
             dismiss();
-            // notify list
         });
     }
 
@@ -142,5 +163,9 @@ public class ConfigTaskDialog extends DialogFragment {
         dialog.setArguments(args);
 
         return dialog;
+    }
+
+    public interface NoticeDialogListener {
+        void dataChanged();
     }
 }
