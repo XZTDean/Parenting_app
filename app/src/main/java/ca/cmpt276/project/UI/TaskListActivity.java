@@ -105,7 +105,7 @@ public class TaskListActivity extends AppCompatActivity implements ConfigTaskDia
                 TextView child = itemView.findViewById(R.id.task_child);
                 child.setText(nextChild);
             } else {
-                view.setVisibility(View.INVISIBLE);
+                view.setVisibility(View.GONE);
             }
 
             return itemView;

@@ -90,7 +90,7 @@ public class ConfigTaskDialog extends DialogFragment {
         edit = true;
 
         View displayPanel = view.findViewById(R.id.task_info_disp);
-        displayPanel.setVisibility(View.INVISIBLE);
+        displayPanel.setVisibility(View.GONE);
 
         View editPanel = view.findViewById(R.id.task_info_edit);
         editPanel.setVisibility(View.VISIBLE);
@@ -107,7 +107,7 @@ public class ConfigTaskDialog extends DialogFragment {
         edit = false;
 
         View editPanel = view.findViewById(R.id.task_info_edit);
-        editPanel.setVisibility(View.INVISIBLE);
+        editPanel.setVisibility(View.GONE);
 
         View displayPanel = view.findViewById(R.id.task_info_disp);
         displayPanel.setVisibility(View.VISIBLE);
