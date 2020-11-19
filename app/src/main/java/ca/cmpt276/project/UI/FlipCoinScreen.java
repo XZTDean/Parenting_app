@@ -54,12 +54,11 @@ public class FlipCoinScreen extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-
         coinFlip = CoinFlip.getInstance();
         childList = ChildManager.getInstance();
 
         if(childList.size() != 0){
-            childPlaying = childList.childOffer();
+            setupChildPlaying();
             choiceScreenShown = true;
             setupChoiceScreen();
         }
@@ -69,6 +68,19 @@ public class FlipCoinScreen extends AppCompatActivity {
         setupHistoryButton();
 
         setupQueueButton();
+    }
+
+    private void setupChildPlaying() {
+        int overrideDefault = getIntent().getIntExtra(getString(R.string.override_default), 0);
+
+        // default choice for child playing
+        if(overrideDefault == 0){
+            childPlaying = childList.childOffer();
+        }
+        // custom choice by user for child playing
+        else{
+            childPlaying = childList.getChildPlaying();
+        }
     }
 
 
@@ -108,7 +120,7 @@ public class FlipCoinScreen extends AppCompatActivity {
         flipCoin.setOnClickListener(v -> {
             resetResultText();
             resetCoinFaces();
-            //childPlaying.updateTimesToPick();
+            childPlaying.updateTimesToPick();
             coinTossAnimation();
             makeSound();
             flipCoin.setVisibility(View.INVISIBLE);
@@ -152,6 +164,7 @@ public class FlipCoinScreen extends AppCompatActivity {
         TextView textHeads = (TextView) findViewById(R.id.textViewHeads);
         textHeads.setVisibility(View.INVISIBLE);
     }
+
 
     private void coinTossAnimation() {
         CoinFlipStats resultStats;
@@ -244,8 +257,8 @@ public class FlipCoinScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // call children list to change childPlaying start activity
-                childPlaying = childList.getChildPlaying();
-                childNameTextView.setText(childPlaying.getName());
+                Intent intent = ChildrenQueue.makeIntent(FlipCoinScreen.this);
+                startActivity(intent);
             }
         });
 
@@ -267,7 +280,6 @@ public class FlipCoinScreen extends AppCompatActivity {
             popupWindow.dismiss();
         });
 
-        // Setup change child screen
     }
 
     public static Intent makeIntent(Context context) {

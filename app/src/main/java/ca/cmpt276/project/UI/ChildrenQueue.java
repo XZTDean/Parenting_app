@@ -27,7 +27,6 @@ public class ChildrenQueue extends AppCompatActivity {
     private List<Child> childQueue = new ArrayList<>() ;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +60,6 @@ public class ChildrenQueue extends AppCompatActivity {
             }
             //find the coinFlipStats
             Child CurrentChild = childQueue.get(position);
-
 
 
             TextView makeText = (TextView) itemView.findViewById(R.id.child_name);
@@ -98,7 +96,13 @@ public class ChildrenQueue extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(ChildrenQueue.this,childQueue.get(position).getName(),Toast.LENGTH_LONG).show();
+                manager.setChildPlaying(childQueue.get(position));
+                // set this child at the bottom of the queue!
+                //
                 //should be replaced with an intent which starts Flip Coin with an override choice instead of default child.
+                Intent intent = FlipCoinScreen.makeIntent(ChildrenQueue.this);
+                intent.putExtra(getString(R.string.override_default), 1);
+                startActivity(intent);
             }
         });
     }

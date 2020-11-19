@@ -16,6 +16,7 @@ import java.util.List;
 public class ChildManager implements Iterable<Child> {
 
     private List<Child> children;
+    private List<Child> childQueue;
     private Child childPlaying;
     public final String CHILD_KEY = "ChildList";
     /*
@@ -24,7 +25,9 @@ public class ChildManager implements Iterable<Child> {
     private static ChildManager instance;
     private ChildManager(){
         children = new ArrayList<Child>();
+        childQueue = new ArrayList<Child>();
     }
+
     public static ChildManager getInstance(){
         if (instance == null){
             instance = new ChildManager();
@@ -113,9 +116,10 @@ public class ChildManager implements Iterable<Child> {
                 index = i;
             }
         }
-        children.get(index).updateTimesToPick();
+        childPlaying = selectedChild;
         return selectedChild;
     }
+
 
     @Override
     public Iterator<Child> iterator() {
