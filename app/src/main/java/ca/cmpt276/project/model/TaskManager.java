@@ -32,10 +32,12 @@ public class TaskManager implements Iterable<Task> {
         taskList = new ArrayList<>();
     }
 
-    public void add(Task task) {
+    public boolean add(Task task) {
         if (!hasTask(task)) {
             taskList.add(task);
+            return true;
         }
+        return false;
     }
 
     public Task get(int i) {

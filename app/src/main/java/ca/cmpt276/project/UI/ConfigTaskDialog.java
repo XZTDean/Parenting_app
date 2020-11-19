@@ -3,6 +3,7 @@ package ca.cmpt276.project.UI;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -54,6 +56,27 @@ public class ConfigTaskDialog extends DialogFragment {
                 .setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {});
         return builder.create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AlertDialog dialog = (AlertDialog) getDialog();
+        assert dialog != null;
+        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        button.setOnClickListener(v -> {
+            if (edit) {
+                if (completeEdit()) {
+                    if (newTask) {
+                        addNewTask();
+                    } else {
+                        dismiss();
+                    }
+                }
+            } else {
+                dismiss();
+            }
+        });
     }
 
     @Override
@@ -119,6 +142,18 @@ public class ConfigTaskDialog extends DialogFragment {
             listener.dataChanged();
         }
         return success;
+    }
+
+    private void addNewTask() {
+        if (!taskManager.add(task)) {
+            EditText nameEdit = view.findViewById(R.id.task_name_edit);
+            EditText descEdit = view.findViewById(R.id.task_desc_edit);
+            nameEdit.setError(getString(R.string.task_exist));
+            descEdit.setError(getString(R.string.task_exist));
+        } else {
+            listener.dataChanged();
+            dismiss();
+        }
     }
 
     private void setButton() {
