@@ -110,7 +110,7 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
 
     private void updateData() {
         populateListView();
-        //saveToDisk();
+        saveToDisk();
     }
 
     @Override
