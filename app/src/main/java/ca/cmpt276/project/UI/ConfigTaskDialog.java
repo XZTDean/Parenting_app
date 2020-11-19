@@ -46,10 +46,11 @@ public class ConfigTaskDialog extends DialogFragment {
             displayEditPanel();
             ImageButton button = view.findViewById(R.id.task_edit_complete);
             button.setVisibility(View.GONE);
-            builder.setTitle("Add Task");
+            builder.setTitle(R.string.add_task);
         } else {
             displayInfoPanel();
-            builder.setNeutralButton("Reset", (dialog, which) -> task.reset());
+            builder.setTitle(R.string.task_detail)
+                    .setNeutralButton(R.string.reset, (dialog, which) -> task.reset());
         }
 
         builder.setView(view)

@@ -53,6 +53,9 @@
     <string name="description">Description</string>
     <string name="empty_error">should not be empty</string>
     <string name="task_exist">Task exist</string>
+    <string name="task_detail">Task Detail</string>
+    <string name="add_task">Add Task</string>
+    <string name="reset">Reset</string>
 
     <string-array name="durationSpinner">
         <item>Select Timeout Duration</item>
