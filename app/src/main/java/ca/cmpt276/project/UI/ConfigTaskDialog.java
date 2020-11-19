@@ -47,7 +47,7 @@ public class ConfigTaskDialog extends DialogFragment {
             builder.setTitle("Add Task");
         } else {
             displayInfoPanel();
-            builder.setNeutralButton("Reset", task.reset());
+            builder.setNeutralButton("Reset", (dialog, which) -> task.reset());
         }
 
         builder.setView(view)
