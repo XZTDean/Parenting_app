@@ -129,6 +129,7 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //
         if(requestCode==REQUEST_GALLERY_IMAGE && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
             Bitmap imageBitmap = null;
@@ -137,21 +138,23 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
                 imageView.setImageBitmap(imageBitmap);
                 childPhoto = imageBitmap;
                 child.setPhoto(childPhoto);
+                continueButton.setVisibility(View.VISIBLE);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        else {
+        else if (requestCode==REQUEST_IMAGE_CAPTURE) {
             Bundle extras = data.getExtras();
-            assert extras != null;
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
-            childPhoto = imageBitmap;
-            child.setPhoto(childPhoto);
+            //assert extras != null;
+            if(extras !=  null) {
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                imageView.setImageBitmap(imageBitmap);
+                childPhoto = imageBitmap;
+                child.setPhoto(childPhoto);
+                continueButton.setVisibility(View.VISIBLE);
+            }
         }
-
-        continueButton.setVisibility(View.VISIBLE);
 
     }
 

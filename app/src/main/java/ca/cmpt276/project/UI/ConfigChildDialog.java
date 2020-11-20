@@ -57,9 +57,6 @@ public class ConfigChildDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         view = inflater.inflate(R.layout.fragment_config_child_dialog, null);
 
-
-
-        //setName();
         setChild();
         if (pos < 0) {
             //Setting default image
@@ -96,7 +93,6 @@ public class ConfigChildDialog extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         listener = (NoticeDialogListener) context;
     }
 
@@ -118,7 +114,6 @@ public class ConfigChildDialog extends DialogFragment {
             editText.setError(getString(R.string.name_empty_warnning));
             return;
         }
-        //child = new Child(name, photo);
         child.setName(name);
         listener.onDialogPositiveClick(pos, child);
         dismiss();
@@ -151,8 +146,6 @@ public class ConfigChildDialog extends DialogFragment {
     }
 
     public interface NoticeDialogListener {
-        //public void onDialogPositiveClick(int pos, String name);
-
         void onDialogPositiveClick(int pos, Child child);
 
         public void onDialogDelete(int pos);
