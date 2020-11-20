@@ -50,15 +50,17 @@ public class ConfigChildDialog extends DialogFragment {
 
         setName();
         if (pos < 0) {
-            builder.setTitle(R.string.add_child);
+            builder.setTitle(R.string.add_child)
+                    .setNegativeButton(R.string.cancel, (dialog, which) -> {})
+                    .setNeutralButton(R.string.addPhoto, null);
         } else {
             builder.setTitle(R.string.edit_child)
-                    .setNeutralButton(R.string.delete, (dialog, which) -> listener.onDialogDelete(pos));
+                    .setNegativeButton(R.string.delete, (dialog, which) -> listener.onDialogDelete(pos))
+                    .setNeutralButton(R.string.changePhoto, null);
         }
         builder.setView(view)
-                .setPositiveButton(R.string.ok, null) // will override after build (onStart method)
-                .setNegativeButton(R.string.cancel, (dialog, which) -> {})
-                .setNeutralButton(R.string.addPhoto, null);
+                .setPositiveButton(R.string.ok, null); // will override after build (onStart method)
+
 
 
         return builder.create();
