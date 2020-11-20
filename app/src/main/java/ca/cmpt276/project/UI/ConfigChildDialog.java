@@ -93,6 +93,7 @@ public class ConfigChildDialog extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+
         listener = (NoticeDialogListener) context;
     }
 

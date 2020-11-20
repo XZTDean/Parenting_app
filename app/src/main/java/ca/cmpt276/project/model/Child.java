@@ -16,7 +16,6 @@ import java.io.ByteArrayOutputStream;
 public class Child implements Parcelable {
     private String name;
     private int choiceOfHeadsOrTails;  // 1 - heads and 2 - tails
-
     private int timesToPick;
 
     private String encodedPhoto;
@@ -103,5 +102,18 @@ public class Child implements Parcelable {
         dest.writeInt(choiceOfHeadsOrTails);
         dest.writeInt(timesToPick);
         dest.writeString(encodedPhoto);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Child child = (Child) o;
+        return name.equals(child.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }
