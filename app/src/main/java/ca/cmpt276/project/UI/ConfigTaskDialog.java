@@ -56,12 +56,7 @@ public class ConfigTaskDialog extends DialogFragment {
             builder.setTitle(R.string.add_task);
         } else {
             displayInfoPanel();
-            builder/*.setTitle(R.string.task_detail)*/
-                    .setNeutralButton(R.string.reset, (dialog, which) -> {
-                        task.reset();
-                        displayChild();
-                        listener.dataChanged();
-                    });
+            builder.setNeutralButton(R.string.reset, null);
         }
 
         builder.setView(view)
@@ -76,18 +71,10 @@ public class ConfigTaskDialog extends DialogFragment {
         AlertDialog dialog = (AlertDialog) getDialog();
         assert dialog != null;
         Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        button.setOnClickListener(v -> clickPositiveButton());
+        button = dialog.getButton(DialogInterface.BUTTON_NEUTRAL);
         button.setOnClickListener(v -> {
-            if (edit) {
-                if (completeEdit()) {
-                    if (newTask) {
-                        addNewTask();
-                    } else {
-                        dismiss();
-                    }
-                }
-            } else {
-                dismiss();
-            }
+            resetTask();
         });
     }
 
@@ -143,6 +130,20 @@ public class ConfigTaskDialog extends DialogFragment {
         }
     }
 
+    private void clickPositiveButton() {
+        if (edit) {
+            if (completeEdit()) {
+                if (newTask) {
+                    addNewTask();
+                } else {
+                    dismiss();
+                }
+            }
+        } else {
+            dismiss();
+        }
+    }
+
     private boolean completeEdit() {
         boolean success = true;
 
@@ -182,6 +183,12 @@ public class ConfigTaskDialog extends DialogFragment {
 
     private void finishTask() {
         task.finishTask(task.getNext());
+        displayChild();
+        listener.dataChanged();
+    }
+
+    private void resetTask() {
+        task.reset();
         displayChild();
         listener.dataChanged();
     }
