@@ -15,8 +15,11 @@
         <activity
             android:name=".UI.TaskListActivity"
             android:label="@string/whose_turn"
+            android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Project.NoActionBar" />
+            android:theme="@style/Theme.Project.NoActionBar"
+            android:launchMode="singleTop"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".UI.ChildrenQueue"
             android:label="Queue"/>

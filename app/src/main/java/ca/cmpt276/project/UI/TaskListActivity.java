@@ -26,6 +26,11 @@ import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.Task;
 import ca.cmpt276.project.model.TaskManager;
 
+/**
+ * This is the activity of list of task, user can
+ * see the detail of tasks and add new tasks from
+ * this activity.
+ */
 public class TaskListActivity extends AppCompatActivity implements ConfigTaskDialog.NoticeDialogListener {
     private TaskManager manager;
     private TaskArrayAdapter adapter;

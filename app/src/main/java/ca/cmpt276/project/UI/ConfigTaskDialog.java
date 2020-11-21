@@ -22,6 +22,12 @@ import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.Task;
 import ca.cmpt276.project.model.TaskManager;
 
+/**
+ * This is the dialog for task detail. Users can see the detail
+ * info in this dialog, and they can also edit or delete task
+ * in this dialog. As data change it will send a message back
+ * to activity to notify the change.
+ */
 public class ConfigTaskDialog extends DialogFragment {
     private static final String POS_KEY = "POS";
 
