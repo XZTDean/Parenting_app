@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Project">
         <activity
             android:name=".UI.TaskListActivity"
-            android:label="Tasks List"
+            android:label="@string/whose_turn"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar" />
         <activity

@@ -6,6 +6,7 @@
     <string name="timeout">timeout Timer</string>
     <string name="configure">Configure Children</string>
     <string name="title_activity_flip_coin_screen">FlipCoinScreen</string>
+    <string name="whose_turn">Whose Turn</string>
 
     <string name="x">X</string>
     <string name="make_your_choice">Make Your Choice</string>
@@ -56,6 +57,7 @@
     <string name="task_detail">Task Detail</string>
     <string name="add_task">Add Task</string>
     <string name="reset">Reset</string>
+    <string name="complete">complete</string>
 
     <string-array name="durationSpinner">
         <item>Select Timeout Duration</item>
@@ -71,6 +73,5 @@
     <string name="uploadButton">Upload Photo from Gallery</string>
     <string name="defaultButton">Use Default Photo</string>
     <string name="continueButton">Continue</string>
-    <string name="complete">complete</string>
 
 </resources>
