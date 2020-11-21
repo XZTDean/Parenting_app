@@ -16,6 +16,7 @@ import java.util.List;
 public class ChildManager implements Iterable<Child> {
 
     private List<Child> children;
+    private Child childPlaying;
     public final String CHILD_KEY = "ChildList";
     /*
      Singleton Support
@@ -29,6 +30,11 @@ public class ChildManager implements Iterable<Child> {
             instance = new ChildManager();
         }
         return instance;
+    }
+
+    public void setList(ChildManager manager){
+        children = manager.getList();
+
     }
 
     public int size() {
@@ -47,8 +53,32 @@ public class ChildManager implements Iterable<Child> {
         children.remove(index);
     }
 
+    public void deleteByObject(Child child) {
+        children.remove(child);
+    }
+
     public Child get(int index){
         return children.get(index);
+    }
+
+    public List<Child >getList(){
+        return children;
+    }
+
+    public Child getChildByName(String name) {
+        if (name == null) {
+            return null;
+        }
+        for (Child child: children) {
+            if (name.equals(child.getName())) {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    public boolean isChildNameExist(String name) {
+        return getChildByName(name) != null;
     }
 
     public String toJson() {
@@ -60,6 +90,18 @@ public class ChildManager implements Iterable<Child> {
         Gson gson = new Gson();
         Type collectionType = new TypeToken<ArrayList<Child>>(){}.getType();
         children = gson.fromJson(json, collectionType);
+    }
+
+    public  Child getChildPlaying(){
+        return childPlaying;
+    }
+
+    public void setChildPlaying(Child child){
+        childPlaying = child;
+    }
+
+    public void updateChildPlayingTimesToPick(){
+        childPlaying.updateTimesToPick();
     }
 
     public Child childOffer(){

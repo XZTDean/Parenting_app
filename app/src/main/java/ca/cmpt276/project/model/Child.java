@@ -8,7 +8,6 @@ package ca.cmpt276.project.model;
 public class Child {
     private String name;
     private int choiceOfHeadsOrTails;  // 1 - heads and 2 - tails
-
     private int timesToPick;
 
     public Child(String name) {
@@ -37,5 +36,18 @@ public class Child {
     }
     public void updateTimesToPick(){
         timesToPick++;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Child child = (Child) o;
+        return name.equals(child.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }
