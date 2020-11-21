@@ -10,9 +10,9 @@
         android:id="@+id/task_info_disp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,6 +84,8 @@
                 android:id="@+id/task_complete_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:text="@string/complete"
                 android:textSize="10sp" />
         </LinearLayout>
@@ -95,7 +97,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
         android:visibility="invisible"
@@ -112,7 +114,7 @@
                 android:id="@+id/task_name_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/name"
@@ -147,8 +149,7 @@
                     android:ems="10"
                     android:hint="@string/name"
                     android:inputType="textPersonName"
-                    android:text="N"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <ImageButton
                     android:id="@+id/task_edit_complete"
@@ -167,8 +168,7 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/description"
-                android:inputType="textMultiLine"
-                android:text="D" />
+                android:inputType="textMultiLine" />
 
         </LinearLayout>
     </LinearLayout>
