@@ -51,7 +51,11 @@ public class ConfigTaskDialog extends DialogFragment {
         } else {
             displayInfoPanel();
             builder.setTitle(R.string.task_detail)
-                    .setNeutralButton(R.string.reset, (dialog, which) -> task.reset());
+                    .setNeutralButton(R.string.reset, (dialog, which) -> {
+                        task.reset();
+                        displayChild();
+                        listener.dataChanged();
+                    });
         }
 
         builder.setView(view)
