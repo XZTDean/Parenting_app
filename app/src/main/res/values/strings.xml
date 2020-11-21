@@ -71,5 +71,6 @@
     <string name="uploadButton">Upload Photo from Gallery</string>
     <string name="defaultButton">Use Default Photo</string>
     <string name="continueButton">Continue</string>
+    <string name="complete">complete</string>
 
 </resources>

@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import ca.cmpt276.project.R;
+import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.Task;
 import ca.cmpt276.project.model.TaskManager;
 
@@ -117,7 +118,19 @@ public class ConfigTaskDialog extends DialogFragment {
         TextView desc = view.findViewById(R.id.task_desc_disp);
         desc.setText(task.getDescription());
 
-        // Child Part - Need work
+        displayChild();
+    }
+
+    private void displayChild() {
+        Child child = task.getNext();
+
+        if (child == null) {
+            View childBlock = view.findViewById(R.id.task_child_block);
+            childBlock.setVisibility(View.GONE);
+        } else {
+            TextView childName = view.findViewById(R.id.task_child_name);
+            childName.setText(child.getName());
+        }
     }
 
     private boolean completeEdit() {
@@ -157,9 +170,15 @@ public class ConfigTaskDialog extends DialogFragment {
         }
     }
 
+    private void finishTask() {
+        task.finishTask(task.getNext());
+        displayChild();
+        listener.dataChanged();
+    }
+
     private void setButton() {
-        ImageButton complete = view.findViewById(R.id.task_edit_complete);
-        complete.setOnClickListener(v -> {
+        ImageButton completeEdit = view.findViewById(R.id.task_edit_complete);
+        completeEdit.setOnClickListener(v -> {
             boolean success = completeEdit();
             if (success) {
                 displayInfoPanel();
@@ -175,6 +194,9 @@ public class ConfigTaskDialog extends DialogFragment {
             listener.dataChanged();
             dismiss();
         });
+
+        Button completeTask = view.findViewById(R.id.task_complete_button);
+        completeTask.setOnClickListener(v -> finishTask());
     }
 
     private void setFields() {
