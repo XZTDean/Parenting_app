@@ -2,7 +2,9 @@ package ca.cmpt276.project.UI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +40,7 @@ public class TaskListActivity extends AppCompatActivity implements ConfigTaskDia
         populateList();
         setButton();
         clickList();
+        setToolbar();
     }
 
     private void populateList() {
@@ -58,6 +61,14 @@ public class TaskListActivity extends AppCompatActivity implements ConfigTaskDia
         });
     }
 
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+    }
+
     private void setButton() {
         FloatingActionButton button = findViewById(R.id.add_task);
         button.setOnClickListener(v -> {
@@ -76,6 +87,7 @@ public class TaskListActivity extends AppCompatActivity implements ConfigTaskDia
     @Override
     public void dataChanged() {
         adapter.notifyDataSetChanged();
+        saveToDisk();
     }
 
     private class TaskArrayAdapter extends ArrayAdapter<Task> {
