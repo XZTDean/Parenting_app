@@ -86,8 +86,8 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Uploading photo from gallery
                 // Adapted from: https://stackoverflow.com/questions/9107900/how-to-upload-image-from-gallery-in-android
-                startActivityForResult(new Intent(Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI),
+                startActivityForResult(
+                        new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI),
                         REQUEST_GALLERY_IMAGE);
             }
         });
@@ -129,7 +129,7 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //
+
         if(requestCode==REQUEST_GALLERY_IMAGE && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
             Bitmap imageBitmap = null;
@@ -146,7 +146,7 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
         }
         else if (requestCode==REQUEST_IMAGE_CAPTURE) {
             Bundle extras = data.getExtras();
-            //assert extras != null;
+
             if(extras !=  null) {
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 imageView.setImageBitmap(imageBitmap);

@@ -40,7 +40,6 @@ import ca.cmpt276.project.model.ChildManager;
  * be a delete button for exist child.
  */
 public class ConfigChildDialog extends DialogFragment {
-    //private static final String NAME = "NAME";
     private static final String CHILD = "CHILD";
     private static final String POS = "POSITION";
     private View view;
