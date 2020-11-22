@@ -12,7 +12,7 @@
     <string name="make_your_choice">Make Your Choice</string>
     <string name="title_activity_coin_flip_screen">CoinFlipScreen</string>
     <string name="add_child">Add Child</string>
-    <string name="edit_child">Edit Child</string>
+    <string name="edit_child">Edit Child\nClick anywhere off dialog to cancel</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="delete">DELETE</string>
