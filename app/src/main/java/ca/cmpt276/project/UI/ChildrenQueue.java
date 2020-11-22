@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,13 +33,26 @@ public class ChildrenQueue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_children_queue);
         manager = ChildManager.getInstance();
-        popQueue(childQueue);
+        popQueue();
         populateListView();
         clickList();
-
+        clickNoChildOption();
     }
 
-    
+    private void clickNoChildOption() {
+        Button noChild = (Button) findViewById(R.id.buttonNoChildSelected);
+        noChild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = FlipCoinScreen.makeIntent(ChildrenQueue.this);
+                intent.putExtra(getString(R.string.no_child_playing), 1);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+
     //populate the queue of children
     private void populateListView() {
         ArrayAdapter<Child> adapter = new myListAdapter();
@@ -68,25 +82,16 @@ public class ChildrenQueue extends AppCompatActivity {
             TextView makeText1 = (TextView) itemView.findViewById(R.id.name_queue);
             makeText1.setText(String.valueOf(CurrentChild.getTimesToPick()));
 
-
-
             return itemView;
-
 
         }
     }
 
-    //use linked-list to store each child such that the order follows the size of each child's timesToPick.
-    public void popQueue(List<Child> childQueue){
-         ChildManager tempManager = manager;
-         tempManager.setList(manager);
-         List<Child> tempList = tempManager.getList();
-         int listSize = tempManager.size();
-         for(int i = 0;i<listSize;i++){
-             Child tempChild = tempManager.childOffer();
-             childQueue.add(tempChild);
-             tempManager.deleteByObject(tempChild);
-         }
+
+    public void popQueue(){
+         manager.deleteChildrenQueue();
+         manager.populateChildrenQueue();
+         childQueue = manager.getChildrenQueue();
     }
 
     //click list will lead to flip coin with a new child picking head or tail.
@@ -97,12 +102,11 @@ public class ChildrenQueue extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(ChildrenQueue.this,childQueue.get(position).getName(),Toast.LENGTH_LONG).show();
                 manager.setChildPlaying(childQueue.get(position));
-                // set this child at the bottom of the queue!
-                //
-                //should be replaced with an intent which starts Flip Coin with an override choice instead of default child.
+
                 Intent intent = FlipCoinScreen.makeIntent(ChildrenQueue.this);
                 intent.putExtra(getString(R.string.override_default), 1);
                 startActivity(intent);
+                finish();
             }
         });
     }

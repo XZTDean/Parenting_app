@@ -40,6 +40,7 @@ public class FlipCoinScreen extends AppCompatActivity {
     private ChildManager childList;
     private Child childPlaying;
     private CoinFlip coinFlip;
+    private int ifNoChildSelected;
     private boolean choiceScreenShown = false;
 
     @Override
@@ -56,8 +57,10 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         coinFlip = CoinFlip.getInstance();
         childList = ChildManager.getInstance();
+        ifNoChildSelected = getIntent().getIntExtra(getString(R.string.no_child_playing), 0);
 
-        if(childList.size() != 0){
+        // this condition revised
+        if(childList.size() != 0 && ifNoChildSelected == 0){
             setupChildPlaying();
             choiceScreenShown = true;
             setupChoiceScreen();
@@ -120,7 +123,9 @@ public class FlipCoinScreen extends AppCompatActivity {
         flipCoin.setOnClickListener(v -> {
             resetResultText();
             resetCoinFaces();
-            childPlaying.updateTimesToPick();
+            if(choiceScreenShown) {
+                childPlaying.updateTimesToPick();
+            }
             coinTossAnimation();
             makeSound();
             flipCoin.setVisibility(View.INVISIBLE);
@@ -259,6 +264,7 @@ public class FlipCoinScreen extends AppCompatActivity {
                 // call children list to change childPlaying start activity
                 Intent intent = ChildrenQueue.makeIntent(FlipCoinScreen.this);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -269,14 +275,12 @@ public class FlipCoinScreen extends AppCompatActivity {
         Button heads = (Button)popupView.findViewById(R.id.buttonHeads);
         heads.setOnClickListener(v -> {
             childPlaying.setChoiceOfHeadsOrTails(1);
-            childList.updateChildPlayingTimesToPick();
             popupWindow.dismiss();
         });
 
         Button tails = (Button)popupView.findViewById(R.id.buttonTails);
         tails.setOnClickListener(v -> {
             childPlaying.setChoiceOfHeadsOrTails(2);
-            childList.updateChildPlayingTimesToPick();
             popupWindow.dismiss();
         });
 

@@ -16,8 +16,9 @@ import java.util.List;
 public class ChildManager implements Iterable<Child> {
 
     private List<Child> children;
-    private List<Child> childQueue;
+    private List<Child> childrenQueue;
     private Child childPlaying;
+    private Child lastChildPlayed;
     public final String CHILD_KEY = "ChildList";
     /*
      Singleton Support
@@ -25,7 +26,7 @@ public class ChildManager implements Iterable<Child> {
     private static ChildManager instance;
     private ChildManager(){
         children = new ArrayList<Child>();
-        childQueue = new ArrayList<Child>();
+        childrenQueue = new ArrayList<Child>();
     }
 
     public static ChildManager getInstance(){
@@ -68,6 +69,10 @@ public class ChildManager implements Iterable<Child> {
         return children;
     }
 
+    public List<Child> getChildrenQueue(){
+        return childrenQueue;
+    }
+
     public Child getChildByName(String name) {
         if (name == null) {
             return null;
@@ -82,6 +87,27 @@ public class ChildManager implements Iterable<Child> {
 
     public boolean isChildNameExist(String name) {
         return getChildByName(name) != null;
+    }
+
+    public void populateChildrenQueue(){
+        List<Child> temp = new ArrayList<Child>(children);
+
+        int size = temp.size();
+        for(int i = 0; i < size; i++){
+            Child tempChild = temp.get(0);
+
+            for(int j =0; j < temp.size(); j++){
+                if(tempChild.getTimesToPick() > temp.get(j).getTimesToPick()){
+                    tempChild = temp.get(j);
+                }
+            }
+            childrenQueue.add(tempChild);
+            temp.remove(tempChild);
+        }
+    }
+
+    public void deleteChildrenQueue(){
+        childrenQueue.removeAll(childrenQueue);
     }
 
     public String toJson() {

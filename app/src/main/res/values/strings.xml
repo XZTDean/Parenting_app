@@ -73,5 +73,6 @@
     <string name="defaultButton">Use Default Photo</string>
     <string name="continueButton">Continue</string>
     <string name="override_default">Override Default</string>
+    <string name="no_child_playing">NoChildPlaying</string>
 
 </resources>
