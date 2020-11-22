@@ -9,66 +9,102 @@
     android:background="@drawable/main_menu">
 
     <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/tom_gif_4"
-        />
+        android:background="@drawable/tom_gif_4" />
 
-    <Button
-        android:id="@+id/coinFlip"
-        android:layout_width="276dp"
-        android:layout_height="75dp"
-        android:text="@string/flip"
-        android:textSize="18sp"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.782" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline14"
+        app:layout_constraintStart_toStartOf="@+id/guideline13"
+        app:layout_constraintTop_toTopOf="@+id/guideline15"
+        app:layout_constraintVertical_bias="0.95">
 
-    <Button
-        android:id="@+id/timeoutTimer"
-        android:layout_width="276dp"
-        android:layout_height="75dp"
-        android:text="@string/timeout"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.467"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.969" />
+        <Button
+            android:id="@+id/configureChildren"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/configure"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/coinFlip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/flip"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/task_manager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/whose_turn"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/timeoutTimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/timeout"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="115dp"
-        android:backgroundTint="#66FFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/circle_background"
+        android:backgroundTint="#66FFFFFF"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:text="@string/mainMenuTitle"
         android:textColor="@color/colorPrimary"
         android:textSize="45sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.003" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
+        app:layout_constraintEnd_toStartOf="@+id/guideline14"
+        app:layout_constraintStart_toStartOf="@+id/guideline13"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/configureChildren"
-        android:layout_width="276dp"
-        android:layout_height="75dp"
-        android:text="@string/configure"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.606" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.175" />
 </androidx.constraintlayout.widget.ConstraintLayout>
