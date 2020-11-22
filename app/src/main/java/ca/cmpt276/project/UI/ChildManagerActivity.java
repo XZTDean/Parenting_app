@@ -10,13 +10,13 @@ import androidx.core.content.ContextCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -80,8 +80,8 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name = manager.get(position).getName();
-                ConfigChildDialog dialog = ConfigChildDialog.getInstance(position, name);
+                Child child = manager.get(position);
+                ConfigChildDialog dialog = ConfigChildDialog.getInstance(position, child);
                 dialog.show(getSupportFragmentManager(), "ConfigChildDialog");
             }
         });
@@ -92,7 +92,7 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfigChildDialog dialog = ConfigChildDialog.getInstance(-1, "");
+                ConfigChildDialog dialog = ConfigChildDialog.getInstance(-1, new Child("",  null));
                 dialog.show(getSupportFragmentManager(), "ConfigChildDialog");
             }
         });
@@ -102,6 +102,7 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
         SharedPreferences prefs = this.getSharedPreferences("AppPreference", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(manager.CHILD_KEY, manager.toJson());
+
         editor.apply();
     }
 
@@ -111,11 +112,12 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
     }
 
     @Override
-    public void onDialogPositiveClick(int pos, String name) {
+    public void onDialogPositiveClick(int pos, Child child) {
         if (pos != -1) {
-            manager.get(pos).setName(name);
+            manager.get(pos).setName(child.getName());
+            manager.get(pos).setPhoto(child.getPhoto());
         } else {
-            manager.add(new Child(name));
+            manager.add(child);
         }
         updateData();
     }
@@ -139,19 +141,17 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
                 itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
             }
 
-            String name = getItem(position);
-            String firstLetter = name.toUpperCase().substring(0, 1);
-            String colorName = "icon_" + position % 5;
-            int colorId = getResources().getIdentifier(colorName, "color", getPackageName());
-            int color = ContextCompat.getColor(ChildManagerActivity.this, colorId);
+            String name = manager.get(position).getName();
+            Bitmap photo = manager.get(position).getPhoto();
 
             TextView nameTextView = itemView.findViewById(R.id.child_name);
             nameTextView.setText(name);
-            TextView iconTextView = itemView.findViewById(R.id.name_icon);
-            iconTextView.setText(firstLetter);
-            iconTextView.setBackgroundTintList(ColorStateList.valueOf(color));
+
+            ImageView childIcon = itemView.findViewById(R.id.child_icon);
+            childIcon.setImageBitmap(photo);
 
             return itemView;
+
         }
     }
 }
