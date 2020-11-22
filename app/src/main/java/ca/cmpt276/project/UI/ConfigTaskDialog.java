@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ca.cmpt276.project.R;
@@ -127,6 +128,9 @@ public class ConfigTaskDialog extends DialogFragment {
         } else {
             TextView childName = view.findViewById(R.id.task_child_name);
             childName.setText(child.getName());
+
+            ImageView childImage = view.findViewById(R.id.task_child_image);
+            childImage.setImageBitmap(child.getPhoto());
         }
     }
 
