@@ -18,7 +18,7 @@ public class ChildManager implements Iterable<Child> {
     private List<Child> children;
     private List<Child> childrenQueue;
     private Child childPlaying;
-    private Child lastChildPlayed;
+    private Child recentChildPlayed;
     public final String CHILD_KEY = "ChildList";
     /*
      Singleton Support
@@ -38,7 +38,6 @@ public class ChildManager implements Iterable<Child> {
 
     public void setList(ChildManager manager){
         children = manager.getList();
-
     }
 
     public int size() {
@@ -71,6 +70,14 @@ public class ChildManager implements Iterable<Child> {
 
     public List<Child> getChildrenQueue(){
         return childrenQueue;
+    }
+
+    public Child getRecentChildPlayed() {
+        return recentChildPlayed;
+    }
+
+    public void setRecentChildPlayed(Child recentChildPlayed) {
+        this.recentChildPlayed = recentChildPlayed;
     }
 
     public Child getChildByName(String name) {

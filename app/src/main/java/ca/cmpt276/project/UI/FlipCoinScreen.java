@@ -55,9 +55,7 @@ public class FlipCoinScreen extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        coinFlip = CoinFlip.getInstance();
-        childList = ChildManager.getInstance();
-        ifNoChildSelected = getIntent().getIntExtra(getString(R.string.no_child_playing), 0);
+        initializeVariables();
 
         // this condition revised
         if(childList.size() != 0 && ifNoChildSelected == 0){
@@ -71,6 +69,12 @@ public class FlipCoinScreen extends AppCompatActivity {
         setupHistoryButton();
 
         setupQueueButton();
+    }
+
+    private void initializeVariables() {
+        coinFlip = CoinFlip.getInstance();
+        childList = ChildManager.getInstance();
+        ifNoChildSelected = getIntent().getIntExtra(getString(R.string.no_child_playing), 0);
     }
 
     private void setupChildPlaying() {
@@ -125,6 +129,7 @@ public class FlipCoinScreen extends AppCompatActivity {
             resetCoinFaces();
             if(choiceScreenShown) {
                 childPlaying.updateTimesToPick();
+                childList.setRecentChildPlayed(childPlaying);
             }
             coinTossAnimation();
             makeSound();
@@ -255,6 +260,8 @@ public class FlipCoinScreen extends AppCompatActivity {
         int height = RelativeLayout.LayoutParams.WRAP_CONTENT;
 
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, false);
+
+        // TODO:show image of child
 
         TextView childNameTextView = (TextView) popupView.findViewById(R.id.textChildName);
         childNameTextView.setText(childPlaying.getName());
