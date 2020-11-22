@@ -1,10 +1,13 @@
 package ca.cmpt276.project.UI;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,7 +83,7 @@ public class ChildrenQueue extends AppCompatActivity {
 
             View itemView = convertView;
             if(itemView == null){
-                itemView = getLayoutInflater().inflate(R.layout.queue_items,parent,false);
+                itemView = getLayoutInflater().inflate(R.layout.queue_items, parent,false);
             }
             //find the coinFlipStats
             Child CurrentChild = childQueue.get(position);
@@ -91,6 +95,12 @@ public class ChildrenQueue extends AppCompatActivity {
             TextView makeText1 = (TextView) itemView.findViewById(R.id.name_queue);
             makeText1.setText(String.valueOf(CurrentChild.getTimesToPick()));
 
+            Bitmap photo = manager.get(position).getPhoto();
+
+            ImageView childIcon = itemView.findViewById(R.id.child_icon);
+            if(childIcon != null) {
+                childIcon.setImageBitmap(photo);
+            }
             return itemView;
 
         }
@@ -119,6 +129,8 @@ public class ChildrenQueue extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 
