@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.io.IOException;
 
 import ca.cmpt276.project.R;
+import ca.cmpt276.project.model.Child;
 
 /*
  * ChildrenPhotoActivity provides the user interface
@@ -39,10 +40,11 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
     private Button continueButton;
     private ImageView imageView;
 
-    //childPhoto will be used in childManager.
     private Bitmap childPhoto;
+    private static Child child;
 
-    public static Intent makeIntent(Context context) {
+    public static Intent makeIntent(Context context, Child childInput) {
+        child = childInput;
         return new Intent(context, ChildrenPhotoActivity.class);
     }
 
@@ -52,6 +54,8 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_children_photo);
 
         imageView = (ImageView) findViewById(R.id.displayPhoto);
+
+        child.setPhoto(childPhoto);
 
         setToolbar();
         setButtons();
@@ -82,8 +86,8 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Uploading photo from gallery
                 // Adapted from: https://stackoverflow.com/questions/9107900/how-to-upload-image-from-gallery-in-android
-                startActivityForResult(new Intent(Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI),
+                startActivityForResult(
+                        new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI),
                         REQUEST_GALLERY_IMAGE);
             }
         });
@@ -114,7 +118,8 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Drawable defaultImage = getResources().getDrawable(R.drawable.default_photo_jerry);
                 imageView.setImageDrawable(defaultImage);
-                // childPhoto = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                childPhoto = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                child.setPhoto(childPhoto);
                 continueButton.setVisibility(View.VISIBLE);
             }
         });
@@ -124,6 +129,7 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
         if(requestCode==REQUEST_GALLERY_IMAGE && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
             Bitmap imageBitmap = null;
@@ -131,20 +137,24 @@ public class ChildrenPhotoActivity extends AppCompatActivity {
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(imageBitmap);
                 childPhoto = imageBitmap;
+                child.setPhoto(childPhoto);
+                continueButton.setVisibility(View.VISIBLE);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        else {
+        else if (requestCode==REQUEST_IMAGE_CAPTURE) {
             Bundle extras = data.getExtras();
-            assert extras != null;
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
-            childPhoto = imageBitmap;
-        }
 
-        continueButton.setVisibility(View.VISIBLE);
+            if(extras !=  null) {
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                imageView.setImageBitmap(imageBitmap);
+                childPhoto = imageBitmap;
+                child.setPhoto(childPhoto);
+                continueButton.setVisibility(View.VISIBLE);
+            }
+        }
 
     }
 
