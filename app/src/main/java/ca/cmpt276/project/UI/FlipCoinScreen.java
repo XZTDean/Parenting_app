@@ -258,7 +258,10 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, false);
 
-        // TODO:show image of child
+        ImageView childIdPhoto = (ImageView) popupView.findViewById(R.id.childIdPhoto);
+
+        assert childIdPhoto != null;
+        childIdPhoto.setImageBitmap(childPlaying.getPhoto());
 
         TextView childNameTextView = (TextView) popupView.findViewById(R.id.textChildName);
         childNameTextView.setText(childPlaying.getName());
