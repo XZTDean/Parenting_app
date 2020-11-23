@@ -6,14 +6,8 @@
     <string name="timeout">timeout Timer</string>
     <string name="configure">Configure Children</string>
     <string name="title_activity_flip_coin_screen">FlipCoinScreen</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="whose_turn">Whose Turn</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="x">X</string>
     <string name="make_your_choice">Make Your Choice</string>
     <string name="title_activity_coin_flip_screen">CoinFlipScreen</string>
@@ -32,7 +26,7 @@
     <string name="exit">Exit</string>
     <string name="return_to_main_menu">RETURN TO MAIN MENU</string>
     <string name="_0">0</string>
-    <string name="name">name</string>
+    <string name="name">Name</string>
     <string name="flip_coin">Flip Coin</string>
     <string name="tails">TAILS</string>
 
@@ -53,10 +47,19 @@
     <string name="name_empty_warnning">Name should not be empty</string>
     <string name="view_history">VIEW HISTORY</string>
     <string name="all">All</string>
+    <string name="time">Time:</string>
+    <string name="colon">:</string>
     <string name="show_queue">Show queue</string>
     <string name="children_with_times_to_pick">Children(With times to pick):</string>
     <string name="addPhoto">Add Photo</string>
-
+    <string name="next_child">Next Child:</string>
+    <string name="description">Description</string>
+    <string name="empty_error">should not be empty</string>
+    <string name="task_exist">Task exist</string>
+    <string name="task_detail">Task Detail</string>
+    <string name="add_task">Add Task</string>
+    <string name="reset">Reset</string>
+    <string name="complete">complete</string>
 
     <string-array name="durationSpinner">
         <item>Select Timeout Duration</item>
@@ -73,6 +76,11 @@
     <string name="defaultButton">Use Default Photo</string>
     <string name="continueButton">Continue</string>
     <string name="changePhoto">CHANGE PHOTO</string>
+    <string name="team_honeydew">Honeydew</string>
+    <string name="developer_name">name</string>
+    <string name="citations">citation</string>
+    <string name="help">Help</string>
+
     <string name="override_default">Override Default</string>
     <string name="no_child_playing">NoChildPlaying</string>
 

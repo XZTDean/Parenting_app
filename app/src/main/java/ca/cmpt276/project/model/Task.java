@@ -111,6 +111,7 @@ public class Task {
     public void reset() {
         taskTaken.clear();
         addChildToMap();
+        current = previous = null;
     }
 
     public String getName() {
