@@ -2,6 +2,7 @@ package ca.cmpt276.project.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -132,6 +133,7 @@ public class FlipCoinScreen extends AppCompatActivity {
                 childPlaying.setRecentlyPlayed(1);
                 childList.setRecentChildPlayed(childPlaying);
             }
+            saveToDisk();
             coinTossAnimation();
             makeSound();
             flipCoin.setVisibility(View.INVISIBLE);
@@ -290,6 +292,15 @@ public class FlipCoinScreen extends AppCompatActivity {
         });
 
     }
+
+    private void saveToDisk() {
+        SharedPreferences prefs = this.getSharedPreferences("AppPreference", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(childList.CHILD_KEY, childList.toJson());
+
+        editor.apply();
+    }
+
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, FlipCoinScreen.class);
