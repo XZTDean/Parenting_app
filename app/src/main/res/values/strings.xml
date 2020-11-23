@@ -47,6 +47,8 @@
     <string name="name_empty_warnning">Name should not be empty</string>
     <string name="view_history">VIEW HISTORY</string>
     <string name="all">All</string>
+    <string name="time">Time:</string>
+    <string name="colon">:</string>
     <string name="show_queue">Show queue</string>
     <string name="children_with_times_to_pick">Children(With times to pick):</string>
     <string name="addPhoto">Add Photo</string>
