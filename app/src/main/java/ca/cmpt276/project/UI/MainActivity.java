@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button help = findViewById(R.id.HelpScreen);
+        Button help = findViewById(R.id.help);
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
