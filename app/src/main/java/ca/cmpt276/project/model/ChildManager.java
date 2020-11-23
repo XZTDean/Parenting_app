@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -96,8 +98,15 @@ public class ChildManager implements Iterable<Child> {
         return getChildByName(name) != null;
     }
 
+    public void resetRecentlyPlayedChild(){
+        for (Child child : children){
+            child.setRecentlyPlayed(0);
+        }
+    }
+
     public void populateChildrenQueue(){
         List<Child> temp = new ArrayList<Child>(children);
+        Collections.sort(temp);
 
         int size = temp.size();
         for(int i = 0; i < size; i++){

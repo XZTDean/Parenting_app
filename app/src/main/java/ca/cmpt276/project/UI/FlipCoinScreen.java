@@ -68,7 +68,6 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         setupHistoryButton();
 
-        setupQueueButton();
     }
 
     private void initializeVariables() {
@@ -129,6 +128,8 @@ public class FlipCoinScreen extends AppCompatActivity {
             resetCoinFaces();
             if(choiceScreenShown) {
                 childPlaying.updateTimesToPick();
+                childList.resetRecentlyPlayedChild();
+                childPlaying.setRecentlyPlayed(1);
                 childList.setRecentChildPlayed(childPlaying);
             }
             coinTossAnimation();
@@ -150,14 +151,6 @@ public class FlipCoinScreen extends AppCompatActivity {
         });
     }
 
-    private void setupQueueButton() {
-        Button btn = findViewById(R.id.showQueue);
-        btn.setOnClickListener(v -> {
-            Intent intent = ChildrenQueue.makeIntent(FlipCoinScreen.this);
-            startActivity(intent);
-        });
-
-    }
 
 
     private void resetCoinFaces() {
@@ -249,6 +242,8 @@ public class FlipCoinScreen extends AppCompatActivity {
     }
 
 
+
+    // Pop up choice Screen
     private void showPopUp(View view) {
         // inflate the queue_items of the popup window
         LayoutInflater inflater = (LayoutInflater)
