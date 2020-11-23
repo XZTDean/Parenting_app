@@ -119,7 +119,6 @@ public class ChildrenQueue extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ChildrenQueue.this,childQueue.get(position).getName(),Toast.LENGTH_LONG).show();
                 manager.setChildPlaying(childQueue.get(position));
 
                 Intent intent = FlipCoinScreen.makeIntent(ChildrenQueue.this);

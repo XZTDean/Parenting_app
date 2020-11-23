@@ -48,17 +48,9 @@ public class FlipCoinScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
+        setupToolBar();
         initializeVariables();
 
-        // this condition revised
         if(childList.size() != 0 && ifNoChildSelected == 0){
             setupChildPlaying();
             choiceScreenShown = true;
@@ -66,9 +58,17 @@ public class FlipCoinScreen extends AppCompatActivity {
         }
 
         setupFlipButton();
-
         setupHistoryButton();
+    }
 
+    private void setupToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void initializeVariables() {
