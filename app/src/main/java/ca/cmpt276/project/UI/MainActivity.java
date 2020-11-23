@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.Button;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.ChildManager;
 import ca.cmpt276.project.model.CoinFlip;
+import ca.cmpt276.project.model.TaskManager;
 
 /**
  * App to flip coins to settle disputes among children
@@ -20,16 +20,11 @@ import ca.cmpt276.project.model.CoinFlip;
  */
 public class MainActivity extends AppCompatActivity {
 
-    ChildManager childManager;
-    CoinFlip coinFlipManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        childManager = ChildManager.getInstance();
-        coinFlipManager = CoinFlip.getInstance();
         loadData();
 
         setupButtons();
@@ -63,13 +58,37 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button taskManage = findViewById(R.id.task_manager);
+        taskManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = TaskListActivity.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+
+        Button help = findViewById(R.id.help);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = HelpScreen.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadData() {
+        ChildManager childManager = ChildManager.getInstance();
+        CoinFlip coinFlipManager = CoinFlip.getInstance();
+        TaskManager taskManager = TaskManager.getInstance();
+
         SharedPreferences prefs = getSharedPreferences("AppPreference", MODE_PRIVATE);
-        String json = prefs.getString(childManager.CHILD_KEY, "[]");
-        String json1 = prefs.getString(coinFlipManager.Flip_KEY,"[]");
-        childManager.loadFromJson(json);
-        coinFlipManager.loadFromJson(json1);
+        String childData = prefs.getString(childManager.CHILD_KEY, "[]");
+        String flipData = prefs.getString(coinFlipManager.Flip_KEY,"[]");
+        String taskData = prefs.getString(taskManager.TASK_KEY, "[]");
+        childManager.loadFromJson(childData);
+        coinFlipManager.loadFromJson(flipData);
+        taskManager.loadFromJson(taskData);
     }
 }

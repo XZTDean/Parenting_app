@@ -26,15 +26,18 @@ public class TaskManager implements Iterable<Task> {
     }
 
     private List<Task> taskList;
+    public final String TASK_KEY = "TaskList";
 
     private TaskManager() {
         taskList = new ArrayList<>();
     }
 
-    public void add(Task task) {
+    public boolean add(Task task) {
         if (!hasTask(task)) {
             taskList.add(task);
+            return true;
         }
+        return false;
     }
 
     public Task get(int i) {
