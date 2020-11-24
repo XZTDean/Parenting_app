@@ -82,18 +82,6 @@ public class ChildManager implements Iterable<Child> {
         this.recentChildPlayed = recentChildPlayed;
     }
 
-    public List<Child> getSpecificChild(Child child){
-        List<Child> myList = new ArrayList<>();
-        for(Child c:children){
-            if(c.getName().equals(child.getName())){
-                myList.add(c);
-            }
-        }
-        return myList;
-    }
-
-
-
 
 
 

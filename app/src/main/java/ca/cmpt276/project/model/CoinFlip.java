@@ -84,4 +84,14 @@ public class CoinFlip {
         return FlipList.iterator();
     }
 
+    public List<CoinFlipStats> getSpecificChild(String childName){
+        List<CoinFlipStats> myList = new ArrayList<>();
+        for(CoinFlipStats c:FlipList){
+            if(c.getChildName().equals(childName)){
+                myList.add(c);
+            }
+        }
+        return myList;
+    }
+
 }
