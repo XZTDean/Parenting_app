@@ -15,6 +15,7 @@
         <activity
             android:name=".UI.HelpScreen"
             android:label="Help Screen"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
             android:parentActivityName=".UI.MainActivity" />
         <activity
@@ -27,7 +28,10 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".UI.ChildrenQueue"
-            android:label="Queue" />
+            android:label="Queue"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Project.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".UI.flipHistory"
             android:label="History Screen"
@@ -45,6 +49,7 @@
         <activity
             android:name=".UI.FlipCoinScreen"
             android:label="@string/title_activity_flip_coin_screen"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity

@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,7 +18,9 @@ import java.util.List;
 public class ChildManager implements Iterable<Child> {
 
     private List<Child> children;
+    private List<Child> childrenQueue;
     private Child childPlaying;
+    private Child recentChildPlayed;
     public final String CHILD_KEY = "ChildList";
     /*
      Singleton Support
@@ -24,7 +28,9 @@ public class ChildManager implements Iterable<Child> {
     private static ChildManager instance;
     private ChildManager(){
         children = new ArrayList<Child>();
+        childrenQueue = new ArrayList<Child>();
     }
+
     public static ChildManager getInstance(){
         if (instance == null){
             instance = new ChildManager();
@@ -34,7 +40,6 @@ public class ChildManager implements Iterable<Child> {
 
     public void setList(ChildManager manager){
         children = manager.getList();
-
     }
 
     public int size() {
@@ -65,6 +70,18 @@ public class ChildManager implements Iterable<Child> {
         return children;
     }
 
+    public List<Child> getChildrenQueue(){
+        return childrenQueue;
+    }
+
+    public Child getRecentChildPlayed() {
+        return recentChildPlayed;
+    }
+
+    public void setRecentChildPlayed(Child recentChildPlayed) {
+        this.recentChildPlayed = recentChildPlayed;
+    }
+
     public Child getChildByName(String name) {
         if (name == null) {
             return null;
@@ -79,6 +96,34 @@ public class ChildManager implements Iterable<Child> {
 
     public boolean isChildNameExist(String name) {
         return getChildByName(name) != null;
+    }
+
+    public void resetRecentlyPlayedChild(){
+        for (Child child : children){
+            child.setRecentlyPlayed(0);
+        }
+    }
+
+    public void populateChildrenQueue(){
+        List<Child> temp = new ArrayList<Child>(children);
+        Collections.sort(temp);
+
+        int size = temp.size();
+        for(int i = 0; i < size; i++){
+            Child tempChild = temp.get(0);
+
+            for(int j =0; j < temp.size(); j++){
+                if(tempChild.getTimesToPick() > temp.get(j).getTimesToPick()){
+                    tempChild = temp.get(j);
+                }
+            }
+            childrenQueue.add(tempChild);
+            temp.remove(tempChild);
+        }
+    }
+
+    public void deleteChildrenQueue(){
+        childrenQueue.removeAll(childrenQueue);
     }
 
     public String toJson() {
@@ -114,9 +159,10 @@ public class ChildManager implements Iterable<Child> {
                 index = i;
             }
         }
-        children.get(index).updateTimesToPick();
+        childPlaying = selectedChild;
         return selectedChild;
     }
+
 
     @Override
     public Iterator<Child> iterator() {

@@ -13,10 +13,11 @@ import java.io.ByteArrayOutputStream;
  * Uses an integer that can be 0 - (child has not flipped yet), 1 - (child got heads)
  * and 2- (child got tails).
  */
-public class Child implements Parcelable {
+public class Child implements Parcelable, Comparable<Child>{
     private String name;
     private int choiceOfHeadsOrTails;  // 1 - heads and 2 - tails
     private int timesToPick;
+    private int recentlyPlayed;  // 1 - true and 0 - false
 
     private String encodedPhoto;
 
@@ -76,6 +77,14 @@ public class Child implements Parcelable {
         }
     }
 
+    public int getRecentlyPlayed() {
+        return recentlyPlayed;
+    }
+
+    public void setRecentlyPlayed(int recentlyPlayed) {
+        this.recentlyPlayed = recentlyPlayed;
+    }
+
     public int getChoiceOfHeadsOrTails() {
         return choiceOfHeadsOrTails;
     }
@@ -115,5 +124,11 @@ public class Child implements Parcelable {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public int compareTo(Child child) {
+        int compareValue = child.getRecentlyPlayed();
+        return this.recentlyPlayed - compareValue;
     }
 }

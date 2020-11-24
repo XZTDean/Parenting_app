@@ -28,56 +28,56 @@
             android:id="@+id/configureChildren"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:text="@string/configure"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/coinFlip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:text="@string/flip"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/task_manager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:text="@string/whose_turn"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/timeoutTimer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:text="@string/timeout"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:text="@string/help"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
 
     </LinearLayout>
@@ -118,5 +118,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.175" />
+        app:layout_constraintGuide_percent="0.19" />
 </androidx.constraintlayout.widget.ConstraintLayout>

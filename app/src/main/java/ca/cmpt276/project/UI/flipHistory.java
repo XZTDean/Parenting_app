@@ -121,9 +121,9 @@ public class flipHistory extends AppCompatActivity {
 
             return itemView;
 
-
         }
     }
+
 
 
     public static Intent makeIntent(Context context) {

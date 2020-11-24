@@ -2,6 +2,7 @@ package ca.cmpt276.project.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -40,12 +41,27 @@ public class FlipCoinScreen extends AppCompatActivity {
     private ChildManager childList;
     private Child childPlaying;
     private CoinFlip coinFlip;
+    private int ifNoChildSelected;
     private boolean choiceScreenShown = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin_screen);
+        setupToolBar();
+        initializeVariables();
+
+        if(childList.size() != 0 && ifNoChildSelected == 0){
+            setupChildPlaying();
+            choiceScreenShown = true;
+            setupChoiceScreen();
+        }
+
+        setupFlipButton();
+        setupHistoryButton();
+    }
+
+    private void setupToolBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,22 +69,25 @@ public class FlipCoinScreen extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+    }
 
-
+    private void initializeVariables() {
         coinFlip = CoinFlip.getInstance();
         childList = ChildManager.getInstance();
+        ifNoChildSelected = getIntent().getIntExtra(getString(R.string.no_child_playing), 0);
+    }
 
-        if(childList.size() != 0){
+    private void setupChildPlaying() {
+        int overrideDefault = getIntent().getIntExtra(getString(R.string.override_default), 0);
+
+        // default choice for child playing
+        if(overrideDefault == 0){
             childPlaying = childList.childOffer();
-            choiceScreenShown = true;
-            setupChoiceScreen();
         }
-
-        setupFlipButton();
-
-        setupHistoryButton();
-
-        setupQueueButton();
+        // custom choice by user for child playing
+        else{
+            childPlaying = childList.getChildPlaying();
+        }
     }
 
 
@@ -108,7 +127,13 @@ public class FlipCoinScreen extends AppCompatActivity {
         flipCoin.setOnClickListener(v -> {
             resetResultText();
             resetCoinFaces();
-            //childPlaying.updateTimesToPick();
+            if(choiceScreenShown) {
+                childPlaying.updateTimesToPick();
+                childList.resetRecentlyPlayedChild();
+                childPlaying.setRecentlyPlayed(1);
+                childList.setRecentChildPlayed(childPlaying);
+            }
+            saveToDisk();
             coinTossAnimation();
             makeSound();
             flipCoin.setVisibility(View.INVISIBLE);
@@ -128,14 +153,6 @@ public class FlipCoinScreen extends AppCompatActivity {
         });
     }
 
-    private void setupQueueButton() {
-        Button btn = findViewById(R.id.showQueue);
-        btn.setOnClickListener(v -> {
-            Intent intent = ChildrenQueue.makeIntent(FlipCoinScreen.this);
-            startActivity(intent);
-        });
-
-    }
 
 
     private void resetCoinFaces() {
@@ -152,6 +169,7 @@ public class FlipCoinScreen extends AppCompatActivity {
         TextView textHeads = (TextView) findViewById(R.id.textViewHeads);
         textHeads.setVisibility(View.INVISIBLE);
     }
+
 
     private void coinTossAnimation() {
         CoinFlipStats resultStats;
@@ -226,6 +244,8 @@ public class FlipCoinScreen extends AppCompatActivity {
     }
 
 
+
+    // Pop up choice Screen
     private void showPopUp(View view) {
         // inflate the queue_items of the popup window
         LayoutInflater inflater = (LayoutInflater)
@@ -238,14 +258,20 @@ public class FlipCoinScreen extends AppCompatActivity {
 
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, false);
 
+        ImageView childIdPhoto = (ImageView) popupView.findViewById(R.id.childIdPhoto);
+
+        assert childIdPhoto != null;
+        childIdPhoto.setImageBitmap(childPlaying.getPhoto());
+
         TextView childNameTextView = (TextView) popupView.findViewById(R.id.textChildName);
         childNameTextView.setText(childPlaying.getName());
         childNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // call children list to change childPlaying start activity
-                childPlaying = childList.getChildPlaying();
-                childNameTextView.setText(childPlaying.getName());
+                Intent intent = ChildrenQueue.makeIntent(FlipCoinScreen.this);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -256,19 +282,25 @@ public class FlipCoinScreen extends AppCompatActivity {
         Button heads = (Button)popupView.findViewById(R.id.buttonHeads);
         heads.setOnClickListener(v -> {
             childPlaying.setChoiceOfHeadsOrTails(1);
-            childList.updateChildPlayingTimesToPick();
             popupWindow.dismiss();
         });
 
         Button tails = (Button)popupView.findViewById(R.id.buttonTails);
         tails.setOnClickListener(v -> {
             childPlaying.setChoiceOfHeadsOrTails(2);
-            childList.updateChildPlayingTimesToPick();
             popupWindow.dismiss();
         });
 
-        // Setup change child screen
     }
+
+    private void saveToDisk() {
+        SharedPreferences prefs = this.getSharedPreferences("AppPreference", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(childList.CHILD_KEY, childList.toJson());
+
+        editor.apply();
+    }
+
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, FlipCoinScreen.class);
