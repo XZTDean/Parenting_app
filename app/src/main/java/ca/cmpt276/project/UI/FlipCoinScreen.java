@@ -58,6 +58,7 @@ public class FlipCoinScreen extends AppCompatActivity {
         }
 
         setupFlipButton();
+
         setupHistoryButton();
     }
 
