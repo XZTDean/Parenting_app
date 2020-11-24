@@ -72,8 +72,9 @@ public class flipHistory extends AppCompatActivity {
                 }
                 else{
                     toggleChildOnlyHistory = false;
-                    populateListView();
                     myList = coinFlipManager.getList();
+                    populateListView();
+
                     toggleHistoryView.setText(R.string.all);
                 }
             }
