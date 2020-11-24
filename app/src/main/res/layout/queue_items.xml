@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:backgroundTint="#2196F3"
+        android:background="#B3E4E1E1"
         android:gravity="center"
         android:text="@string/_0"
         android:textColor="@color/green"

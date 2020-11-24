@@ -340,6 +340,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private void startSelected() {
         timeoutTimer = TimeoutTimer.getNewInstance(runnable, chosenDuration);
         timeoutTimer.start();
+        customDuration.setVisibility(View.INVISIBLE);
+        customDurationLayout.setVisibility(View.INVISIBLE);
         displayTimeDisplay();
         setButtonInRunning();
     }

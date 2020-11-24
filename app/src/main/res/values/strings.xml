@@ -83,5 +83,6 @@
 
     <string name="override_default">Override Default</string>
     <string name="no_child_playing">NoChildPlaying</string>
+    <string name="tasks">Tasks:</string>
 
 </resources>

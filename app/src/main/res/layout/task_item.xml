@@ -15,6 +15,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="serif"
+        android:background="#B2FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,6 +28,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
         android:orientation="horizontal"
+        android:background="#B2FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_name">
