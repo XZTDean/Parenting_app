@@ -26,7 +26,9 @@ import java.util.List;
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.ChildManager;
-
+/**
+*
+ */
 public class ChildrenQueue extends AppCompatActivity {
 
 
