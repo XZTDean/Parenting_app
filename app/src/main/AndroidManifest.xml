@@ -15,6 +15,7 @@
         <activity
             android:name=".UI.HelpScreen"
             android:label="Help Screen"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
             android:parentActivityName=".UI.MainActivity" />
         <activity
