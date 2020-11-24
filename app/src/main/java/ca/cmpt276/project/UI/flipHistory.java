@@ -66,12 +66,15 @@ public class flipHistory extends AppCompatActivity {
             public void onClick(View v) {
                 if(!toggleChildOnlyHistory){
                     toggleChildOnlyHistory = true;
+                    myList = coinFlipManager.getSpecificChild(childPlayingName);
                     populateListView();
                     toggleHistoryView.setText(childPlayingName);
                 }
                 else{
                     toggleChildOnlyHistory = false;
+                    myList = coinFlipManager.getList();
                     populateListView();
+
                     toggleHistoryView.setText(R.string.all);
                 }
             }

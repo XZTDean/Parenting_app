@@ -82,6 +82,9 @@ public class ChildManager implements Iterable<Child> {
         this.recentChildPlayed = recentChildPlayed;
     }
 
+
+
+
     public Child getChildByName(String name) {
         if (name == null) {
             return null;
