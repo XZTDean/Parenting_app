@@ -25,7 +25,7 @@
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/tom_gif_6"
+        android:background="@drawable/tom_gif_9"
         />
 
     <include layout="@layout/content_flip_coin_screen" />
