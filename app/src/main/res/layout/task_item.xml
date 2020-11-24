@@ -11,11 +11,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="#E81647"
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="serif"
-        android:background="#B2FFFFFF"
+        android:background="#992C2C2C"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +28,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
         android:orientation="horizontal"
-        android:background="#B2FFFFFF"
+        android:background="#992C2C2C"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_name">
@@ -38,13 +38,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:text="@string/next_child"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/task_child"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
