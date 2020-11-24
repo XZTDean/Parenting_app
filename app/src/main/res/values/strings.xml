@@ -86,7 +86,7 @@
     <string name="override_default">Override Default</string>
     <string name="no_child_playing">NoChildPlaying</string>
     <string name="tasks">Tasks:</string>
-    <string name="developer_name">Developer: \nRepo Manager: \tShubh kumar Mall\nProduct Owner:\tXingjian Ding
-        \nScrum Master:\tZeti Xiong\nTeam member: \tJoshua Taylor</string>
+    <string name="developer_name">Developer: \nRepo Manager: Shubh kumar Mall\nProduct Owner: Xingjian Ding
+        \nScrum Master: Zeti Xiong\nTeam member: Joshua Taylor</string>
 
 </resources>
