@@ -43,17 +43,17 @@
 
     <TextView
         android:id="@+id/child_config_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="368dp"
+        android:layout_height="59dp"
         android:layout_marginTop="16dp"
+        android:background="#99FFFFFF"
         android:text="@string/children_with_times_to_pick"
         android:textAllCaps="true"
         android:textColor="@color/colorPrimary"
-        android:background="#99FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="serif"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarQ" />
 
