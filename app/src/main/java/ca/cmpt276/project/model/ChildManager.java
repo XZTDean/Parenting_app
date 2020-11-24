@@ -65,6 +65,21 @@ public class ChildManager implements Iterable<Child> {
         return children;
     }
 
+    public List<Child> getSpecificChild(Child child){
+        List<Child> myList = new ArrayList<>();
+        for(Child c:children){
+            if(c.getName().equals(child.getName())){
+                myList.add(c);
+            }
+        }
+        return myList;
+    }
+
+
+
+
+
+
     public Child getChildByName(String name) {
         if (name == null) {
             return null;
