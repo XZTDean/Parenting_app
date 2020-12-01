@@ -71,6 +71,20 @@
         <item>Custom</item>
     </string-array>
 
+    <string-array name="breathsSpinner">
+        <item>N</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
     <string name="newPhotoButton">Take New Photo</string>
     <string name="uploadButton">Upload Photo from Gallery</string>
     <string name="defaultButton">Use Default Photo</string>
@@ -88,5 +102,8 @@
     <string name="tasks">Tasks:</string>
     <string name="developer_name">Developer: \nRepo Manager: Shubh kumar Mall\nProduct Owner: Xingjian Ding
         \nScrum Master: Zeti Xiong\nTeam member: Joshua Taylor</string>
+    <string name="takeBreath">Take a Breath</string>
+    <string name="nBreathsHeader1">Let\'s Take</string>
+    <string name="nBreathsHeader2">Breaths Together</string>
 
 </resources>

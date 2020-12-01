@@ -88,6 +88,14 @@
             android:theme="@style/Theme.Project.NoActionBar"
             android:name=".UI.ChildrenPhotoActivity"
             android:launchMode="singleTop" />
+        <activity
+            android:label="Take a Breath"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:parentActivityName=".UI.MainActivity"
+            android:theme="@style/Theme.Project.NoActionBar"
+            android:name=".UI.BreathActivity"
+            android:launchMode="singleTop" />
 
     </application>
 
