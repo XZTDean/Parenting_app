@@ -9,11 +9,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -121,6 +123,13 @@ public class TaskListActivity extends AppCompatActivity implements ConfigTaskDia
                 String nextChild = next.getName();
                 TextView child = itemView.findViewById(R.id.task_child);
                 child.setText(nextChild);
+
+                Bitmap photo = next.getPhoto();
+
+                ImageView childIcon = itemView.findViewById(R.id.child_icon_task);
+                if(childIcon != null) {
+                    childIcon.setImageBitmap(photo);
+                }
             } else {
                 view.setVisibility(View.GONE);
             }
