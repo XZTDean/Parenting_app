@@ -14,9 +14,11 @@ public class TimeoutTimer {
      * Countdown time in milliseconds
      */
     private long remainingTime;
+    private long displayTime;
     private long finishTime;
     private Status status;
     private final int option;
+    private double speed;
 
     public enum Status {
         ready, running, paused, stop
@@ -60,8 +62,10 @@ public class TimeoutTimer {
      * @param time Time set for timer in minutes
      */
     private TimeoutTimer(Runnable runnable, int time) {
+        this.speed = 1;
         this.option = time;
-        this.remainingTime = minToMillisecond(time);
+        this.displayTime = minToMillisecond(time);
+        this.remainingTime = (long) (displayTime / speed);
         this.runnable = runnable;
         status = Status.ready;
     }
@@ -87,11 +91,7 @@ public class TimeoutTimer {
         status = Status.running;
     }
 
-    /**
-     * Pause the timer
-     * @return remaining time in seconds
-     */
-    public long pause() {
+    public void pause() {
         System.out.println("paused");
         if (status != Status.running) {
             throw new IllegalStateException("Timer is not running");
@@ -99,7 +99,6 @@ public class TimeoutTimer {
         updateRemainingTime();
         thread.interrupt();
         status = Status.paused;
-        return remainingTime / 1000;
     }
 
     public void resume() {
@@ -117,7 +116,8 @@ public class TimeoutTimer {
         if (status == Status.running) {
             pause();
         }
-        remainingTime = minToMillisecond(option);
+        displayTime = minToMillisecond(option);
+        remainingTime = (long) (displayTime / speed);
         status = Status.ready;
     }
 
@@ -132,12 +132,34 @@ public class TimeoutTimer {
         if (status == Status.running) {
             updateRemainingTime();
         }
-        return remainingTime / 1000;
+        return displayTime / 1000;
     }
 
     private void updateRemainingTime() {
         long currentTime = System.currentTimeMillis();
         remainingTime = finishTime - currentTime;
+        displayTime = (long) (remainingTime * speed);
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        if (speed <= 0) {
+            throw new IllegalArgumentException("Speed should be positive");
+        }
+        boolean running = status == Status.running;
+        if (running) {
+            pause();
+        }
+
+        this.speed = speed;
+        remainingTime = (long) (displayTime / speed);
+
+        if (running) {
+            resume();
+        }
     }
 
     private long minToMillisecond(int minute) {
@@ -146,6 +168,6 @@ public class TimeoutTimer {
 
     public void endTimer() {
         status = Status.stop;
-        remainingTime = 0;
+        remainingTime = displayTime = 0;
     }
 }
