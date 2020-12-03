@@ -52,5 +52,7 @@ public class Breath {
         return breathPerson;
     }
 
+    public Boolean isInhaling(){ return ifInhale; }
+
 
 }
