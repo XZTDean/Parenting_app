@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +20,7 @@ import ca.cmpt276.project.model.BreathManager;
 import ca.cmpt276.project.model.ChildManager;
 import ca.cmpt276.project.model.TimeoutTimer;
 
-public class BreathActivity extends AppCompatActivity {
+public class BreathActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     //private BreathManager breathManager = BreathManager.g;
 
@@ -30,6 +31,8 @@ public class BreathActivity extends AppCompatActivity {
     public enum Status {
         ready, running, paused, stop
     }
+
+    private int breathsSelected;
 
     private Thread thread;
 
@@ -52,15 +55,23 @@ public class BreathActivity extends AppCompatActivity {
                     } else {
                         begin.setText(IN);
                     }
-                    //reset();
+
+                    if(!breath.isInhaling()) {
+                        breath.updateBreathLeft();
+                    }
                     breath.changeBreath();
-                    breath.updateBreathLeft();
+
                     animation = new CircleAngleAnimation(circle, 0);
                     animation.setDuration(150);
                     circle.startAnimation(animation);
                     breathRemainingTime = 3000;
 
+                    if(breath.getBreathNum() < 1){
+                        onFinish();
+                    }
+
                 }
+
             });
         }
     };
@@ -87,6 +98,7 @@ public class BreathActivity extends AppCompatActivity {
 
         breathsSpinner = (Spinner) findViewById(R.id.breathsSpinner);
         setSpinner();
+        breathsSpinner.setOnItemSelectedListener(this);
 
         begin.setOnClickListener(v -> beginSelected());
 
@@ -94,6 +106,18 @@ public class BreathActivity extends AppCompatActivity {
         circle.setRadius(0);
         animation = new CircleAngleAnimation(circle, radius);
 
+    }
+
+    private void onFinish() {
+        Context context = getApplicationContext();
+        CharSequence text = "Namaste -- Your breaths are complete :)";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        begin.setText("begin");
+        breathsSpinner.setEnabled(true);
     }
 
     private void startBreath() {
@@ -142,6 +166,8 @@ public class BreathActivity extends AppCompatActivity {
     }
 
     private void beginSelected() {
+        breathsSpinner.setEnabled(false);
+
         if(breath.isInhaling()){
             begin.setText(IN);
         } else {
@@ -153,7 +179,7 @@ public class BreathActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     startBreath();
-                    System.out.println("In");
+                    System.out.println(breath.getBreathNum());
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     System.out.println(breathRemainingTime);
                     reset();
@@ -169,39 +195,45 @@ public class BreathActivity extends AppCompatActivity {
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-
         switch (pos) {
-            case 0:
-                breath.setBreathNum(1);
-                break;
             case 1:
-                breath.setBreathNum(2);
+                breathsSelected = 1;
                 break;
             case 2:
-                breath.setBreathNum(3);
+                breathsSelected = 2;
                 break;
             case 3:
-                breath.setBreathNum(4);
+                breathsSelected = 3;
                 break;
             case 4:
-                breath.setBreathNum(5);
+                breathsSelected = 4;
                 break;
             case 5:
-                breath.setBreathNum(6);
+                breathsSelected = 5;
                 break;
             case 6:
-                breath.setBreathNum(7);
+                breathsSelected = 6;
                 break;
             case 7:
-                breath.setBreathNum(8);
+                breathsSelected = 7;
                 break;
             case 8:
-                breath.setBreathNum(9);
+                breathsSelected = 8;
                 break;
             case 9:
-                breath.setBreathNum(10);
+                breathsSelected = 9;
+                break;
+            case 10:
+                breathsSelected = 10;
                 break;
         }
+
+        breath.setBreathNum(breathsSelected);
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
