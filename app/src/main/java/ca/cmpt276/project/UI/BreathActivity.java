@@ -23,12 +23,20 @@ public class BreathActivity extends AppCompatActivity {
 
     //private BreathManager breathManager = BreathManager.g;
 
-    OnCustomEventListener mListener;
+
+    private long finishTime;
+    private TimeoutTimer.Status status;
+    public enum Status {
+        ready, running, paused, stop
+    }
 
     private Thread thread;
 
     private String IN = "In";
     private String OUT = "Out";
+
+    private Circle circle;
+    CircleAngleAnimation animation;
 
     private long breathRemainingTime = 3000;
 
@@ -43,9 +51,11 @@ public class BreathActivity extends AppCompatActivity {
                     } else {
                         begin.setText(IN);
                     }
-                    reset();
+                    //reset();
                     breath.changeBreath();
                     breath.updateBreathLeft();
+                    circle.setAngle(0);
+                    CircleAngleAnimation animation = new CircleAngleAnimation(circle, 360);
 
                 }
             });
@@ -67,8 +77,7 @@ public class BreathActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breath);
 
-
-
+        status = TimeoutTimer.Status.ready;
 
         begin = (Button) findViewById(R.id.begin);
         begin.setText("begin");
@@ -76,45 +85,63 @@ public class BreathActivity extends AppCompatActivity {
         breathsSpinner = (Spinner) findViewById(R.id.breathsSpinner);
         setSpinner();
 
-
         begin.setOnClickListener(v -> beginSelected());
+
+        circle = (Circle) findViewById(R.id.circle);
+        circle.setAngle(0);
+        animation = new CircleAngleAnimation(circle, 360);
 
     }
 
     private void startBreath() {
+        if (status != TimeoutTimer.Status.ready) {
+            throw new IllegalStateException("Timer is not ready");
+        }
         thread = new Thread(changeBreathRunnable){
-            @Override
 
+            @Override
             public void run() {
+                circle.setAngle(0);
+                animation.setDuration(breathRemainingTime);
+                System.out.println("startAnim");
+                circle.startAnimation(animation);
                 try {
                     Thread.sleep(breathRemainingTime);
                 } catch (InterruptedException e) {
                     return;
                 }
                 super.run();
+                endTimer();
             }
         };
         thread.start();
+        finishTime = System.currentTimeMillis() + breathRemainingTime;
+        status = TimeoutTimer.Status.running;
     }
 
     public void reset() {
+
+        animation = new CircleAngleAnimation(circle, 360);
         breathRemainingTime = 3000;
+        circle.setAngle(0);
+        status = TimeoutTimer.Status.ready;
     }
 
-    public interface OnCustomEventListener {
-        void onEvent();
+    private void updateRemainingTime() {
+        long currentTime = System.currentTimeMillis();
+        breathRemainingTime = finishTime - currentTime;
     }
 
-    public void setCustomEventListener(OnCustomEventListener eventListener) {
-        mListener = eventListener;
-
+    public void endTimer() {
+        status = TimeoutTimer.Status.stop;
+        breathRemainingTime = 0;
     }
 
     private void beginSelected() {
         if(breath.isInhaling()){
-            begin.setText(OUT);
-        } else {
             begin.setText(IN);
+        } else {
+            begin.setText(OUT);
         }
 
         begin.setOnTouchListener(new View.OnTouchListener() {
@@ -122,7 +149,9 @@ public class BreathActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     startBreath();
+                    System.out.println("In");
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    System.out.println(breathRemainingTime);
                     reset();
                 }
 

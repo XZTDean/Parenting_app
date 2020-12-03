@@ -15,6 +15,17 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ca.cmpt276.project.UI.Circle
+        android:id="@+id/circle"
+        android:layout_width="85dp"
+        android:layout_height="116dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nBreathsHeader2"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/nBreathsHeader1"
         android:layout_width="230dp"
