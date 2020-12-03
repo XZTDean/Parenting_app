@@ -202,6 +202,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         TextView secBox = findViewById(R.id.second_text);
         minBox.setText(String.valueOf(min));
         secBox.setText(String.format("%02d", sec));
+        progressBar.setProgress(100);
     }
 
     private void setupGifBG() {
