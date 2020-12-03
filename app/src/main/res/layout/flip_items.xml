@@ -47,6 +47,7 @@
         android:text="TextView"
         android:textColor="@color/white" />
 
+
     <ImageView
         android:id="@+id/child_icon_history"
         android:layout_width="48dp"
