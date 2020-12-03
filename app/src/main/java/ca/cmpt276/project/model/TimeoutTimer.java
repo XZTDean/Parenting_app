@@ -3,20 +3,21 @@ package ca.cmpt276.project.model;
 /**
  * This model for timer, it will only hold a timer each time.
  * It can start, pause, resume and reset a timer. It can return
- * the remaining time of the timer.
+ * the remaining time of the timer. It can change the timer speed.
  */
 public class TimeoutTimer {
     private static TimeoutTimer instance;
 
     private Thread thread;
     private final Runnable runnable;
-    /**
-     * Countdown time in milliseconds
-     */
+    /** Countdown time in milliseconds (actual time) */
     private long remainingTime;
+    /** Display or set time (will not changed by speed) */
+    private long displayTime;
     private long finishTime;
     private Status status;
     private final int option;
+    private double speed;
 
     public enum Status {
         ready, running, paused, stop
@@ -60,8 +61,10 @@ public class TimeoutTimer {
      * @param time Time set for timer in minutes
      */
     private TimeoutTimer(Runnable runnable, int time) {
+        this.speed = 1;
         this.option = time;
-        this.remainingTime = minToMillisecond(time);
+        this.displayTime = minToMillisecond(time);
+        this.remainingTime = (long) (displayTime / speed);
         this.runnable = runnable;
         status = Status.ready;
     }
@@ -87,11 +90,7 @@ public class TimeoutTimer {
         status = Status.running;
     }
 
-    /**
-     * Pause the timer
-     * @return remaining time in seconds
-     */
-    public long pause() {
+    public void pause() {
         System.out.println("paused");
         if (status != Status.running) {
             throw new IllegalStateException("Timer is not running");
@@ -99,7 +98,6 @@ public class TimeoutTimer {
         updateRemainingTime();
         thread.interrupt();
         status = Status.paused;
-        return remainingTime / 1000;
     }
 
     public void resume() {
@@ -117,7 +115,8 @@ public class TimeoutTimer {
         if (status == Status.running) {
             pause();
         }
-        remainingTime = minToMillisecond(option);
+        displayTime = minToMillisecond(option);
+        remainingTime = (long) (displayTime / speed);
         status = Status.ready;
     }
 
@@ -126,18 +125,40 @@ public class TimeoutTimer {
     }
 
     /**
-     * @return remaining time in seconds
+     * @return displayed remaining time in seconds
      */
     public long getRemainingTime() {
         if (status == Status.running) {
             updateRemainingTime();
         }
-        return remainingTime / 1000;
+        return displayTime / 1000;
     }
 
     private void updateRemainingTime() {
         long currentTime = System.currentTimeMillis();
         remainingTime = finishTime - currentTime;
+        displayTime = (long) (remainingTime * speed);
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        if (speed <= 0) {
+            throw new IllegalArgumentException("Speed should be positive");
+        }
+        boolean running = status == Status.running;
+        if (running) {
+            pause(); // cannot change remaining time during running
+        }
+
+        this.speed = speed;
+        remainingTime = (long) (displayTime / speed);
+
+        if (running) {
+            resume();
+        }
     }
 
     private long minToMillisecond(int minute) {
@@ -146,6 +167,6 @@ public class TimeoutTimer {
 
     public void endTimer() {
         status = Status.stop;
-        remainingTime = 0;
+        remainingTime = displayTime = 0;
     }
 }

@@ -93,6 +93,10 @@ public class Child implements Parcelable, Comparable<Child>{
         this.choiceOfHeadsOrTails = choiceOfHeadsOrTails;
     }
 
+    public String getEncodedPhoto() {
+        return encodedPhoto;
+    }
+
     public int getTimesToPick() {
         return timesToPick;
     }
