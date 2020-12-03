@@ -3,17 +3,16 @@ package ca.cmpt276.project.model;
 /**
  * This model for timer, it will only hold a timer each time.
  * It can start, pause, resume and reset a timer. It can return
- * the remaining time of the timer.
+ * the remaining time of the timer. It can change the timer speed.
  */
 public class TimeoutTimer {
     private static TimeoutTimer instance;
 
     private Thread thread;
     private final Runnable runnable;
-    /**
-     * Countdown time in milliseconds
-     */
+    /** Countdown time in milliseconds (actual time) */
     private long remainingTime;
+    /** Display or set time (will not changed by speed) */
     private long displayTime;
     private long finishTime;
     private Status status;
@@ -126,7 +125,7 @@ public class TimeoutTimer {
     }
 
     /**
-     * @return remaining time in seconds
+     * @return displayed remaining time in seconds
      */
     public long getRemainingTime() {
         if (status == Status.running) {
@@ -151,7 +150,7 @@ public class TimeoutTimer {
         }
         boolean running = status == Status.running;
         if (running) {
-            pause();
+            pause(); // cannot change remaining time during running
         }
 
         this.speed = speed;
