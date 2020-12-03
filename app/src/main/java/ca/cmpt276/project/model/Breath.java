@@ -6,53 +6,44 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Breath {
-    private int breathNum = 3;   // #breath for each breath activity(default is 3)
-    private String breathPerson;  // the person who takes the deep breath(could be user or the children)
 
-    private long breathTimeLeft;
-    private CountDownTimer timer;
+    private String breathPerson;  // the person who takes the deep breath(could be user or the children)
+    private int breathNumLeft;
+
+
     private boolean ifInhale = true;
     private boolean ifBreathing = true;
 
 
     public Breath(int breathNum, String breathPerson) {
-        this.breathNum = breathNum;
+        this.breathNumLeft = breathNum;
         this.breathPerson = breathPerson;
     }
 
     public void setBreathNum(int breathNum) {
-        this.breathNum = breathNum;
+        this.breathNumLeft = breathNum;
     }
 
-    public void setBreathTime(){
-        breathTimeLeft = 8 * breathNum * 1000;
-    }
-
-    public void startBreath(){
-        timer = new CountDownTimer(breathTimeLeft,4000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                ifInhale = !ifInhale;
-                breathTimeLeft = millisUntilFinished;
-            }
-
-            @Override
-            public void onFinish() {
-                ifBreathing = false;
-            }
-        }.start();
-
-    }
 
     public int getBreathNum(){
-        return breathNum;
+        return breathNumLeft;
     }
 
     public String getBreathPerson(){
         return breathPerson;
     }
 
+    public void updateBreathLeft(){
+        breathNumLeft--;
+    }
+
+    public void moreBreath(int n){
+        breathNumLeft = breathNumLeft + n;
+    }
+
     public Boolean isInhaling(){ return ifInhale; }
+
+    public void changeBreath(){this.ifInhale = !this.ifInhale;}
 
 
 }

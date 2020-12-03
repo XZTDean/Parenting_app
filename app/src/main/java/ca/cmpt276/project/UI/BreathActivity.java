@@ -1,8 +1,10 @@
 package ca.cmpt276.project.UI;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +17,7 @@ import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Breath;
 import ca.cmpt276.project.model.BreathManager;
 import ca.cmpt276.project.model.ChildManager;
+import ca.cmpt276.project.model.TimeoutTimer;
 
 public class BreathActivity extends AppCompatActivity {
 
@@ -22,6 +25,32 @@ public class BreathActivity extends AppCompatActivity {
 
     OnCustomEventListener mListener;
 
+    private Thread thread;
+
+    private String IN = "In";
+    private String OUT = "Out";
+
+    private long breathRemainingTime = 3000;
+
+    private final Runnable changeBreathRunnable = new Runnable() {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(breath.isInhaling()){
+                        begin.setText(OUT);
+                    } else {
+                        begin.setText(IN);
+                    }
+                    reset();
+                    breath.changeBreath();
+                    breath.updateBreathLeft();
+
+                }
+            });
+        }
+    };
 
 
     private Breath breath = new Breath(3, "Tom");
@@ -40,6 +69,7 @@ public class BreathActivity extends AppCompatActivity {
 
 
 
+
         begin = (Button) findViewById(R.id.begin);
         begin.setText("begin");
 
@@ -49,6 +79,26 @@ public class BreathActivity extends AppCompatActivity {
 
         begin.setOnClickListener(v -> beginSelected());
 
+    }
+
+    private void startBreath() {
+        thread = new Thread(changeBreathRunnable){
+            @Override
+
+            public void run() {
+                try {
+                    Thread.sleep(breathRemainingTime);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                super.run();
+            }
+        };
+        thread.start();
+    }
+
+    public void reset() {
+        breathRemainingTime = 3000;
     }
 
     public interface OnCustomEventListener {
@@ -61,11 +111,27 @@ public class BreathActivity extends AppCompatActivity {
     }
 
     private void beginSelected() {
-        begin.setText("In");
-        breath.startBreath();
+        if(breath.isInhaling()){
+            begin.setText(OUT);
+        } else {
+            begin.setText(IN);
+        }
+
+        begin.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    startBreath();
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    reset();
+                }
+
+                return true;
+            }
+        });
+
+
     }
-
-
 
 
     public void onItemSelected(AdapterView<?> parent, View view,
