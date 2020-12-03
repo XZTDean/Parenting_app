@@ -7,20 +7,20 @@ public class CircleAngleAnimation extends Animation {
 
     private Circle circle;
 
-    private float oldAngle;
-    private float newAngle;
+    private float oldRadius;
+    private float newRadius;
 
-    public CircleAngleAnimation(Circle circle, int newAngle) {
-        this.oldAngle = circle.getAngle();
-        this.newAngle = newAngle;
+    public CircleAngleAnimation(Circle circle, int newRadius) {
+        this.oldRadius = circle.getRadius();
+        this.newRadius = newRadius;
         this.circle = circle;
     }
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation transformation) {
-        float angle = oldAngle + ((newAngle - oldAngle) * interpolatedTime);
+        float radius = oldRadius + ((newRadius - oldRadius) * interpolatedTime);
 
-        circle.setAngle(angle);
+        circle.setRadius(radius);
         circle.requestLayout();
     }
 }

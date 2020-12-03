@@ -16,14 +16,18 @@ public class Circle extends View {
     private static final int START_ANGLE_POINT = 90;
 
     private final Paint paint;
-    private final RectF rect;
+    //private final RectF rect;
 
     private float angle;
+
+    private float x = 360;
+    private float y = 250;
+    private float radius = 0;
 
     public Circle(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        final int strokeWidth = 40;
+        final int strokeWidth = 75;
 
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -33,24 +37,24 @@ public class Circle extends View {
         paint.setColor(Color.GREEN);
 
         //size 200x200 example
-        rect = new RectF(strokeWidth, strokeWidth, 200 + strokeWidth, 200 + strokeWidth);
+
 
         //Initial Angle (optional, it can be zero)
-        angle = 120;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawArc(rect, START_ANGLE_POINT, angle, false, paint);
+        canvas.drawCircle(x, y, radius, paint);
+        //canvas.drawArc(rect, START_ANGLE_POINT, angle, false, paint);
     }
 
-    public float getAngle() {
-        return angle;
+    public void setRadius(float newRadius){
+        this.radius = newRadius;
     }
 
-    public void setAngle(float angle) {
-        this.angle = angle;
+    public float getRadius() {
+        return radius;
     }
 }
 /*

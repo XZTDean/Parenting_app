@@ -24,6 +24,7 @@ public class BreathActivity extends AppCompatActivity {
     //private BreathManager breathManager = BreathManager.g;
 
 
+    private int radius = 150;
     private long finishTime;
     private TimeoutTimer.Status status;
     public enum Status {
@@ -54,8 +55,10 @@ public class BreathActivity extends AppCompatActivity {
                     //reset();
                     breath.changeBreath();
                     breath.updateBreathLeft();
-                    circle.setAngle(0);
-                    CircleAngleAnimation animation = new CircleAngleAnimation(circle, 360);
+                    animation = new CircleAngleAnimation(circle, 0);
+                    animation.setDuration(150);
+                    circle.startAnimation(animation);
+                    breathRemainingTime = 3000;
 
                 }
             });
@@ -88,8 +91,8 @@ public class BreathActivity extends AppCompatActivity {
         begin.setOnClickListener(v -> beginSelected());
 
         circle = (Circle) findViewById(R.id.circle);
-        circle.setAngle(0);
-        animation = new CircleAngleAnimation(circle, 360);
+        circle.setRadius(0);
+        animation = new CircleAngleAnimation(circle, radius);
 
     }
 
@@ -101,7 +104,7 @@ public class BreathActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                circle.setAngle(0);
+                animation = new CircleAngleAnimation(circle, radius);
                 animation.setDuration(breathRemainingTime);
                 System.out.println("startAnim");
                 circle.startAnimation(animation);
@@ -120,10 +123,11 @@ public class BreathActivity extends AppCompatActivity {
     }
 
     public void reset() {
-
-        animation = new CircleAngleAnimation(circle, 360);
+        thread.interrupt();
+        animation = new CircleAngleAnimation(circle, 0);
+        animation.setDuration(150);
+        circle.startAnimation(animation);
         breathRemainingTime = 3000;
-        circle.setAngle(0);
         status = TimeoutTimer.Status.ready;
     }
 
