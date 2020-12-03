@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tom_jerry_clock_bg"
+    android:background="@drawable/tom_jerry_clock_bg_3"
     android:screenOrientation="portrait"
     tools:ignore="LockedOrientationActivity">
 
@@ -160,6 +160,18 @@
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
+    <ProgressBar
+        android:id="@+id/progress_circular_timer"
+        android:layout_width="218dp"
+        android:layout_height="218dp"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@drawable/circle_progress_bar"
+        tools:progress="70"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/remaining_time_display"
         android:layout_width="wrap_content"
@@ -178,7 +190,8 @@
             android:gravity="center"
             android:text="@string/time"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -192,7 +205,8 @@
                 android:layout_weight="1"
                 android:background="@color/text_background"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/colon"
@@ -203,7 +217,8 @@
                 android:gravity="center"
                 android:text="@string/colon"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/second_text"
@@ -212,7 +227,8 @@
                 android:layout_weight="1"
                 android:background="@color/text_background"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
