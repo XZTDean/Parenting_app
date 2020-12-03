@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,8 @@ public class flipHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_history);
+
+
 
         listSize = getIntent().getIntExtra("listSize", 0);
         populateListView();
@@ -121,6 +124,18 @@ public class flipHistory extends AppCompatActivity {
             TextView makeText1 = (TextView) itemView.findViewById(R.id.textView2);
             String outputHistory = CurrentStats.getChildName()+" chose "+ interpretInt(CurrentStats.getChoice());
             makeText1.setText(outputHistory);
+
+
+
+            try {
+                Bitmap photo = CurrentStats.getChildPortrait();
+                ImageView childIcon = itemView.findViewById(R.id.child_icon_history);
+                if(childIcon != null && photo != null) {
+                    childIcon.setImageBitmap(photo);
+                }
+            } catch(Exception ignored) {
+
+            }
 
             return itemView;
 
