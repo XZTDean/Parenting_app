@@ -39,6 +39,7 @@ import java.util.Objects;
 
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.TimeoutTimer;
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
@@ -63,6 +64,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private Button resetButton;
 
     private GifImageView relaxingBG;
+
+    private MaterialProgressBar progressBar;
 
     private int chosenDuration;
 
@@ -132,10 +135,15 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         duration.setOnItemSelectedListener(this);
 
         setupToolBar();
+        setupProgressBar();
         setupGifBG();
         createNotificationChannel();
         initializeButtons();
         restoreTimer();
+    }
+
+    private void setupProgressBar() {
+        progressBar = findViewById(R.id.progress_bar);
     }
 
     private void setupToolBar() {
@@ -181,6 +189,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         TextView minBox = findViewById(R.id.minute_text);
         TextView secBox = findViewById(R.id.second_text);
         long time = timeoutTimer.getRemainingTime();
+        progressBar.setProgress((int)time);
         String minText = String.valueOf(time / 60);
         String secText = String.format("%02d", time % 60);
         minBox.setText(minText);
@@ -338,6 +347,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void startSelected() {
+        progressBar.setMax(chosenDuration*60);
         timeoutTimer = TimeoutTimer.getNewInstance(runnable, chosenDuration);
         timeoutTimer.start();
         customDuration.setVisibility(View.INVISIBLE);
