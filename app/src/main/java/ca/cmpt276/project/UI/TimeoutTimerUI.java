@@ -76,28 +76,31 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     @Override
     protected void onResume() {
         super.onResume();
-        TimeoutTimerUI.activityResumed();
+        activityResumed();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        TimeoutTimerUI.activityPaused();
+        activityPaused();
     }
 
     public static boolean isActivityVisible() {
         return activityVisible;
     }
 
-    public static void activityResumed() {
+    public void activityResumed() {
         activityVisible = true;
+        obj = this;
     }
 
-    public static void activityPaused() {
+    public void activityPaused() {
         activityVisible = false;
+        obj = null;
     }
 
     private static boolean activityVisible;
+    private static TimeoutTimerUI obj;
 
     private final Runnable runnable = new Runnable() {
         @Override
@@ -105,10 +108,10 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    setButtonInReady();
+                    obj.setButtonInReady();
 
                     if(activityVisible) {
-                        onFinish();
+                        obj.onFinish();
                     } else {
                         sendNotification();
                     }
