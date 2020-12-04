@@ -56,6 +56,14 @@ public class Circle extends View {
     public float getRadius() {
         return radius;
     }
+
+    public void swapColor(Boolean isInhale){
+        if(isInhale){
+            paint.setColor(Color.GREEN);
+        } else {
+            paint.setColor(Color.BLUE);
+        }
+    }
 }
 /*
 import android.animation.ObjectAnimator;
