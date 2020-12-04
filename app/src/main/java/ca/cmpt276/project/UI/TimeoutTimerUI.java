@@ -50,7 +50,6 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private static Context context;
     private TimeoutTimer timeoutTimer = null;
 
     private TextInputLayout customDurationLayout;
@@ -76,46 +75,33 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     @Override
     protected void onResume() {
         super.onResume();
-        activityResumed();
+        activityVisible = true;
+        obj = this;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        activityPaused();
+        activityVisible = false;
+        obj = null;
     }
 
     public static boolean isActivityVisible() {
         return activityVisible;
     }
 
-    public void activityResumed() {
-        activityVisible = true;
-        obj = this;
-    }
-
-    public void activityPaused() {
-        activityVisible = false;
-        obj = null;
-    }
-
-    private static boolean activityVisible;
-    private static TimeoutTimerUI obj;
+    private static boolean activityVisible = false;
+    private static TimeoutTimerUI obj = null; // will set to null when exit activity
 
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+            runOnUiThread(() -> {
+                if(activityVisible) {
                     obj.setButtonInReady();
-
-                    if(activityVisible) {
-                        obj.onFinish();
-                    } else {
-                        sendNotification();
-                    }
-
+                    obj.onFinish();
+                } else {
+                    sendNotification();
                 }
             });
         }
@@ -222,7 +208,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
         startButton.setOnClickListener(v -> startSelected());
-
         pauseButton.setOnClickListener(v -> pauseSelected());
         resetButton.setOnClickListener(v -> resetSelected());
         resumeButton.setOnClickListener(v -> resumeSelected());
@@ -498,8 +483,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     }
 
     public static Intent makeIntent(Context contextInput) {
-        context = contextInput;
-        return new Intent(context, TimeoutTimerUI.class);
+        return new Intent(contextInput, TimeoutTimerUI.class);
     }
 
 }
