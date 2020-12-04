@@ -105,5 +105,6 @@
     <string name="takeBreath">Take a Breath</string>
     <string name="nBreathsHeader1">Let\'s Take</string>
     <string name="nBreathsHeader2">Breaths Together</string>
+    <string name="previous_breath">Previous Breath</string>
 
 </resources>

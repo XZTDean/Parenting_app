@@ -3,6 +3,7 @@ package ca.cmpt276.project.UI;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -124,6 +125,31 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         circle = (Circle) findViewById(R.id.circle);
         circle.setRadius(0);
         animation = new CircleAngleAnimation(circle, radius);
+
+        displayLastBreath();
+
+        storeBreathNumFromSharedPrefs();
+
+    }
+
+    private void displayLastBreath() {
+        int lastBreath = getBreathFromSharedPref();
+
+        TextView textview = (TextView) findViewById(R.id.prevBreath);
+        textview.setText(lastBreath);
+    }
+
+    private int getBreathFromSharedPref() {
+        SharedPreferences prefs = getSharedPreferences("breathNum",MODE_PRIVATE);
+        return prefs.getInt("breathN",0);
+    }
+
+    private void storeBreathNumFromSharedPrefs(){
+        SharedPreferences prefs = getSharedPreferences("breathNum",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("breathN",breathsSelected);
+        editor.commit();
+
 
     }
 
