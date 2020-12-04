@@ -20,7 +20,7 @@ public class Circle extends View {
 
     private float angle;
 
-    private float x = 360;
+    private float x = 370;
     private float y = 250;
     private float radius = 0;
 

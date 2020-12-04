@@ -3,6 +3,7 @@ package ca.cmpt276.project.UI;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,9 +11,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Breath;
@@ -22,8 +26,12 @@ import ca.cmpt276.project.model.TimeoutTimer;
 
 public class BreathActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    //private BreathManager breathManager = BreathManager.g;
+    private String BREATH_IN_MESSAGE = "Press and hold the big button, then breath in.";
+    private String BREATH_OUT_MESSAGE = "Press and hold the big button, then breath out.";
+    private TextView helpMessage;
 
+    private Boolean isBreathComplete = false;
+    private Boolean isFirstInhale = true;
 
     private int radius = 150;
     private long finishTime;
@@ -32,9 +40,12 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         ready, running, paused, stop
     }
 
-    private int breathsSelected;
+    private int breathsSelected = 3;
+
+    private MediaPlayer mp;
 
     private Thread thread;
+    private Thread forceChangeThread;
 
     private String IN = "In";
     private String OUT = "Out";
@@ -50,26 +61,22 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(breath.isInhaling()){
-                        begin.setText(OUT);
-                    } else {
-                        begin.setText(IN);
-                    }
 
-                    if(!breath.isInhaling()) {
-                        breath.updateBreathLeft();
-                    }
-                    breath.changeBreath();
+                    isBreathComplete = true;
 
-                    animation = new CircleAngleAnimation(circle, 0);
-                    animation.setDuration(150);
-                    circle.startAnimation(animation);
-                    breathRemainingTime = 3000;
+                }
 
-                    if(breath.getBreathNum() < 1){
-                        onFinish();
-                    }
+            });
+        }
+    };
 
+    private final Runnable forceChangeBreathRunnable = new Runnable() {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    breathComplete();
                 }
 
             });
@@ -91,7 +98,13 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breath);
 
+        setToolbar();
+
         status = TimeoutTimer.Status.ready;
+
+        helpMessage = (TextView) findViewById(R.id.helpMessage);
+
+        mp = MediaPlayer.create(this, R.raw.relaxing_music);
 
         begin = (Button) findViewById(R.id.begin);
         begin.setText("begin");
@@ -108,6 +121,41 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
     }
 
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void breathComplete() {
+        mp.stop();
+        mp = MediaPlayer.create(this, R.raw.relaxing_music);
+
+        if(breath.isInhaling()){
+            begin.setText(OUT);
+        } else {
+            begin.setText(IN);
+        }
+
+        if(!breath.isInhaling()) {
+            breath.updateBreathLeft();
+        }
+        breath.changeBreath();
+
+        animation = new CircleAngleAnimation(circle, 0);
+        animation.setDuration(150);
+        circle.startAnimation(animation);
+        breathRemainingTime = 3000;
+
+        isBreathComplete = false;
+
+        if(breath.getBreathNum() < 1){
+            onFinish();
+        }
+    }
+
     private void onFinish() {
         Context context = getApplicationContext();
         CharSequence text = "Namaste -- Your breaths are complete :)";
@@ -118,19 +166,21 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
         begin.setText("begin");
         breathsSpinner.setEnabled(true);
+
+        breath.setBreathNum(breathsSelected);
+
     }
 
     private void startBreath() {
-        if (status != TimeoutTimer.Status.ready) {
-            throw new IllegalStateException("Timer is not ready");
-        }
+
         thread = new Thread(changeBreathRunnable){
 
             @Override
             public void run() {
+                mp.start();
+
                 animation = new CircleAngleAnimation(circle, radius);
                 animation.setDuration(breathRemainingTime);
-                System.out.println("startAnim");
                 circle.startAnimation(animation);
                 try {
                     Thread.sleep(breathRemainingTime);
@@ -146,7 +196,29 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         status = TimeoutTimer.Status.running;
     }
 
+    private void startForceChange() {
+
+        forceChangeThread = new Thread(forceChangeBreathRunnable){
+
+            @Override
+            public void run() {
+
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                super.run();
+                endTimer();
+            }
+        };
+        forceChangeThread.start();
+    }
+
     public void reset() {
+        mp.stop();
+        mp = MediaPlayer.create(this, R.raw.relaxing_music);
+
         thread.interrupt();
         animation = new CircleAngleAnimation(circle, 0);
         animation.setDuration(150);
@@ -166,11 +238,16 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void beginSelected() {
+
+        isFirstInhale = false;
+
         breathsSpinner.setEnabled(false);
 
-        if(breath.isInhaling()){
+        if(breath.isInhaling() || begin.getText() == "Begin"){
+            helpMessage.setText(BREATH_IN_MESSAGE);
             begin.setText(IN);
         } else {
+            helpMessage.setText(BREATH_OUT_MESSAGE);
             begin.setText(OUT);
         }
 
@@ -179,10 +256,41 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     startBreath();
+                    startForceChange();
                     System.out.println(breath.getBreathNum());
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    System.out.println(breathRemainingTime);
-                    reset();
+                    if(forceChangeThread.isAlive()) {
+                        forceChangeThread.interrupt();
+                    }
+
+                    mp.stop();
+                    mp = MediaPlayer.create(BreathActivity.this, R.raw.relaxing_music);
+
+                    if(isBreathComplete){
+                        if(breath.isInhaling()){
+                            begin.setText(OUT);
+                        } else {
+                            begin.setText(IN);
+                        }
+
+                        if(!breath.isInhaling()) {
+                            breath.updateBreathLeft();
+                        }
+                        breath.changeBreath();
+
+                        animation = new CircleAngleAnimation(circle, 0);
+                        animation.setDuration(150);
+                        circle.startAnimation(animation);
+                        breathRemainingTime = 3000;
+
+                        isBreathComplete = false;
+
+                        if(breath.getBreathNum() < 1){
+                            onFinish();
+                        }
+                    } else {
+                        reset();
+                    }
                 }
 
                 return true;
@@ -243,4 +351,6 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         breathsSpinner.setAdapter(adapter);
     }
+
+
 }
