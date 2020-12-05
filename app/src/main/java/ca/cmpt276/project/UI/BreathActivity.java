@@ -34,7 +34,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
     private Boolean isBreathComplete = false;
     private Boolean isFirstInhale = true;
 
-    private int radius = 150;
+    private float radius = 220;
     private long finishTime;
     private TimeoutTimer.Status status;
     public enum Status {
@@ -47,6 +47,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
     private Thread thread;
     private Thread forceChangeThread;
+    private Thread asyncThread;
 
     private String IN = "In";
     private String OUT = "Out";
@@ -63,6 +64,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    isBreathComplete = true;
                     if(!breath.isInhaling()){
                         helpMessage.setText(BREATH_IN_MESSAGE);
                         begin.setText(IN);
@@ -70,8 +72,23 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                         helpMessage.setText(BREATH_OUT_MESSAGE);
                         begin.setText(OUT);
                     }
+                }
 
-                    isBreathComplete = true;
+            });
+        }
+    };
+
+    private final Runnable asyncRunnable = new Runnable() {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(isBreathComplete){
+                        breathComplete();
+                    } else {
+                        reset();
+                    }
                 }
 
             });
@@ -84,6 +101,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
                     breathComplete();
                 }
 
@@ -141,6 +159,9 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         mp.stop();
         mp = MediaPlayer.create(this, R.raw.relaxing_music);
 
+        pauseAnimation();
+        circle.saveRadius();
+
         if(!breath.isInhaling()) {
             breath.updateBreathLeft();
         }
@@ -168,8 +189,6 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         breathsSpinner.setEnabled(true);
 
         breath.setBreathNum(breathsSelected);
-
-
     }
 
     private void startBreath() {
@@ -180,13 +199,13 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             public void run() {
                 mp.start();
                 if(breath.isInhaling()){
-                    radius = 150;
+                    radius = 220;
                 } else {
                     radius = 0;
                 }
 
                 animation = new CircleAngleAnimation(circle, radius);
-                animation.setDuration(breathRemainingTime);
+                animation.setDuration(animationTime);
                 circle.swapColor(breath.isInhaling());
                 circle.startAnimation(animation);
                 try {
@@ -201,6 +220,24 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         thread.start();
         finishTime = System.currentTimeMillis() + breathRemainingTime;
         status = TimeoutTimer.Status.running;
+    }
+
+    private void startAsyncHandler() {
+
+        asyncThread = new Thread(asyncRunnable){
+
+            @Override
+            public void run() {
+
+                try {
+                    Thread.sleep(750);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                super.run();
+            }
+        };
+        asyncThread.start();
     }
 
     private void startForceChange() {
@@ -223,22 +260,27 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void reset() {
-        mp.stop();
-        mp = MediaPlayer.create(this, R.raw.relaxing_music);
-
         thread.interrupt();
-        if(breath.isInhaling()){
-            radius = 0;
-        } else {
-            radius = 150;
-        }
+        asyncThread.interrupt();
+
+        mp.stop();
+        mp = MediaPlayer.create(BreathActivity.this, R.raw.relaxing_music);
+
+        radius = circle.getSavedRadius();
 
         animation = new CircleAngleAnimation(circle, radius);
         animation.setDuration(150);
-        circle.swapColor(breath.isInhaling());
+        circle.swapColor(breath.isInhaling()); //?????????????????????????????????????????????????????????????????
         circle.startAnimation(animation);
+
         breathRemainingTime = 3000;
         status = TimeoutTimer.Status.ready;
+    }
+
+    private void pauseAnimation(){
+        animation = new CircleAngleAnimation(circle, circle.getRadius());
+        animation.setDuration(1);
+        circle.startAnimation(animation);
     }
 
     private void updateRemainingTime() {
@@ -273,22 +315,20 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                         helpMessage.setText(BREATH_IN_MESSAGE);
                     }
 
+
                     startBreath();
                     startForceChange();
+
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     if(forceChangeThread.isAlive()) {
                         forceChangeThread.interrupt();
                     }
 
-                    mp.stop();
-                    mp = MediaPlayer.create(BreathActivity.this, R.raw.relaxing_music);
+                    pauseAnimation();
 
-                    if(isBreathComplete){
-                        breathComplete();
-                    } else {
-                        reset();
-                    }
+                    startAsyncHandler();
+
                 }
 
                 return true;

@@ -10,11 +10,12 @@ public class CircleAngleAnimation extends Animation {
     private float oldRadius;
     private float newRadius;
 
-    public CircleAngleAnimation(Circle circle, int newRadius) {
+    public CircleAngleAnimation(Circle circle, float newRadius) {
         this.oldRadius = circle.getRadius();
         this.newRadius = newRadius;
         this.circle = circle;
     }
+
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation transformation) {
@@ -23,4 +24,11 @@ public class CircleAngleAnimation extends Animation {
         circle.setRadius(radius);
         circle.requestLayout();
     }
+
+    public void pause(){
+        circle.setRadius(circle.getRadius());
+        circle.requestLayout();
+    }
+
+
 }
