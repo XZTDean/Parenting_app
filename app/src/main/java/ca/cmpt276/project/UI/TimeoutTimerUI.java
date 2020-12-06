@@ -18,6 +18,8 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -88,6 +90,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         TimeoutTimerUI.activityPaused();
     }
 
+
+
     public static boolean isActivityVisible() {
         return activityVisible;
     }
@@ -140,6 +144,13 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         createNotificationChannel();
         initializeButtons();
         restoreTimer();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.timer_speed_menu, menu);
+        return true;
     }
 
     private void setupProgressBar() {

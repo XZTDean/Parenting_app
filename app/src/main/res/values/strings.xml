@@ -88,5 +88,13 @@
     <string name="tasks">Tasks:</string>
     <string name="developer_name">Developer: \nRepo Manager: Shubh kumar Mall\nProduct Owner: Xingjian Ding
         \nScrum Master: Zeti Xiong\nTeam member: Joshua Taylor</string>
+    <string name="icon">icon</string>
+    <string name="_25">25%</string>
+    <string name="_50">50%</string>
+    <string name="_75">75%</string>
+    <string name="_100">100%</string>
+    <string name="_200">200%</string>
+    <string name="_300">300%</string>
+    <string name="_400">400%</string>
 
 </resources>
