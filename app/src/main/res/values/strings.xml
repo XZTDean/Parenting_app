@@ -114,5 +114,6 @@
     <string name="release_message">Release button and breath out</string>
     <string name="begin">Begin</string>
     <string name="good_job">Good Job</string>
+    <string name="default_message">Click the spinner above to set N breaths :)</string>
 
 </resources>

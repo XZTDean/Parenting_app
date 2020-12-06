@@ -3,6 +3,11 @@ package ca.cmpt276.project.UI;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+/*
+ * CircleAngleAnimation puts the Circle class in motion.
+ * This is the animation eventually used in the "Take A Breath"
+ * activity.
+ */
 public class CircleAngleAnimation extends Animation {
 
     private Circle circle;
@@ -15,7 +20,6 @@ public class CircleAngleAnimation extends Animation {
         this.newRadius = newRadius;
         this.circle = circle;
     }
-
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation transformation) {

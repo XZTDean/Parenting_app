@@ -1,6 +1,5 @@
 package ca.cmpt276.project.UI;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,11 +8,11 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-
-
+/*
+ * The Circle class provides the backbone of the circle animation
+ * used in the "Take A Breath" activity.
+ */
 public class Circle extends View {
-
-    private static final int START_ANGLE_POINT = 90;
 
     private final Paint paint;
 
