@@ -253,6 +253,8 @@ public class FlipCoinScreen extends AppCompatActivity {
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.custom_pop_up, null);
 
+        setFlippable(false);
+
         // create the popup window
         int width = RelativeLayout.LayoutParams.WRAP_CONTENT;
         int height = RelativeLayout.LayoutParams.WRAP_CONTENT;
@@ -282,16 +284,23 @@ public class FlipCoinScreen extends AppCompatActivity {
         // setup Heads and Tails buttons
         Button heads = (Button)popupView.findViewById(R.id.buttonHeads);
         heads.setOnClickListener(v -> {
+            setFlippable(true);
             childPlaying.setChoiceOfHeadsOrTails(1);
             popupWindow.dismiss();
         });
 
         Button tails = (Button)popupView.findViewById(R.id.buttonTails);
         tails.setOnClickListener(v -> {
+            setFlippable(true);
             childPlaying.setChoiceOfHeadsOrTails(2);
             popupWindow.dismiss();
         });
 
+    }
+
+    private void setFlippable(boolean flippable) {
+        Button button = findViewById(R.id.buttonFlipCoin);
+        button.setClickable(flippable);
     }
 
     private void saveToDisk() {
