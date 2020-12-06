@@ -54,7 +54,7 @@ public class FlipCoinScreen extends AppCompatActivity {
         if(childList.size() != 0 && ifNoChildSelected == 0){
             setupChildPlaying();
             choiceScreenShown = true;
-            setupChoiceScreen();
+            new Handler().postDelayed(this::showPopUp, 200);
         }
 
         setupFlipButton();
@@ -106,21 +106,6 @@ public class FlipCoinScreen extends AppCompatActivity {
     private void makeSound(){
         MediaPlayer mp = MediaPlayer.create(this, R.raw.coin_toss_sound);
         mp.start();
-    }
-
-
-    private void setupChoiceScreen() {
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> showPopUp(view));
-
-        int noOfSecond = 1;
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                fab.performClick();
-            }
-        }, noOfSecond * 200);
     }
 
     private void setupFlipButton() {
@@ -240,14 +225,13 @@ public class FlipCoinScreen extends AppCompatActivity {
         startActivity(new Intent(FlipCoinScreen.this, PopEndScreen.class)
                 .putExtra("Result",resultStats.getResult())
                 .putExtra("WinOrLose",resultStats.winOrLose())
-                .putExtra("childPlaying", childPlaying.getName())
-                .putExtra("listSize", childList.size()));
+                .putExtra("childPlaying", childPlaying.getName()));
     }
 
 
 
     // Pop up choice Screen
-    private void showPopUp(View view) {
+    private void showPopUp() {
         // inflate the queue_items of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -279,6 +263,7 @@ public class FlipCoinScreen extends AppCompatActivity {
         });
 
         // show the popup window
+        View view = getLayoutInflater().inflate(R.layout.content_flip_coin_screen, null);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
         // setup Heads and Tails buttons
