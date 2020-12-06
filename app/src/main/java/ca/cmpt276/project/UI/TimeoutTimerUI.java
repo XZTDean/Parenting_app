@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -53,7 +54,7 @@ import pl.droidsonroids.gif.GifImageView;
  * classes will interact with each other and the interface.
  */
 
-public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PopupMenu.OnMenuItemClickListener{
 
     private static Context context;
     private TimeoutTimer timeoutTimer = null;
@@ -72,6 +73,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private ProgressBar progressBar;
 
     private int chosenDuration;
+    private double speed = 1;
 
     private final String CHANNEL_ID = "TIMER";
     private Vibrator vibrator;
@@ -151,7 +153,59 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.timer_speed_menu, menu);
+        inflater.inflate(R.menu.timer_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.speed_icon) {
+            View icon = findViewById(R.id.speed_icon);
+            showPopup(icon);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.timer_speed_menu, popup.getMenu());
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (timeoutTimer == null) {
+            return false;
+        }
+        switch (item.getItemId()) {
+            case R.id.speed_25:
+                speed = 0.25;
+                break;
+            case R.id.speed_50:
+                speed = 0.5;
+                break;
+            case R.id.speed_75:
+                speed = 0.75;
+                break;
+            case R.id.speed_100:
+                speed = 1;
+                break;
+            case R.id.speed_200:
+                speed = 2;
+                break;
+            case R.id.speed_300:
+                speed = 3;
+                break;
+            case R.id.speed_400:
+                speed = 4;
+                break;
+            default:
+                return false;
+        }
+        timeoutTimer.setSpeed(speed);
         return true;
     }
 
@@ -556,5 +610,4 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         context = contextInput;
         return new Intent(context, TimeoutTimerUI.class);
     }
-
 }
