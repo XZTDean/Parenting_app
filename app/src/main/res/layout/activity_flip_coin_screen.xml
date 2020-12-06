@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
     tools:ignore="LockedOrientationActivity"
-    tools:context=".UI.CoinFlipScreen">
+    tools:context=".UI.FlipCoinScreen">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
