@@ -115,7 +115,8 @@ public class FlipHistory extends AppCompatActivity {
             makeText.setText(CurrentStats.getFlipTime());
 
             TextView makeText1 = (TextView) itemView.findViewById(R.id.textView2);
-            String outputHistory = CurrentStats.getChildName()+" chose "+ interpretInt(CurrentStats.getChoice());
+            String outputHistory = getString(R.string.flip_history_display,
+                    CurrentStats.getChildName(), interpretInt(CurrentStats.getChoice()));
             makeText1.setText(outputHistory);
 
 
@@ -154,10 +155,10 @@ public class FlipHistory extends AppCompatActivity {
     //interpret choice and result as Strings "Head" or "tails".
     public String interpretInt(int choiceOrresult){
         if(choiceOrresult ==1){
-            return "head";
+            return getString(R.string.head);
         }
         else{
-            return "tail";
+            return getString(R.string.tail);
         }
     }
 
