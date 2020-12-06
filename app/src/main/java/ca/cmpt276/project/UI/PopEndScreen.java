@@ -3,7 +3,6 @@ package ca.cmpt276.project.UI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -55,9 +54,7 @@ public class PopEndScreen extends Activity {
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = flipHistory.makeIntent(PopEndScreen.this);
-                intent.putExtra("childPlaying", childPlaying);
-                intent.putExtra("listSize", listSize);
+                Intent intent = FlipHistory.makeIntent(PopEndScreen.this, childPlaying);
                 startActivity(intent);
                 finish();
             }

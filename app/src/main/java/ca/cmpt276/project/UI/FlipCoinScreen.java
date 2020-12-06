@@ -148,8 +148,8 @@ public class FlipCoinScreen extends AppCompatActivity {
     private void setupHistoryButton(){
         Button btn = findViewById(R.id.historyButton);
         btn.setOnClickListener(v -> {
-            Intent intent = flipHistory.makeIntent(FlipCoinScreen.this);
-            intent.putExtra("listSize", childList.size());
+            String name = (childPlaying != null) ? childPlaying.getName() : null;
+            Intent intent = FlipHistory.makeIntent(FlipCoinScreen.this, name);
             startActivity(intent);
         });
     }

@@ -1,7 +1,5 @@
 package ca.cmpt276.project.UI;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,43 +9,39 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
 import ca.cmpt276.project.model.CoinFlip;
 import ca.cmpt276.project.model.CoinFlipStats;
 
-public class flipHistory extends AppCompatActivity {
+public class FlipHistory extends AppCompatActivity {
 
-    private CoinFlip coinFlipManager = CoinFlip.getInstance();
-    List<CoinFlipStats> myList = coinFlipManager.getList();
-    private int listSize;
+    private static final String CHILD_PLAYING = "childPlaying";
+    private final CoinFlip coinFlipManager = CoinFlip.getInstance();
+    private List<CoinFlipStats> myList = coinFlipManager.getList();
     private boolean toggleChildOnlyHistory = false;
+    private String childPlayingName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_history);
 
-
-
-        listSize = getIntent().getIntExtra("listSize", 0);
         populateListView();
         saveToDisk();
         setToolbar();
-        if(listSize != 0){
+        childPlayingName = getIntent().getStringExtra(CHILD_PLAYING);
+
+        if(childPlayingName != null){
             setupToggleButton();
         }
         else{
@@ -62,7 +56,6 @@ public class flipHistory extends AppCompatActivity {
 
     private void setupToggleButton() {
         Button toggleHistoryView = (Button) findViewById(R.id.buttonToggleHistory);
-        String childPlayingName = getIntent().getStringExtra("childPlaying");
 
         toggleHistoryView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +95,7 @@ public class flipHistory extends AppCompatActivity {
 
     private class myListAdapter extends ArrayAdapter<CoinFlipStats> {
         public myListAdapter(){
-            super(flipHistory.this,R.layout.flip_items,myList );
+            super(FlipHistory.this,R.layout.flip_items,myList );
         }
 
         @Override
@@ -144,8 +137,10 @@ public class flipHistory extends AppCompatActivity {
 
 
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, flipHistory.class);
+    public static Intent makeIntent(Context context, String childName) {
+        Intent intent = new Intent(context, FlipHistory.class);
+        intent.putExtra(CHILD_PLAYING, childName);
+        return intent;
     }
     //use SharedPreferences to store history and reload the next time user open the app.
     private void saveToDisk() {

@@ -33,7 +33,7 @@
             android:theme="@style/Theme.Project.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".UI.flipHistory"
+            android:name=".UI.FlipHistory"
             android:label="History Screen"
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
