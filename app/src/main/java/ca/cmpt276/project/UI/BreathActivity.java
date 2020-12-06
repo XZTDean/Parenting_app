@@ -136,7 +136,8 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         int lastBreath = getBreathFromSharedPref();
 
         TextView textview = (TextView) findViewById(R.id.prevBreath);
-        textview.setText(lastBreath);
+        String string = String.valueOf(lastBreath);
+        textview.setText(string);
     }
 
     private int getBreathFromSharedPref() {
