@@ -23,13 +23,18 @@ import ca.cmpt276.project.model.Breath;
 
 public class BreathActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private String BREATH_IN_MESSAGE = "Press and hold the big button, then breath in.";
-    private String BREATH_OUT_MESSAGE = " ";
-    private String FINISH_MESSAGE = "Tap the big button to start again.";
+    private String BREATH_IN_MESSAGE;
+    private String BREATH_OUT_MESSAGE;
+    private String FINISH_MESSAGE;
+    private String RELEASE_MESSAGE;
+    private String IN;
+    private String OUT;
+    private String BEGIN;
+    private String GOOD_JOB;
+
     private TextView helpMessage;
 
     private Boolean isBreathComplete = false;
-    private Boolean isFirstInhale = true;
 
     private float radius = 220;
     private long finishTime;
@@ -41,9 +46,6 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
     private Thread thread;
     private Thread forceChangeThread;
     private Thread asyncThread;
-
-    private String IN = "In";
-    private String OUT = "Out";
 
     private Circle circle;
     CircleAngleAnimation animation;
@@ -114,7 +116,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                 @Override
                 public void run() {
                     if(breath.isInhaling()) {
-                        helpMessage.setText("Release button and breath out");
+                        helpMessage.setText(RELEASE_MESSAGE);
                     }
                     breathComplete();
                     if(readyToExhale) {
@@ -143,12 +145,21 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
         setToolbar();
 
+        BREATH_IN_MESSAGE = getString(R.string.breath_in_message);
+        BREATH_OUT_MESSAGE = getString(R.string.breath_out_message);
+        FINISH_MESSAGE = getString(R.string.finish_message);
+        RELEASE_MESSAGE = getString(R.string.release_message);
+        IN = getString(R.string.in);
+        OUT = getString(R.string.out);
+        BEGIN = getString(R.string.begin);
+        GOOD_JOB = getString(R.string.good_job);
+
         helpMessage = (TextView) findViewById(R.id.helpMessage);
 
         mp = MediaPlayer.create(this, R.raw.relaxing_music);
 
         begin = (Button) findViewById(R.id.begin);
-        begin.setText("begin");
+        begin.setText(BEGIN);
 
         breathsSpinner = (Spinner) findViewById(R.id.breathsSpinner);
         setSpinner();
@@ -204,7 +215,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        begin.setText("Good Job");
+        begin.setText(GOOD_JOB);
         helpMessage.setText(FINISH_MESSAGE);
         breathsSpinner.setEnabled(true);
 
@@ -217,7 +228,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
             @Override
             public void run() {
-                System.out.println(breath.isInhaling());
+
                 mp.start();
                 if(breath.isInhaling()){
                     radius = 220;
@@ -311,9 +322,43 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         breathRemainingTime = 0;
     }
 
-    private void beginSelected() {
+    private void buttonClickHandler() {
 
-        isFirstInhale = false;
+        if(helpMessage.getText() == RELEASE_MESSAGE){
+            helpMessage.setText(BREATH_OUT_MESSAGE);
+        }
+
+        if(!breath.isInhaling()){
+            thread.interrupt();
+            if(asyncThread != null) {
+                asyncThread.interrupt();
+            }
+            forceChangeThread.interrupt();
+            breathComplete();
+        }
+
+        //Starting breaths again.
+        if(begin.getText() == GOOD_JOB){
+            begin.setText(IN);
+            breathsSpinner.setEnabled(false);
+            helpMessage.setText(BREATH_IN_MESSAGE);
+        }
+
+        startBreath();
+        startForceChange();
+    }
+
+    private void buttonReleaseHandler() {
+        if(forceChangeThread.isAlive()) {
+            forceChangeThread.interrupt();
+        }
+
+        pauseAnimation();
+
+        startAsyncHandler();
+    }
+
+    private void beginSelected() {
 
         breathsSpinner.setEnabled(false);
 
@@ -325,44 +370,17 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    if(helpMessage.getText() == "Release button and breath out"){
-                        helpMessage.setText(BREATH_OUT_MESSAGE);
+                    if(thread == null || !thread.isAlive()) {
+                        buttonClickHandler();
                     }
-
-                    if(!breath.isInhaling()){
-                        thread.interrupt();
-                        if(asyncThread != null) {
-                            asyncThread.interrupt();
-                        }
-                        forceChangeThread.interrupt();
-                        breathComplete();
-                    }
-
-                    //Starting breaths again.
-                    if(begin.getText() == "Good Job"){
-                        begin.setText(IN);
-                        breathsSpinner.setEnabled(false);
-                        helpMessage.setText(BREATH_IN_MESSAGE);
-                    }
-
-                    startBreath();
-                    startForceChange();
-
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if(forceChangeThread.isAlive()) {
-                        forceChangeThread.interrupt();
-                    }
-
-                    pauseAnimation();
-
-                    startAsyncHandler();
+                   buttonReleaseHandler();
                 }
 
                 return true;
             }
         });
     }
-
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
