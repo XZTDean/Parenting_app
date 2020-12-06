@@ -20,6 +20,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -151,6 +153,38 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.timer_speed_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.speed_25:
+                Toast.makeText(this, "Speed 25", Toast.LENGTH_SHORT).show();
+                // set speed
+                return true;
+            case R.id.speed_50:
+                Toast.makeText(this, "Speed 50", Toast.LENGTH_SHORT).show();
+                // set speed
+                return true;
+            case R.id.speed_75:
+                Toast.makeText(this, "Speed 75", Toast.LENGTH_SHORT).show();
+                // set speed
+                return true;
+            case R.id.speed_100:
+                // set speed
+                return true;
+            case R.id.speed_200:
+                // set speed
+                return true;
+            case R.id.speed_300:
+                // set speed
+                return true;
+            case R.id.speed_400:
+                // set speed
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setupProgressBar() {
