@@ -160,7 +160,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.speed_icon) {
-            showPopup(item.getActionView());
+            View icon = findViewById(R.id.speed_icon);
+            showPopup(icon);
             return true;
         } else {
             return false;
