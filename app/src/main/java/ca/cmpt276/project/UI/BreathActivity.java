@@ -58,6 +58,8 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
     private long breathRemainingTime = 3000;
     private long animationTime = 10000;
 
+    private Boolean readyToExhale = false;
+
     private final Runnable changeBreathRunnable = new Runnable() {
         @Override
         public void run() {
@@ -68,9 +70,12 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                     if(!breath.isInhaling()){
                         helpMessage.setText(BREATH_IN_MESSAGE);
                         begin.setText(IN);
+                        readyToExhale = false;
+                        begin.setEnabled(true);
                     } else {
                         helpMessage.setText(BREATH_OUT_MESSAGE);
                         begin.setText(OUT);
+                        readyToExhale = true;
                     }
                 }
 
@@ -85,10 +90,16 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                 @Override
                 public void run() {
                     if(isBreathComplete){
+
                         breathComplete();
+                        if(readyToExhale){
+                            startBreath();
+                            startForceChange();
+                        }
                     } else {
                         reset();
                     }
+
                 }
 
             });
@@ -101,7 +112,9 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
+                    if(breath.isInhaling()) {
+                        helpMessage.setText("Release button and breath out");
+                    }
                     breathComplete();
                 }
 
@@ -164,6 +177,9 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
         if(!breath.isInhaling()) {
             breath.updateBreathLeft();
+            begin.setEnabled(true);
+        } else {
+            begin.setEnabled(false);
         }
         breath.changeBreath();
 
@@ -197,6 +213,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
             @Override
             public void run() {
+                System.out.println(breath.isInhaling());
                 mp.start();
                 if(breath.isInhaling()){
                     radius = 220;
@@ -307,6 +324,9 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if(helpMessage.getText() == "Release button and breath out"){
+                        helpMessage.setText(BREATH_OUT_MESSAGE);
+                    }
 
                     //Starting breaths again.
                     if(begin.getText() == "Good Job"){
@@ -315,10 +335,8 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                         helpMessage.setText(BREATH_IN_MESSAGE);
                     }
 
-
                     startBreath();
                     startForceChange();
-
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     if(forceChangeThread.isAlive()) {
@@ -328,7 +346,6 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                     pauseAnimation();
 
                     startAsyncHandler();
-
                 }
 
                 return true;
