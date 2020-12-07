@@ -59,6 +59,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private static Context context;
     private TimeoutTimer timeoutTimer = null;
 
+    private TextView textTimeSpeed;
     private TextInputLayout customDurationLayout;
     private TextInputEditText customDuration;
     private Spinner duration;
@@ -71,6 +72,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private GifImageView relaxingBG;
 
     private ProgressBar progressBar;
+
+    private MenuItem speedTimerMenu;
 
     private int chosenDuration;
     private double speed = 1;
@@ -154,6 +157,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.timer_toolbar, menu);
+        speedTimerMenu = menu.findItem(R.id.speed_icon);
+        speedTimerMenu.setVisible(false);
         return true;
     }
 
@@ -180,27 +185,35 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         if (timeoutTimer == null) {
             return false;
         }
+        textTimeSpeed = (TextView) findViewById(R.id.textTimeSpeed);
         switch (item.getItemId()) {
             case R.id.speed_25:
                 speed = 0.25;
+                textTimeSpeed.setText(R.string.time_25);
                 break;
             case R.id.speed_50:
                 speed = 0.5;
+                textTimeSpeed.setText(R.string.time_50);
                 break;
             case R.id.speed_75:
                 speed = 0.75;
+                textTimeSpeed.setText(R.string.time_75);
                 break;
             case R.id.speed_100:
                 speed = 1;
+                textTimeSpeed.setText(R.string.time_100);
                 break;
             case R.id.speed_200:
                 speed = 2;
+                textTimeSpeed.setText(R.string.time_200);
                 break;
             case R.id.speed_300:
                 speed = 3;
+                textTimeSpeed.setText(R.string.time_300);
                 break;
             case R.id.speed_400:
                 speed = 4;
+                textTimeSpeed.setText(R.string.time_400);
                 break;
             default:
                 return false;
@@ -211,7 +224,9 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private void setupProgressBar() {
         progressBar = (ProgressBar) findViewById(R.id.progress_circular_timer);
-        progressBar.setProgress(100);
+        if(timeoutTimer != null){
+            progressBar.setMax(chosenDuration*60);
+        }
     }
 
     private void setupToolBar() {
@@ -262,6 +277,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         minBox.setText(minText);
         secBox.setText(secText);
         progressBar.setProgress((int)time);
+        speedTimerMenu.setVisible(true);
     }
 
     private void displayTime(int min, int sec) {
@@ -321,6 +337,11 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         ringtone.play();
         finishNotification();
+        progressBar.setMax(100);
+        progressBar.setProgress(100);
+        textTimeSpeed.setText(R.string.time_100);
+        speed = 1;
+        speedTimerMenu.setVisible(false);
         timeoutTimer = null;
     }
 
@@ -377,7 +398,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
                         && timeoutTimer.getStatus() == TimeoutTimer.Status.running) {
                     runOnUiThread(() -> displayTime());
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep((long)(1000/speed));
                     } catch (InterruptedException e) {
                         return;
                     }
@@ -416,6 +437,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void startSelected() {
+        speedTimerMenu.setVisible(true);
         timeoutTimer = TimeoutTimer.getNewInstance(runnable, chosenDuration);
         timeoutTimer.start();
         customDuration.setVisibility(View.INVISIBLE);
