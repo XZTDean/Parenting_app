@@ -21,25 +21,29 @@ import androidx.appcompat.widget.Toolbar;
 
 import ca.cmpt276.project.R;
 import ca.cmpt276.project.model.Breath;
-import ca.cmpt276.project.model.BreathManager;
-import ca.cmpt276.project.model.ChildManager;
-import ca.cmpt276.project.model.TimeoutTimer;
 
+/*
+ * BreathActivity allows users to calm down by taking beep breaths.
+ * This class makes use of the Breath model class, and the Circle and
+ * the CircleAngleAnimation UI classes.
+ */
 public class BreathActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private String BREATH_IN_MESSAGE = "Press and hold the big button, then breath in.";
-    private String BREATH_OUT_MESSAGE = "Press and hold the big button, then breath out.";
+    private String BREATH_IN_MESSAGE;
+    private String BREATH_OUT_MESSAGE;
+    private String FINISH_MESSAGE;
+    private String RELEASE_MESSAGE;
+    private String IN;
+    private String OUT;
+    private String BEGIN;
+    private String GOOD_JOB;
+    private String DEFAULT_MESSAGE;
+
     private TextView helpMessage;
 
     private Boolean isBreathComplete = false;
-    private Boolean isFirstInhale = true;
 
-    private int radius = 150;
-    private long finishTime;
-    private TimeoutTimer.Status status;
-    public enum Status {
-        ready, running, paused, stop
-    }
+    private float radius = 220;
 
     private int breathsSelected = 3;
 
@@ -47,14 +51,15 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
     private Thread thread;
     private Thread forceChangeThread;
-
-    private String IN = "In";
-    private String OUT = "Out";
+    private Thread asyncThread;
 
     private Circle circle;
     CircleAngleAnimation animation;
 
     private long breathRemainingTime = 3000;
+    private long animationTime = 10000;
+
+    private Boolean readyToExhale = false;
 
     private final Runnable changeBreathRunnable = new Runnable() {
         @Override
@@ -62,17 +67,48 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(!breath.isInhaling() || begin.getText() == "Begin"){
+                    isBreathComplete = true;
+                    if(!breath.isInhaling()){
                         helpMessage.setText(BREATH_IN_MESSAGE);
                         begin.setText(IN);
+                        readyToExhale = false;
+
+                        breath.updateBreathLeft();
+
+                        if(breath.getBreathNum() < 1){
+                            onFinish();
+                        }
+
+                        begin.setEnabled(true);
+
                     } else {
                         helpMessage.setText(BREATH_OUT_MESSAGE);
                         begin.setText(OUT);
+                        readyToExhale = true;
                     }
-
-                    isBreathComplete = true;
                 }
 
+            });
+        }
+    };
+
+    private final Runnable asyncRunnable = new Runnable() {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(isBreathComplete){
+
+                        breathComplete();
+                        if(readyToExhale){
+                            startBreath();
+                            startForceChange();
+                        }
+                    } else {
+                        reset();
+                    }
+                }
             });
         }
     };
@@ -83,15 +119,21 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if(breath.isInhaling()) {
+                        helpMessage.setText(RELEASE_MESSAGE);
+                    }
                     breathComplete();
+                    if(readyToExhale) {
+                        startBreath();
+                        startForceChange();
+                    }
                 }
-
             });
         }
     };
 
 
-    private Breath breath = new Breath(3, "Tom");
+    private Breath breath = new Breath(3, "");
     private Spinner breathsSpinner;
 
     private Button begin;
@@ -107,25 +149,45 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
         setToolbar();
 
-        status = TimeoutTimer.Status.ready;
+        initializeStringConstants();
+        initializeButton();
+        initializeCircle();
+        initializeSpinner();
 
         helpMessage = (TextView) findViewById(R.id.helpMessage);
+        helpMessage.setText(DEFAULT_MESSAGE);
 
         mp = MediaPlayer.create(this, R.raw.relaxing_music);
+    }
 
-        begin = (Button) findViewById(R.id.begin);
-        begin.setText("begin");
-
+    private void initializeSpinner() {
         breathsSpinner = (Spinner) findViewById(R.id.breathsSpinner);
         setSpinner();
         breathsSpinner.setOnItemSelectedListener(this);
+    }
 
-        begin.setOnClickListener(v -> beginSelected());
-
+    private void initializeCircle() {
         circle = (Circle) findViewById(R.id.circle);
         circle.setRadius(0);
         animation = new CircleAngleAnimation(circle, radius);
+    }
 
+    private void initializeButton() {
+        begin = (Button) findViewById(R.id.begin);
+        begin.setText(BEGIN);
+        begin.setOnClickListener(v -> beginSelected());
+    }
+
+    private void initializeStringConstants() {
+        BREATH_IN_MESSAGE = getString(R.string.breath_in_message);
+        BREATH_OUT_MESSAGE = getString(R.string.breath_out_message);
+        FINISH_MESSAGE = getString(R.string.finish_message);
+        RELEASE_MESSAGE = getString(R.string.release_message);
+        IN = getString(R.string.in);
+        OUT = getString(R.string.out);
+        BEGIN = getString(R.string.begin);
+        GOOD_JOB = getString(R.string.good_job);
+        DEFAULT_MESSAGE = getString(R.string.default_message);
         displayLastBreath();
 
         storeBreathNumFromSharedPrefs();
@@ -162,41 +224,52 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         ab.setDisplayHomeAsUpEnabled(true);
     }
 
-    private void breathComplete() {
+    private void stopMusic(){
         mp.stop();
         mp = MediaPlayer.create(this, R.raw.relaxing_music);
 
-        if(!breath.isInhaling()) {
-            breath.updateBreathLeft();
-        }
-        breath.changeBreath();
-
-       /* animation = new CircleAngleAnimation(circle, 0);
-        animation.setDuration(150);
-        circle.startAnimation(animation);*/
-
-        breathRemainingTime = 3000;
-
-        isBreathComplete = false;
-
-        if(breath.getBreathNum() < 1){
-            onFinish();
-        }
     }
 
-    private void onFinish() {
+    private void breathComplete() {
+        stopMusic();
+        pauseAnimation();
+        circle.saveRadius();
+
+        if(!breath.isInhaling()) {
+            begin.setEnabled(true);
+        } else {
+            begin.setEnabled(false);
+        }
+
+        breath.changeBreath();
+        breathRemainingTime = 3000;
+        isBreathComplete = false;
+
+    }
+
+    private void finishToast() {
         Context context = getApplicationContext();
         CharSequence text = "Namaste -- Your breaths are complete :)";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
 
-        begin.setText("begin");
+    private void onFinish() {
+        thread.interrupt();
+        if(asyncThread != null) {
+            asyncThread.interrupt();
+        }
+        forceChangeThread.interrupt();
+
+        finishToast();
+
+        begin.setText(GOOD_JOB);
+        helpMessage.setText(FINISH_MESSAGE);
         breathsSpinner.setEnabled(true);
 
         breath.setBreathNum(breathsSelected);
-
     }
 
     private void startBreath() {
@@ -205,16 +278,16 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
             @Override
             public void run() {
+
                 mp.start();
                 if(breath.isInhaling()){
-                    radius = 150;
+                    radius = 220;
                 } else {
                     radius = 0;
                 }
 
-
                 animation = new CircleAngleAnimation(circle, radius);
-                animation.setDuration(breathRemainingTime);
+                animation.setDuration(animationTime);
                 circle.swapColor(breath.isInhaling());
                 circle.startAnimation(animation);
                 try {
@@ -227,8 +300,24 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
             }
         };
         thread.start();
-        finishTime = System.currentTimeMillis() + breathRemainingTime;
-        status = TimeoutTimer.Status.running;
+    }
+
+    private void startAsyncHandler() {
+
+        asyncThread = new Thread(asyncRunnable){
+
+            @Override
+            public void run() {
+
+                try {
+                    Thread.sleep(750);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                super.run();
+            }
+        };
+        asyncThread.start();
     }
 
     private void startForceChange() {
@@ -251,80 +340,91 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void reset() {
-        mp.stop();
-        mp = MediaPlayer.create(this, R.raw.relaxing_music);
-
         thread.interrupt();
-        if(breath.isInhaling()){
-            radius = 0;
-        } else {
-            radius = 150;
-        }
+        asyncThread.interrupt();
+
+        stopMusic();
+
+        radius = circle.getSavedRadius();
 
         animation = new CircleAngleAnimation(circle, radius);
         animation.setDuration(150);
         circle.swapColor(breath.isInhaling());
         circle.startAnimation(animation);
+
         breathRemainingTime = 3000;
-        status = TimeoutTimer.Status.ready;
     }
 
-    private void updateRemainingTime() {
-        long currentTime = System.currentTimeMillis();
-        breathRemainingTime = finishTime - currentTime;
+    private void pauseAnimation(){
+        animation = new CircleAngleAnimation(circle, circle.getRadius());
+        animation.setDuration(1);
+        circle.startAnimation(animation);
     }
 
     public void endTimer() {
-        status = TimeoutTimer.Status.stop;
         breathRemainingTime = 0;
+    }
+
+    private void buttonClickHandler() {
+
+        if(helpMessage.getText() == RELEASE_MESSAGE){
+            helpMessage.setText(BREATH_OUT_MESSAGE);
+        }
+
+        if(!breath.isInhaling()){
+            thread.interrupt();
+            if(asyncThread != null) {
+                asyncThread.interrupt();
+            }
+            forceChangeThread.interrupt();
+            breathComplete();
+        }
+
+        //Starting breaths again.
+        if(begin.getText() == GOOD_JOB){
+            begin.setText(IN);
+            breathsSpinner.setEnabled(false);
+            helpMessage.setText(BREATH_IN_MESSAGE);
+        }
+
+        startBreath();
+        startForceChange();
+    }
+
+    private void buttonReleaseHandler() {
+        if(forceChangeThread.isAlive()) {
+            forceChangeThread.interrupt();
+        }
+        if(!breath.isInhaling()){
+            begin.setEnabled(false);
+        }
+
+        pauseAnimation();
+        startAsyncHandler();
     }
 
     private void beginSelected() {
 
-        isFirstInhale = false;
-
         breathsSpinner.setEnabled(false);
-
         helpMessage.setText(BREATH_IN_MESSAGE);
         begin.setText(IN);
-        /*if(breath.isInhaling() || begin.getText() == "Begin"){
-            helpMessage.setText(BREATH_IN_MESSAGE);
-            begin.setText(IN);
-        } else {
-            helpMessage.setText(BREATH_OUT_MESSAGE);
-            begin.setText(OUT);
-        }*/
 
         begin.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    startBreath();
-                    startForceChange();
-                    System.out.println(breath.getBreathNum());
+                    if(thread == null || !thread.isAlive()) {
+                        buttonClickHandler();
+                    }
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if(forceChangeThread.isAlive()) {
-                        forceChangeThread.interrupt();
-                    }
-
-                    mp.stop();
-                    mp = MediaPlayer.create(BreathActivity.this, R.raw.relaxing_music);
-
-                    if(isBreathComplete){
-                        breathComplete();
-                    } else {
-                        reset();
-                    }
+                   buttonReleaseHandler();
                 }
 
                 return true;
             }
         });
-
-
     }
-
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
@@ -360,9 +460,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                 breathsSelected = 10;
                 break;
         }
-
         breath.setBreathNum(breathsSelected);
-
     }
 
     @Override
@@ -376,6 +474,5 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         breathsSpinner.setAdapter(adapter);
     }
-
 
 }
