@@ -57,8 +57,11 @@ public class ChildManager implements Iterable<Child> {
     }
 
     public boolean editChildName(int index, String name) {
-        for (int i = 0; i < children.size(); i++) {
-            if (children.get(i).getName().equals(name) && i != index) {
+        if (children.get(index).getName().equals(name)) {
+            return true;
+        }
+        for (Child child : children) {
+            if (child.getName().equals(name)) {
                 return false;
             }
         }
