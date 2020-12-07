@@ -71,6 +71,20 @@
         <item>Custom</item>
     </string-array>
 
+    <string-array name="breathsSpinner">
+        <item>N</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
     <string name="newPhotoButton">Take New Photo</string>
     <string name="uploadButton">Upload Photo from Gallery</string>
     <string name="defaultButton">Use Default Photo</string>
@@ -96,5 +110,18 @@
     <string name="_200">200%</string>
     <string name="_300">300%</string>
     <string name="_400">400%</string>
+    <string name="takeBreath">Take a Breath</string>
+    <string name="nBreathsHeader1">Let\'s Take</string>
+    <string name="nBreathsHeader2">Breaths Together</string>
+
+    <string name="breath_in_message">Press and hold the big button, then breath in.</string>
+    <string name="breath_out_message"> </string>
+    <string name="finish_message">Tap the big button to start again.</string>
+    <string name="in">In</string>
+    <string name="out">Out</string>
+    <string name="release_message">Release button and breath out</string>
+    <string name="begin">Begin</string>
+    <string name="good_job">Good Job</string>
+    <string name="default_message">Click the spinner above to set N breaths :)</string>
 
 </resources>
