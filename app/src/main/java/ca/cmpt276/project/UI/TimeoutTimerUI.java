@@ -170,8 +170,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.timer_speed_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.timer_speed_menu);
         popup.show();
     }
 
