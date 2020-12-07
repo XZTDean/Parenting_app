@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +64,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private Button resetButton;
 
     private GifImageView relaxingBG;
+
+    private ProgressBar progressBar;
 
     private int chosenDuration;
 
@@ -132,10 +135,16 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         duration.setOnItemSelectedListener(this);
 
         setupToolBar();
+        setupProgressBar();
         setupGifBG();
         createNotificationChannel();
         initializeButtons();
         restoreTimer();
+    }
+
+    private void setupProgressBar() {
+        progressBar = (ProgressBar) findViewById(R.id.progress_circular_timer);
+        progressBar.setProgress(100);
     }
 
     private void setupToolBar() {
@@ -185,6 +194,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         String secText = String.format("%02d", time % 60);
         minBox.setText(minText);
         secBox.setText(secText);
+        progressBar.setProgress((int)time);
     }
 
     private void displayTime(int min, int sec) {
@@ -192,6 +202,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         TextView secBox = findViewById(R.id.second_text);
         minBox.setText(String.valueOf(min));
         secBox.setText(String.format("%02d", sec));
+        progressBar.setProgress(100);
     }
 
     private void setupGifBG() {
@@ -342,6 +353,8 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         timeoutTimer.start();
         customDuration.setVisibility(View.INVISIBLE);
         customDurationLayout.setVisibility(View.INVISIBLE);
+        progressBar.setMax(chosenDuration*60);
+        progressBar.setProgress(chosenDuration*60);
         displayTimeDisplay();
         setButtonInRunning();
     }

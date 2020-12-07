@@ -33,7 +33,7 @@
             android:theme="@style/Theme.Project.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".UI.flipHistory"
+            android:name=".UI.FlipHistory"
             android:label="History Screen"
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
@@ -51,10 +51,6 @@
             android:label="@string/title_activity_flip_coin_screen"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".UI.CoinFlipScreen"
-            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".UI.MainActivity"

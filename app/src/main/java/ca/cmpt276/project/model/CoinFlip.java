@@ -44,7 +44,7 @@ public class CoinFlip {
         int icon = (result == childPlaying.getChoiceOfHeadsOrTails())? R.drawable.check_icon : R.drawable.cross_icon;
 
         CoinFlipStats resultStats = new CoinFlipStats(timedDate, childPlaying.getName(),
-                childPlaying.getChoiceOfHeadsOrTails() ,result, icon);
+                childPlaying.getEncodedPhoto(), childPlaying.getChoiceOfHeadsOrTails() ,result, icon);
         addStats(resultStats);
 
         return resultStats;

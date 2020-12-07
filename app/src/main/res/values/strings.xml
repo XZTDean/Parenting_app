@@ -29,6 +29,9 @@
     <string name="name">Name</string>
     <string name="flip_coin">Flip Coin</string>
     <string name="tails">TAILS</string>
+    <string name="flip_history_display">%1$s chose %2$s</string>
+    <string name="head">head</string>
+    <string name="tail">tail</string>
 
     <string name="duration">Please select a duration</string>
     <string name="durationHint">Enter Custom Timeout Duration (in minutes)</string>
