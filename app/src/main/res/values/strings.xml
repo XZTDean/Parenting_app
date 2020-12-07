@@ -97,7 +97,9 @@
     <string name="citations">Backgrounds: https://giphy.com/explore/tom-jerry \n\n
         Default portrait photo: https://www.reddit.com/r/TomAndJerryMemes/comments/eaa9j3/jerry_sunglasses_meme_what_episode_is_this_from/ \n\n
         Choose photo activity background: https://www.reddit.com/r/TomAndJerryMemes/comments/eaa9j3/jerry_sunglasses_meme_what_episode_is_this_from/
-        \n\nAlarm icon in notification: https://www.flaticon.com/free-icon/alarm-clock_860735 </string>
+        \n\nAlarm icon in notification: https://www.flaticon.com/free-icon/alarm-clock_860735 \n\n
+        Take A Breath Background: https://newcastlebeach.org/images/angry-jerry.jpg\n\n
+        Take A Breath Music: https://www.fesliyanstudios.com/royalty-free-music/downloads-c/peaceful-and-relaxing-music/22</string>
     <string name="help">Help</string>
 
     <string name="override_default">Override Default</string>
@@ -110,7 +112,7 @@
     <string name="nBreathsHeader2">Breaths Together</string>
     <string name="previous_breath">Previous Breath</string>
 
-    <string name="breath_in_message">Press and hold the big button, then breath in.</string>
+    <string name="breath_in_message">Hold button and breath in</string>
     <string name="breath_out_message"> </string>
     <string name="finish_message">Tap the big button to start again.</string>
     <string name="in">In</string>
