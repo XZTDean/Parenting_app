@@ -47,6 +47,8 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
 
     private int breathsSelected = 3;
 
+
+
     private MediaPlayer mp;
 
     private Thread thread;
@@ -146,8 +148,9 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breath);
-
+        displayLastBreath();
         setToolbar();
+
 
         initializeStringConstants();
         initializeButton();
@@ -188,9 +191,9 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         BEGIN = getString(R.string.begin);
         GOOD_JOB = getString(R.string.good_job);
         DEFAULT_MESSAGE = getString(R.string.default_message);
-        displayLastBreath();
 
-        storeBreathNumFromSharedPrefs();
+
+
 
     }
 
@@ -198,8 +201,8 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         int lastBreath = getBreathFromSharedPref();
 
         TextView textview = (TextView) findViewById(R.id.prevBreath);
-        String string = String.valueOf(lastBreath);
-        textview.setText(string);
+        String breathNum= "last breath: "+String.valueOf(lastBreath);
+        textview.setText(breathNum);
     }
 
     private int getBreathFromSharedPref() {
@@ -268,7 +271,6 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         begin.setText(GOOD_JOB);
         helpMessage.setText(FINISH_MESSAGE);
         breathsSpinner.setEnabled(true);
-
         breath.setBreathNum(breathsSelected);
     }
 
@@ -461,6 +463,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                 break;
         }
         breath.setBreathNum(breathsSelected);
+        storeBreathNumFromSharedPrefs();
     }
 
     @Override

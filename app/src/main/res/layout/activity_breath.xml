@@ -19,12 +19,12 @@
 
     <Button
         android:id="@+id/begin"
-        android:layout_width="234dp"
-        android:layout_height="106dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="222dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ca.cmpt276.project.UI.Circle
@@ -102,8 +102,11 @@
         android:id="@+id/prevBreath"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/previous_breath"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/begin"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
