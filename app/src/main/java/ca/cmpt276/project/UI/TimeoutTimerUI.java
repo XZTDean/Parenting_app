@@ -59,7 +59,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private static Context context;
     private TimeoutTimer timeoutTimer = null;
 
-    private TextView textTimeSpeed;
     private TextInputLayout customDurationLayout;
     private TextInputEditText customDuration;
     private Spinner duration;
@@ -144,7 +143,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         duration.setOnItemSelectedListener(this);
 
         setupToolBar();
-        setupProgressBarAndTimerSpeed();
+        setupProgressBar();
         setupGifBG();
         createNotificationChannel();
         initializeButtons();
@@ -158,7 +157,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.speed_icon) {
@@ -170,6 +168,13 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.timer_speed_menu);
+        popup.show();
+    }
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (timeoutTimer == null) {
@@ -178,7 +183,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         switch (item.getItemId()) {
             case R.id.speed_25:
                 speed = 0.25;
-                Toast.makeText(this, "Speed is" + speed, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.speed_50:
                 speed = 0.5;
@@ -205,21 +209,9 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         return true;
     }
 
-    public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.timer_speed_menu, popup.getMenu());
-        popup.show();
-
-    }
-
-
-    private void setupProgressBarAndTimerSpeed() {
+    private void setupProgressBar() {
         progressBar = (ProgressBar) findViewById(R.id.progress_circular_timer);
         progressBar.setProgress(100);
-
-        textTimeSpeed = (TextView) findViewById(R.id.textTimeSpeed);
-        textTimeSpeed.setText("Time @100%");
     }
 
     private void setupToolBar() {
@@ -425,9 +417,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private void startSelected() {
         timeoutTimer = TimeoutTimer.getNewInstance(runnable, chosenDuration);
-        timeoutTimer.setSpeed(speed);
         timeoutTimer.start();
-        // TODO: set text of timeSpeed
         customDuration.setVisibility(View.INVISIBLE);
         customDurationLayout.setVisibility(View.INVISIBLE);
         progressBar.setMax(chosenDuration*60);
