@@ -3,6 +3,7 @@ package ca.cmpt276.project.UI;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -45,6 +46,8 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
     private float radius = 220;
 
     private int breathsSelected = 3;
+
+
 
     private MediaPlayer mp;
 
@@ -145,8 +148,9 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breath);
-
+        displayLastBreath();
         setToolbar();
+
 
         initializeStringConstants();
         initializeButton();
@@ -187,6 +191,32 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         BEGIN = getString(R.string.begin);
         GOOD_JOB = getString(R.string.good_job);
         DEFAULT_MESSAGE = getString(R.string.default_message);
+
+
+
+
+    }
+
+    private void displayLastBreath() {
+        int lastBreath = getBreathFromSharedPref();
+
+        TextView textview = (TextView) findViewById(R.id.prevBreath);
+        String breathNum= "last breath: "+String.valueOf(lastBreath);
+        textview.setText(breathNum);
+    }
+
+    private int getBreathFromSharedPref() {
+        SharedPreferences prefs = getSharedPreferences("breathNum",MODE_PRIVATE);
+        return prefs.getInt("breathN",0);
+    }
+
+    private void storeBreathNumFromSharedPrefs(){
+        SharedPreferences prefs = getSharedPreferences("breathNum",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("breathN",breathsSelected);
+        editor.commit();
+
+
     }
 
     private void setToolbar() {
@@ -241,7 +271,6 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
         begin.setText(GOOD_JOB);
         helpMessage.setText(FINISH_MESSAGE);
         breathsSpinner.setEnabled(true);
-
         breath.setBreathNum(breathsSelected);
     }
 
@@ -434,6 +463,7 @@ public class BreathActivity extends AppCompatActivity implements AdapterView.OnI
                 break;
         }
         breath.setBreathNum(breathsSelected);
+        storeBreathNumFromSharedPrefs();
     }
 
     @Override
