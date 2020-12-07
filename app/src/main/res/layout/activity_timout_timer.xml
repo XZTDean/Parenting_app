@@ -165,7 +165,6 @@
         android:id="@+id/progress_circular_timer"
         android:layout_width="218dp"
         android:layout_height="218dp"
-        android:progress="100"
         android:indeterminateOnly="false"
         android:progressDrawable="@drawable/circle_progress_bar"
         app:layout_constraintBottom_toBottomOf="parent"
