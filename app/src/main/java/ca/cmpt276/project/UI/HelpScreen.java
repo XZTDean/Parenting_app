@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 import ca.cmpt276.project.R;
@@ -18,6 +19,9 @@ public class HelpScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_screen);
         setToolbar();
+
+        TextView citations = (TextView) findViewById(R.id.txt_citations);
+        citations.setMovementMethod(new ScrollingMovementMethod());
     }
 
     private void setToolbar() {
