@@ -44,6 +44,23 @@ public class TaskManager implements Iterable<Task> {
         return taskList.get(i);
     }
 
+    public boolean edit(int i, String name, String desc) {
+        final Task tmp = new Task(name, desc);
+        final Task target = taskList.get(i);
+
+        if (target.equals(tmp)) {
+            return true;
+        }
+        for (Task task : taskList) {
+            if (task.equals(tmp)) {
+                return false;
+            }
+        }
+        target.setName(name);
+        target.setDescription(desc);
+        return true;
+    }
+
     public void remove(int i) {
         taskList.remove(i);
     }
