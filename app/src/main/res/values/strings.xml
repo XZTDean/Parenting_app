@@ -19,6 +19,7 @@
     <string name="config_children">Config Children</string>
     <string name="child_page_title">Children:</string>
     <string name="no_child">There is no child now</string>
+    <string name="child_exist">Child exist</string>
     <string name="add_child_instruction">Tap \"+\" to add one</string>
     <string name="coin_fliping_history">Coin Flipping History</string>
     <string name="history">History</string>
