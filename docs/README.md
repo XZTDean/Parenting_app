@@ -1,12 +1,12 @@
 Scrum roles for this iteration:
 
-Product Owner: Xingjian Ding
+Product Owner: Zeti Xiong
 
-Repo Manager:	Shubh Kumar Mall
+Repo Manager: Joshua Taylor
 
-Team Member: Joshua Taylor
+Team Member: Xingjian Ding
 
-Scrum Master: Zeti Xiong
+Scrum Master: Shubh Kumar Mall
 
 Code Style Guide taken from CMPT 276 course website.
 https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/project/files/itr2
