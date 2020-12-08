@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.Breath;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Breath;
+import ca.cmpt276.project.model.BREATH.Breath;
 
 /*
  * BreathActivity allows users to calm down by taking beep breaths.

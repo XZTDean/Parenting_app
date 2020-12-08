@@ -1,4 +1,4 @@
-package ca.cmpt276.project.model;
+package ca.cmpt276.project.model.BREATH;
 
 import android.os.CountDownTimer;
 

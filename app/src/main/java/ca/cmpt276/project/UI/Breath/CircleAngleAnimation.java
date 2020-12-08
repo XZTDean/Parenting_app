@@ -1,7 +1,9 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.Breath;
 
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+
+import ca.cmpt276.project.UI.Breath.Circle;
 
 /*
  * CircleAngleAnimation puts the Circle class in motion.

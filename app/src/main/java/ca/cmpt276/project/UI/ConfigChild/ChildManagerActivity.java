@@ -1,11 +1,10 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.ConfigChild;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
-import ca.cmpt276.project.model.ChildManager;
+import ca.cmpt276.project.model.CHILD.Child;
+import ca.cmpt276.project.model.CHILD.ChildManager;
 
 /**
  * This is the UI class for child managing. User can add,

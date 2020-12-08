@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.HelpScreen;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;

@@ -9,9 +9,15 @@ import android.view.View;
 import android.widget.Button;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.ChildManager;
-import ca.cmpt276.project.model.CoinFlip;
-import ca.cmpt276.project.model.TaskManager;
+import ca.cmpt276.project.UI.Breath.BreathActivity;
+import ca.cmpt276.project.UI.ConfigChild.ChildManagerActivity;
+import ca.cmpt276.project.UI.FlipCoin.FlipCoinScreen;
+import ca.cmpt276.project.UI.HelpScreen.HelpScreen;
+import ca.cmpt276.project.UI.Tasks.TaskListActivity;
+import ca.cmpt276.project.UI.Timeout.TimeoutTimerUI;
+import ca.cmpt276.project.model.CHILD.ChildManager;
+import ca.cmpt276.project.model.COIN_FLIP.CoinFlip;
+import ca.cmpt276.project.model.TASKS.TaskManager;
 
 /**
  * App to flip coins to settle disputes among children

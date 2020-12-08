@@ -1,4 +1,4 @@
-package ca.cmpt276.project.model;
+package ca.cmpt276.project.model.TASKS;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+
+import ca.cmpt276.project.model.CHILD.Child;
+import ca.cmpt276.project.model.CHILD.ChildManager;
 
 /**
  * This Task class store the info of task name & description

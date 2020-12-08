@@ -1,7 +1,6 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.ConfigChild;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -15,24 +14,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.os.Parcelable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Objects;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
-import ca.cmpt276.project.model.ChildManager;
+import ca.cmpt276.project.model.CHILD.Child;
 
 /**
  * This is the dialog for entering child's name

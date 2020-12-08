@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
     tools:ignore="LockedOrientationActivity"
-    tools:context=".UI.ChildManagerActivity">
+    tools:context=".UI.ConfigChild.ChildManagerActivity">
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"

@@ -1,4 +1,4 @@
-package ca.cmpt276.project.model;
+package ca.cmpt276.project.model.COIN_FLIP;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import ca.cmpt276.project.R;
+import ca.cmpt276.project.model.CHILD.Child;
 
 /**
  * Class that represents a singular Coin Flip

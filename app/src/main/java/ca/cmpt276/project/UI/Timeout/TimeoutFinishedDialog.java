@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.Timeout;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.FlipCoin;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +20,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.CoinFlip;
-import ca.cmpt276.project.model.CoinFlipStats;
+import ca.cmpt276.project.model.COIN_FLIP.CoinFlip;
+import ca.cmpt276.project.model.COIN_FLIP.CoinFlipStats;
 
 public class FlipHistory extends AppCompatActivity {
 

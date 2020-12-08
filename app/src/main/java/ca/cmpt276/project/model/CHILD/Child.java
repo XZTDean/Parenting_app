@@ -1,4 +1,4 @@
-package ca.cmpt276.project.model;
+package ca.cmpt276.project.model.CHILD;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

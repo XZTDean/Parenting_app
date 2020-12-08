@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.Tasks;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,9 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
-import ca.cmpt276.project.model.Task;
-import ca.cmpt276.project.model.TaskManager;
+import ca.cmpt276.project.model.CHILD.Child;
+import ca.cmpt276.project.model.TASKS.Task;
+import ca.cmpt276.project.model.TASKS.TaskManager;
 
 /**
  * This is the dialog for task detail. Users can see the detail

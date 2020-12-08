@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.ConfigTaskDialog">
+    tools:context=".UI.Tasks.ConfigTaskDialog">
 
     <LinearLayout
         android:id="@+id/task_info_disp"

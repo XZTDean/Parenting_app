@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.ConfigChild;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -6,7 +6,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -24,7 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.io.IOException;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
+import ca.cmpt276.project.model.CHILD.Child;
 
 /*
  * ChildrenPhotoActivity provides the user interface

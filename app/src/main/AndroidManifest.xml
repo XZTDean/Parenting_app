@@ -13,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project">
         <activity
-            android:name=".UI.HelpScreen"
+            android:name=".UI.HelpScreen.HelpScreen"
             android:label="Help Screen"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
             android:parentActivityName=".UI.MainActivity" />
         <activity
-            android:name=".UI.TaskListActivity"
+            android:name=".UI.Tasks.TaskListActivity"
             android:label="@string/whose_turn"
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
@@ -27,27 +27,27 @@
             android:launchMode="singleTop"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".UI.ChildrenQueue"
+            android:name=".UI.FlipCoin.ChildrenQueue"
             android:label="Queue"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".UI.FlipHistory"
+            android:name=".UI.FlipCoin.FlipHistory"
             android:label="History Screen"
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".UI.ChildManagerActivity"
+            android:name=".UI.ConfigChild.ChildManagerActivity"
             android:label="@string/config_children"
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".UI.FlipCoinScreen"
+            android:name=".UI.FlipCoin.FlipCoinScreen"
             android:label="@string/title_activity_flip_coin_screen"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
@@ -64,7 +64,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UI.PopEndScreen"
+            android:name=".UI.FlipCoin.PopEndScreen"
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.CustomTheme"
@@ -74,15 +74,15 @@
             android:parentActivityName=".UI.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Project.NoActionBar"
-            android:name=".UI.TimeoutTimerUI"
+            android:name=".UI.Timeout.TimeoutTimerUI"
             android:launchMode="singleTop" />
         <activity
             android:label="Add Photo"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
-            android:parentActivityName=".UI.ChildManagerActivity"
+            android:parentActivityName=".UI.ConfigChild.ChildManagerActivity"
             android:theme="@style/Theme.Project.NoActionBar"
-            android:name=".UI.ChildrenPhotoActivity"
+            android:name=".UI.ConfigChild.ChildrenPhotoActivity"
             android:launchMode="singleTop" />
         <activity
             android:label="Take a Breath"
@@ -90,7 +90,7 @@
             tools:ignore="LockedOrientationActivity"
             android:parentActivityName=".UI.MainActivity"
             android:theme="@style/Theme.Project.NoActionBar"
-            android:name=".UI.BreathActivity"
+            android:name=".UI.Breath.BreathActivity"
             android:launchMode="singleTop" />
 
     </application>

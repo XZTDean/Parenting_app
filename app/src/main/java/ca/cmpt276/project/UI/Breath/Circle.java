@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.Breath;
 
 import android.content.Context;
 import android.graphics.Canvas;

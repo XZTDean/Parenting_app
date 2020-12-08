@@ -1,4 +1,4 @@
-package ca.cmpt276.project.model;
+package ca.cmpt276.project.model.BREATH;
 
 import java.util.ArrayList;
 import java.util.List;

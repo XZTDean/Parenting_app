@@ -27,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ca.cmpt276.project.UI.Circle
+    <ca.cmpt276.project.UI.Breath.Circle
         android:id="@+id/circle"
         android:layout_width="306dp"
         android:layout_height="284dp"

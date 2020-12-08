@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
     tools:ignore="LockedOrientationActivity"
-    tools:context=".UI.FlipHistory">
+    tools:context=".UI.FlipCoin.FlipHistory">
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView2"

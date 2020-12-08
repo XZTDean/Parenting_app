@@ -1,11 +1,10 @@
-package ca.cmpt276.project.model;
+package ca.cmpt276.project.model.CHILD;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;

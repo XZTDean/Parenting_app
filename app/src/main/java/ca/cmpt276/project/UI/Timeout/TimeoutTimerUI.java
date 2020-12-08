@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.Timeout;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -45,7 +45,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.TimeoutTimer;
+import ca.cmpt276.project.model.TIMEOUT.TimeoutTimer;
 import pl.droidsonroids.gif.GifImageView;
 
 /**

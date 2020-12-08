@@ -1,6 +1,4 @@
-package ca.cmpt276.project.model;
-
-import android.content.SharedPreferences;
+package ca.cmpt276.project.model.TIMEOUT;
 
 /**
  * This model for timer, it will only hold a timer each time.

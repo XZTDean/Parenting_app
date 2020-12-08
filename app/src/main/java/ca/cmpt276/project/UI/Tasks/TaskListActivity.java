@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.Tasks;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,9 +24,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
-import ca.cmpt276.project.model.Task;
-import ca.cmpt276.project.model.TaskManager;
+import ca.cmpt276.project.model.CHILD.Child;
+import ca.cmpt276.project.model.TASKS.Task;
+import ca.cmpt276.project.model.TASKS.TaskManager;
 
 /**
  * This is the activity of list of task, user can

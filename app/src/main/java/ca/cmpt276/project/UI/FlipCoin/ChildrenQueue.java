@@ -1,7 +1,5 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.FlipCoin;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -9,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,14 +15,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
-import ca.cmpt276.project.model.ChildManager;
+import ca.cmpt276.project.model.CHILD.Child;
+import ca.cmpt276.project.model.CHILD.ChildManager;
 /**
 *
  */

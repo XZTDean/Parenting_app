@@ -1,4 +1,4 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.FlipCoin;
 
 import android.app.Activity;
 import android.content.Intent;

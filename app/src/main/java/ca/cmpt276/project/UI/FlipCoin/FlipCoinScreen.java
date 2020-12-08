@@ -1,12 +1,10 @@
-package ca.cmpt276.project.UI;
+package ca.cmpt276.project.UI.FlipCoin;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,10 +23,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import ca.cmpt276.project.R;
-import ca.cmpt276.project.model.Child;
-import ca.cmpt276.project.model.ChildManager;
-import ca.cmpt276.project.model.CoinFlip;
-import ca.cmpt276.project.model.CoinFlipStats;
+import ca.cmpt276.project.model.CHILD.Child;
+import ca.cmpt276.project.model.CHILD.ChildManager;
+import ca.cmpt276.project.model.COIN_FLIP.CoinFlip;
+import ca.cmpt276.project.model.COIN_FLIP.CoinFlipStats;
 
 /**
  * Class to display animation of a coin flip.

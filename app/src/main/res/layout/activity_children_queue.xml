@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
     tools:ignore="LockedOrientationActivity"
-    tools:context=".UI.ChildrenQueue">
+    tools:context=".UI.FlipCoin.ChildrenQueue">
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
