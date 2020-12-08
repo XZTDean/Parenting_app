@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/speed_25"
+        android:title="@string/_25" />
+    <item
+        android:id="@+id/speed_50"
+        android:title="@string/_50" />
+    <item
+        android:id="@+id/speed_75"
+        android:title="@string/_75" />
+    <item
+        android:id="@+id/speed_100"
+        android:title="@string/_100" />
+    <item
+        android:id="@+id/speed_200"
+        android:title="@string/_200" />
+    <item
+        android:id="@+id/speed_300"
+        android:title="@string/_300" />
+    <item
+        android:id="@+id/speed_400"
+        android:title="@string/_400" />
+</menu>

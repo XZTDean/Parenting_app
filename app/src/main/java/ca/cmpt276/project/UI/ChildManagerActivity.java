@@ -112,14 +112,19 @@ public class ChildManagerActivity extends AppCompatActivity implements ConfigChi
     }
 
     @Override
-    public void onDialogPositiveClick(int pos, Child child) {
+    public boolean onDialogPositiveClick(int pos, Child child) {
         if (pos != -1) {
-            manager.get(pos).setName(child.getName());
+            if (!manager.editChildName(pos, child.getName())) {
+                return false;
+            }
             manager.get(pos).setPhoto(child.getPhoto());
         } else {
-            manager.add(child);
+            if (!manager.add(child)) {
+                return false;
+            }
         }
         updateData();
+        return true;
     }
 
     @Override

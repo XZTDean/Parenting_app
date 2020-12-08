@@ -19,6 +19,7 @@
     <string name="config_children">Config Children</string>
     <string name="child_page_title">Children:</string>
     <string name="no_child">There is no child now</string>
+    <string name="child_exist">Child exist</string>
     <string name="add_child_instruction">Tap \"+\" to add one</string>
     <string name="coin_fliping_history">Coin Flipping History</string>
     <string name="history">History</string>
@@ -107,6 +108,14 @@
     <string name="tasks">Tasks:</string>
     <string name="developer_name">Developer: \nRepo Manager: Shubh kumar Mall\nProduct Owner: Xingjian Ding
         \nScrum Master: Zeti Xiong\nTeam member: Joshua Taylor</string>
+    <string name="icon">icon</string>
+    <string name="_25">25%</string>
+    <string name="_50">50%</string>
+    <string name="_75">75%</string>
+    <string name="_100">100%</string>
+    <string name="_200">200%</string>
+    <string name="_300">300%</string>
+    <string name="_400">400%</string>
     <string name="takeBreath">Take a Breath</string>
     <string name="nBreathsHeader1">Let\'s Take</string>
     <string name="nBreathsHeader2">Breaths Together</string>
@@ -121,5 +130,12 @@
     <string name="begin">Begin</string>
     <string name="good_job">Good Job</string>
     <string name="default_message">Click the spinner above to set N breaths :)</string>
+    <string name="time_100">Time @100%</string>
+    <string name="time_25">Time @25%</string>
+    <string name="time_50">Time @50%</string>
+    <string name="time_75">Time @75%</string>
+    <string name="time_200">Time @200%</string>
+    <string name="time_300">Time @300%</string>
+    <string name="time_400">Time @400%</string>
 
 </resources>

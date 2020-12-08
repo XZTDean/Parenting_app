@@ -137,11 +137,7 @@ public class ConfigTaskDialog extends DialogFragment {
     private void clickPositiveButton() {
         if (edit) {
             if (completeEdit()) {
-                if (newTask) {
-                    addNewTask();
-                } else {
-                    dismiss();
-                }
+                dismiss();
             }
         } else {
             dismiss();
@@ -166,23 +162,22 @@ public class ConfigTaskDialog extends DialogFragment {
         }
 
         if (success) {
-            task.setName(name);
-            task.setDescription(desc);
-            listener.dataChanged();
+            if (newTask) {
+                task.setName(name);
+                task.setDescription(desc);
+                success = taskManager.add(task);
+            } else {
+                success = taskManager.edit(pos, name, desc);
+            }
+
+            if (success) {
+                listener.dataChanged();
+            } else {
+                nameEdit.setError(getString(R.string.task_exist));
+                descEdit.setError(getString(R.string.task_exist));
+            }
         }
         return success;
-    }
-
-    private void addNewTask() {
-        if (!taskManager.add(task)) {
-            EditText nameEdit = view.findViewById(R.id.task_name_edit);
-            EditText descEdit = view.findViewById(R.id.task_desc_edit);
-            nameEdit.setError(getString(R.string.task_exist));
-            descEdit.setError(getString(R.string.task_exist));
-        } else {
-            listener.dataChanged();
-            dismiss();
-        }
     }
 
     private void finishTask() {

@@ -1,5 +1,7 @@
 package ca.cmpt276.project.model;
 
+import android.content.SharedPreferences;
+
 /**
  * This model for timer, it will only hold a timer each time.
  * It can start, pause, resume and reset a timer. It can return
@@ -67,6 +69,10 @@ public class TimeoutTimer {
         this.remainingTime = (long) (displayTime / speed);
         this.runnable = runnable;
         status = Status.ready;
+    }
+
+    public int getOption() {
+        return option;
     }
 
     public void start() {
@@ -169,4 +175,5 @@ public class TimeoutTimer {
         status = Status.stop;
         remainingTime = displayTime = 0;
     }
+
 }
