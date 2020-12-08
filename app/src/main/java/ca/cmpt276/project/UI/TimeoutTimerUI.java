@@ -99,8 +99,11 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         activityVisible = true;
         obj = this;
         loadData();
-        updateData();
+
         if(timeoutTimer != null){
+            progressBar.setMax(timeoutTimer.getOption()*60);
+            progressBar.setProgress((int)timeoutTimer.getRemainingTime());
+
             if(timeoutTimer.getSpeed() == 0.25) {
                 textTimeSpeed.setText(R.string.time_25);
             }
@@ -670,25 +673,4 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         chosenDuration = sharedPreferences.getInt(CHOSEN_DURATION, 1);
     }
 
-    public void updateData(){
-        progressBar.setMax(maxDuration);
-        switch (speedOptionSelected){
-            case 1:
-                textTimeSpeed.setText(R.string.time_25);
-            case 2:
-                textTimeSpeed.setText(R.string.time_50);
-            case 3:
-                textTimeSpeed.setText(R.string.time_75);
-            case 4:
-                textTimeSpeed.setText(R.string.time_100);
-            case 5:
-                textTimeSpeed.setText(R.string.time_200);
-            case 6:
-                textTimeSpeed.setText(R.string.time_300);
-            case 7:
-                textTimeSpeed.setText(R.string.time_400);
-            default:
-                textTimeSpeed.setText(R.string.time_100);
-        }
-    }
 }

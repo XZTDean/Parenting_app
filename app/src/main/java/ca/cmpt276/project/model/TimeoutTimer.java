@@ -71,6 +71,10 @@ public class TimeoutTimer {
         status = Status.ready;
     }
 
+    public int getOption() {
+        return option;
+    }
+
     public void start() {
         if (status != Status.ready) {
             throw new IllegalStateException("Timer is not ready");
