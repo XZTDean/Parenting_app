@@ -90,6 +90,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
     private static final String MAX_DURATION = "maxDuration";
     private static final String SPEED = "speed";
     private static final String SPEED_OPTION = "SpeedOption";
+    private static final String CHOSEN_DURATION = "chosenDuration";
 
     //Adapted from: https://stackoverflow.com/questions/18038399/how-to-check-if-activity-is-in-foreground-or-in-visible-background
     @Override
@@ -99,6 +100,29 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         obj = this;
         loadData();
         updateData();
+        if(timeoutTimer != null){
+            if(timeoutTimer.getSpeed() == 0.25) {
+                textTimeSpeed.setText(R.string.time_25);
+            }
+            else if(timeoutTimer.getSpeed() == 0.5){
+                textTimeSpeed.setText(R.string.time_50);
+            }
+            else if(timeoutTimer.getSpeed() == 0.75){
+                textTimeSpeed.setText(R.string.time_75);
+            }
+            else if(timeoutTimer.getSpeed() == 1){
+                textTimeSpeed.setText(R.string.time_100);
+            }
+            else if(timeoutTimer.getSpeed() == 2){
+                textTimeSpeed.setText(R.string.time_200);
+            }
+            else if(timeoutTimer.getSpeed() == 3){
+                textTimeSpeed.setText(R.string.time_300);
+            }
+            else if(timeoutTimer.getSpeed() == 4){
+                textTimeSpeed.setText(R.string.time_400);
+            }
+        }
     }
 
     @Override
@@ -151,8 +175,10 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         createNotificationChannel();
         initializeButtons();
         restoreTimer();
-        loadData();
-        updateData();
+
+        // if needed to add functionality of saving state when app is closed in future iterations
+        /*loadData();
+        updateData();*/
     }
 
     @Override
@@ -291,7 +317,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         secBox.setText(secText);
         progressBar.setProgress((int)time);
         speedTimerMenu.setVisible(true);
-
     }
 
     private void displayTime(int min, int sec) {
@@ -632,6 +657,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         editor.putInt(MAX_DURATION, chosenDuration*60);
         editor.putFloat(SPEED, (float)speed);
         editor.putInt(SPEED_OPTION, speedOptionSelected);
+        editor.putInt(CHOSEN_DURATION, chosenDuration);
 
         editor.apply();
     }
@@ -641,6 +667,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         maxDuration = sharedPreferences.getInt(MAX_DURATION, 100);
         speed = (double) sharedPreferences.getFloat(SPEED, 1);
         speedOptionSelected = sharedPreferences.getInt(SPEED_OPTION, 4);
+        chosenDuration = sharedPreferences.getInt(CHOSEN_DURATION, 1);
     }
 
     public void updateData(){
