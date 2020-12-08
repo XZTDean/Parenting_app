@@ -58,8 +58,6 @@ import pl.droidsonroids.gif.GifImageView;
 public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PopupMenu.OnMenuItemClickListener{
 
     private TimeoutTimer timeoutTimer = null;
-    private int maxDuration;
-    private int speedOptionSelected;        // 1 = 25%, 2 = 50%, 3 = 75%, 4 = 100%, 5 = 200%, 6 = 300%, 7 = 400%
 
     private TextView textTimeSpeed;
     private TextInputLayout customDurationLayout;
@@ -219,43 +217,36 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         switch (item.getItemId()) {
             case R.id.speed_25:
                 speed = 0.25;
-                speedOptionSelected = 1;
                 textTimeSpeed.setText(R.string.time_25);
                 saveData();
                 break;
             case R.id.speed_50:
                 speed = 0.5;
-                speedOptionSelected = 2;
                 textTimeSpeed.setText(R.string.time_50);
                 saveData();
                 break;
             case R.id.speed_75:
                 speed = 0.75;
-                speedOptionSelected = 3;
                 textTimeSpeed.setText(R.string.time_75);
                 saveData();
                 break;
             case R.id.speed_100:
                 speed = 1;
-                speedOptionSelected = 4;
                 textTimeSpeed.setText(R.string.time_100);
                 saveData();
                 break;
             case R.id.speed_200:
                 speed = 2;
-                speedOptionSelected = 5;
                 textTimeSpeed.setText(R.string.time_200);
                 saveData();
                 break;
             case R.id.speed_300:
                 speed = 3;
-                speedOptionSelected = 6;
                 textTimeSpeed.setText(R.string.time_300);
                 saveData();
                 break;
             case R.id.speed_400:
                 speed = 4;
-                speedOptionSelected = 7;
                 textTimeSpeed.setText(R.string.time_400);
                 saveData();
                 break;
@@ -377,8 +368,6 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
         ringtone.play();
         finishNotification();
-        speedOptionSelected = 1;
-        maxDuration = 100;
         textTimeSpeed.setText(R.string.time_100);
         speed = 1;
         saveData();
@@ -481,6 +470,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     private void startSelected() {
         speedTimerMenu.setVisible(true);
+        textTimeSpeed.setText(R.string.time_100);
         timeoutTimer = TimeoutTimer.getNewInstance(runnable, chosenDuration);
         timeoutTimer.start();
         customDuration.setVisibility(View.INVISIBLE);
@@ -657,9 +647,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putInt(MAX_DURATION, chosenDuration*60);
         editor.putFloat(SPEED, (float)speed);
-        editor.putInt(SPEED_OPTION, speedOptionSelected);
         editor.putInt(CHOSEN_DURATION, chosenDuration);
 
         editor.apply();
@@ -667,9 +655,7 @@ public class TimeoutTimerUI extends AppCompatActivity implements AdapterView.OnI
 
     public void loadData(){
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
-        maxDuration = sharedPreferences.getInt(MAX_DURATION, 100);
         speed = (double) sharedPreferences.getFloat(SPEED, 1);
-        speedOptionSelected = sharedPreferences.getInt(SPEED_OPTION, 4);
         chosenDuration = sharedPreferences.getInt(CHOSEN_DURATION, 1);
     }
 
