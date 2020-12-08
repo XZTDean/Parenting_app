@@ -46,12 +46,27 @@ public class ChildManager implements Iterable<Child> {
         return children.size();
     }
 
-    public void add(Child child){
+    public boolean add(Child child){
+        for (Child c : children) {
+            if (c.equals(child)) {
+                return false;
+            }
+        }
         children.add(child);
+        return true;
     }
 
-    public void editChildName(int index, String name){ //Maybe just editChild
+    public boolean editChildName(int index, String name) {
+        if (children.get(index).getName().equals(name)) {
+            return true;
+        }
+        for (Child child : children) {
+            if (child.getName().equals(name)) {
+                return false;
+            }
+        }
         children.get(index).setName(name);
+        return true;
     }
 
     public void delete(int index){
