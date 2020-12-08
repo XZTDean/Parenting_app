@@ -19,6 +19,7 @@
     <string name="config_children">Config Children</string>
     <string name="child_page_title">Children:</string>
     <string name="no_child">There is no child now</string>
+    <string name="child_exist">Child exist</string>
     <string name="add_child_instruction">Tap \"+\" to add one</string>
     <string name="coin_fliping_history">Coin Flipping History</string>
     <string name="history">History</string>
@@ -29,6 +30,9 @@
     <string name="name">Name</string>
     <string name="flip_coin">Flip Coin</string>
     <string name="tails">TAILS</string>
+    <string name="flip_history_display">%1$s chose %2$s</string>
+    <string name="head">head</string>
+    <string name="tail">tail</string>
 
     <string name="duration">Please select a duration</string>
     <string name="durationHint">Enter Custom Timeout Duration (in minutes)</string>
@@ -71,6 +75,20 @@
         <item>Custom</item>
     </string-array>
 
+    <string-array name="breathsSpinner">
+        <item>N</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
     <string name="newPhotoButton">Take New Photo</string>
     <string name="uploadButton">Upload Photo from Gallery</string>
     <string name="defaultButton">Use Default Photo</string>
@@ -80,13 +98,44 @@
     <string name="citations">Backgrounds: https://giphy.com/explore/tom-jerry \n\n
         Default portrait photo: https://www.reddit.com/r/TomAndJerryMemes/comments/eaa9j3/jerry_sunglasses_meme_what_episode_is_this_from/ \n\n
         Choose photo activity background: https://www.reddit.com/r/TomAndJerryMemes/comments/eaa9j3/jerry_sunglasses_meme_what_episode_is_this_from/
-        \n\nAlarm icon in notification: https://www.flaticon.com/free-icon/alarm-clock_860735 </string>
+        \n\nAlarm icon in notification: https://www.flaticon.com/free-icon/alarm-clock_860735 \n\n
+        Take A Breath Background: https://newcastlebeach.org/images/angry-jerry.jpg\n\n
+        Take A Breath Music: https://www.fesliyanstudios.com/royalty-free-music/downloads-c/peaceful-and-relaxing-music/22</string>
     <string name="help">Help</string>
 
     <string name="override_default">Override Default</string>
     <string name="no_child_playing">NoChildPlaying</string>
     <string name="tasks">Tasks:</string>
-    <string name="developer_name">Developer: \nRepo Manager: Shubh kumar Mall\nProduct Owner: Xingjian Ding
-        \nScrum Master: Zeti Xiong\nTeam member: Joshua Taylor</string>
+    <string name="developer_name">Developer: \nRepo Manager: Joshua Taylor\nProduct Owner: Zeti Xiong
+        \nScrum Master: Shubh kumar Mall\nTeam member: Xingjian Ding</string>
+    <string name="icon">icon</string>
+    <string name="_25">25%</string>
+    <string name="_50">50%</string>
+    <string name="_75">75%</string>
+    <string name="_100">100%</string>
+    <string name="_200">200%</string>
+    <string name="_300">300%</string>
+    <string name="_400">400%</string>
+    <string name="takeBreath">Take a Breath</string>
+    <string name="nBreathsHeader1">Let\'s Take</string>
+    <string name="nBreathsHeader2">Breaths Together</string>
+    <string name="previous_breath">Previous Breath</string>
+
+    <string name="breath_in_message">Hold button and breath in</string>
+    <string name="breath_out_message"> </string>
+    <string name="finish_message">Tap the big button to start again.</string>
+    <string name="in">In</string>
+    <string name="out">Out</string>
+    <string name="release_message">Release button and breath out</string>
+    <string name="begin">Begin</string>
+    <string name="good_job">Good Job</string>
+    <string name="default_message">Click the spinner above to set N breaths :)</string>
+    <string name="time_100">Time @100%</string>
+    <string name="time_25">Time @25%</string>
+    <string name="time_50">Time @50%</string>
+    <string name="time_75">Time @75%</string>
+    <string name="time_200">Time @200%</string>
+    <string name="time_300">Time @300%</string>
+    <string name="time_400">Time @400%</string>
 
 </resources>

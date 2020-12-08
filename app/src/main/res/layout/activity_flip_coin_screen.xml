@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
     tools:ignore="LockedOrientationActivity"
-    tools:context=".UI.CoinFlipScreen">
+    tools:context=".UI.FlipCoinScreen">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -29,16 +29,6 @@
         />
 
     <include layout="@layout/content_flip_coin_screen" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:visibility="invisible"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

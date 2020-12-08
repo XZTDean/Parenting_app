@@ -59,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button breath = findViewById(R.id.takeBreath);
+        breath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = BreathActivity.makeIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+
         Button taskManage = findViewById(R.id.task_manager);
         taskManage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     private void loadData() {

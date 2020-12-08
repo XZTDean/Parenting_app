@@ -115,7 +115,10 @@ public class ConfigChildDialog extends DialogFragment {
             return;
         }
         child.setName(name);
-        listener.onDialogPositiveClick(pos, child);
+        if (!listener.onDialogPositiveClick(pos, child)) {
+            editText.setError(getString(R.string.child_exist));
+            return;
+        }
         dismiss();
     }
 
@@ -146,8 +149,8 @@ public class ConfigChildDialog extends DialogFragment {
     }
 
     public interface NoticeDialogListener {
-        void onDialogPositiveClick(int pos, Child child);
+        boolean onDialogPositiveClick(int pos, Child child);
 
-        public void onDialogDelete(int pos);
+        void onDialogDelete(int pos);
     }
 }
